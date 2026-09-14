@@ -1,6 +1,6 @@
 # Repository operating settings
 
-This document defines the repository settings and maintainer conventions that are useful for `mivama-digital/ui` without depending on plan- or visibility-specific GitHub enforcement features.
+This document defines the repository settings and maintainer conventions that are useful for `mivabyte/ui` without depending on plan- or visibility-specific GitHub enforcement features.
 
 Repository policy must match capabilities that are actually available. Do not commit permanently failing workflows or document unavailable rulesets as required infrastructure.
 

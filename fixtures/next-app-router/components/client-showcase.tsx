@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
   Switch,
-} from "@mivama-digital/ui"
+} from "@mivabyte/ui"
 
 export function ClientShowcase() {
   const [enabled, setEnabled] = useState(false)
@@ -35,7 +35,7 @@ export function ClientShowcase() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label htmlFor="fixture-name">Name</Label>
-          <Input id="fixture-name" placeholder="Mivama" />
+          <Input id="fixture-name" placeholder="Mivabyte" />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="fixture-role">Role</Label>

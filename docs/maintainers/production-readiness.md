@@ -53,7 +53,7 @@ Unavailable plan-specific features are not completion blockers. Do not emulate t
 - [ ] release intent is represented by Changesets
 - [ ] release versioning has consumed pending Changesets
 - [ ] `main` has no pending release Changesets before publish
-- [ ] npm Trusted Publisher matches `mivama-digital/ui` and `release.yml`
+- [ ] npm Trusted Publisher matches `mivabyte/ui` and `release.yml`
 - [ ] publishing is restricted to `main` by the release workflow
 - [ ] GitHub environment `npm` is configured when environment protection is available
 - [ ] no long-lived npm publish token is required

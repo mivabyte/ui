@@ -1,4 +1,4 @@
-// @mivama-digital/ui — official shadcn/ui components only
+// @mivabyte/ui — official shadcn/ui components only
 
 // Accordion
 export {

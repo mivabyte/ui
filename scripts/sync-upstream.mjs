@@ -2,7 +2,7 @@
 /**
  * Detect shadcn/ui base-registry changes and prepare a reviewable sync proposal.
  *
- * This script deliberately does not write component source. @mivama-digital/ui carries
+ * This script deliberately does not write component source. @mivabyte/ui carries
  * package-local import paths and theme tokens, so blindly replacing source from
  * upstream can produce a syntactically valid but broken package. A scheduled
  * GitHub Action writes only a draft PR containing the exact upstream delta.
@@ -224,7 +224,7 @@ export function renderProposal(report) {
     "",
     "## Review boundary",
     "",
-    "This is a **draft-only detection proposal**. It intentionally does not overwrite `src/components/ui` or update the baseline pin. `@mivama-digital/ui` uses package-local imports and Mivama theme tokens, so every source change must be reviewed, adapted, and pass the full package verification before the pinned SHA is advanced.",
+    "This is a **draft-only detection proposal**. It intentionally does not overwrite `src/components/ui` or update the baseline pin. `@mivabyte/ui` uses package-local imports and Mivabyte theme tokens, so every source change must be reviewed, adapted, and pass the full package verification before the pinned SHA is advanced.",
     "",
     "- Baseline SHA: `" + report.baselineSha + "`",
     "- Candidate SHA: `" + report.targetSha + "`",
@@ -233,7 +233,7 @@ export function renderProposal(report) {
       " → " +
       report.targetComponents,
     "- Changed base-registry components: " + report.changes.length,
-    "- Changes in the @mivama-digital/ui 64-component catalog: " +
+    "- Changes in the @mivabyte/ui 64-component catalog: " +
       report.trackedChanges.length,
     "",
   ]

@@ -36,16 +36,16 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  --color-mivama-main: var(--mivama-main);
-  --color-mivama-midnight: var(--mivama-midnight);
-  --color-mivama-midnight-surface: var(--mivama-midnight-surface);
-  --color-mivama-cyan: var(--mivama-cyan);
-  --color-mivama-cyan-dark: var(--mivama-cyan-dark);
-  --color-mivama-azure: var(--mivama-azure);
-  --color-mivama-azure-dark: var(--mivama-azure-dark);
-  --color-mivama-white: var(--mivama-white);
-  --color-mivama-slate: var(--mivama-slate);
-  --color-mivama-dark-border: var(--mivama-dark-border);
+  --color-mivabyte-main: var(--mivabyte-main);
+  --color-mivabyte-midnight: var(--mivabyte-midnight);
+  --color-mivabyte-midnight-surface: var(--mivabyte-midnight-surface);
+  --color-mivabyte-cyan: var(--mivabyte-cyan);
+  --color-mivabyte-cyan-dark: var(--mivabyte-cyan-dark);
+  --color-mivabyte-azure: var(--mivabyte-azure);
+  --color-mivabyte-azure-dark: var(--mivabyte-azure-dark);
+  --color-mivabyte-white: var(--mivabyte-white);
+  --color-mivabyte-slate: var(--mivabyte-slate);
+  --color-mivabyte-dark-border: var(--mivabyte-dark-border);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -53,21 +53,21 @@
 }
 
 :root {
-  /* Mivama Canonical Brand Primitives */
-  --mivama-main: #0a8ec3;
-  --mivama-midnight: #080d18;
-  --mivama-midnight-surface: #111827;
-  --mivama-cyan: #22d3ee;
-  --mivama-cyan-dark: #06b6d4;
-  --mivama-azure: #3b82f6;
-  --mivama-azure-dark: #2563eb;
-  --mivama-white: #f8fafc;
-  --mivama-slate: #94a3b8;
-  --mivama-dark-border: #1e293b;
-  --mivama-light-bg: #f7f8fa;
-  --mivama-light-border: #cbd5e1;
+  /* Mivabyte Canonical Brand Primitives */
+  --mivabyte-main: #0a8ec3;
+  --mivabyte-midnight: #080d18;
+  --mivabyte-midnight-surface: #111827;
+  --mivabyte-cyan: #22d3ee;
+  --mivabyte-cyan-dark: #06b6d4;
+  --mivabyte-azure: #3b82f6;
+  --mivabyte-azure-dark: #2563eb;
+  --mivabyte-white: #f8fafc;
+  --mivabyte-slate: #94a3b8;
+  --mivabyte-dark-border: #1e293b;
+  --mivabyte-light-bg: #f7f8fa;
+  --mivabyte-light-border: #cbd5e1;
 
-  /* Mivama Semantic Tokens - Light Theme */
+  /* Mivabyte Semantic Tokens - Light Theme */
   --background: 220 20% 97.5%;
   --foreground: 221.3 50% 6.3%;
   --card: 0 0% 100%;
@@ -106,7 +106,7 @@
 }
 
 .dark {
-  /* Mivama Semantic Tokens - Dark Theme */
+  /* Mivabyte Semantic Tokens - Dark Theme */
   --background: 221.3 50% 6.3%;
   --foreground: 210 40% 98%;
   --card: 220.9 39.3% 11%;
@@ -152,11 +152,11 @@ body {
   color: hsl(var(--foreground));
 }
 
-/* Mivama Utilities */
-.bg-mivama-gradient {
+/* Mivabyte Utilities */
+.bg-mivabyte-gradient {
   background-image: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
 }
 
-.shadow-mivama-glow {
+.shadow-mivabyte-glow {
   box-shadow: 0 0 32px rgba(34, 211, 238, 0.08);
 }

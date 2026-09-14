@@ -13,7 +13,7 @@
   },
   "apiReport": {
     "enabled": true,
-    "reportFileName": "mivama-ui.api.md",
+    "reportFileName": "mivabyte-ui.api.md",
     "reportFolder": "<projectFolder>/etc/api",
     "reportTempFolder": "<projectFolder>/.artifacts/api"
   },

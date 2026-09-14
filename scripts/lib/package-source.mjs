@@ -10,7 +10,7 @@ export async function preparePackageSource({
 }) {
   await rm(artifacts, { recursive: true, force: true })
 
-  const registrySpec = process.env.MIVAMA_PACKAGE_SPEC?.trim()
+  const registrySpec = process.env.MIVABYTE_PACKAGE_SPEC?.trim()
   if (registrySpec) {
     return {
       spec: registrySpec,
