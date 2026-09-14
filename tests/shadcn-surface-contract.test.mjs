@@ -147,7 +147,7 @@ test("the source and package are Radix/shadcn-only, without Base UI", async () =
   assert.match(styles, /\.dark/)
 })
 
-test("legacy Mivama shell helpers are absent from the build source", async () => {
+test("legacy Mivabyte shell helpers are absent from the build source", async () => {
   for (const file of ["shell-attributes.ts", "shell-contract.ts"]) {
     await assert.rejects(
       access(path.join(root, "src/lib", file)),

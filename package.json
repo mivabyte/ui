@@ -1,7 +1,7 @@
 {
   "name": "@mivama-digital/ui",
   "version": "26.9.10-1",
-  "description": "Shared Mivama design tokens and React UI primitives.",
+  "description": "Shared Mivabyte design tokens and React UI primitives.",
   "license": "MIT",
   "private": false,
   "type": "module",

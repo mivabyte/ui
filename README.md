@@ -1,6 +1,6 @@
 # @mivama-digital/ui
 
-Shared Mivama design tokens and React UI primitives for websites, portals, and product surfaces. Complete shadcn/ui distribution with exactly 64 official components and no proprietary React extensions, built on Base UI 1.7.0.
+Shared Mivabyte design tokens and React UI primitives for websites, portals, and product surfaces. Complete shadcn/ui distribution with exactly 64 official components and no proprietary React extensions, built on Base UI 1.7.0.
 
 ## Installation
 
@@ -42,7 +42,7 @@ import { ChartContainer } from "@mivama-digital/ui/chart"
 
 - For the complete API catalog and usage examples for all 64 official components, see [`docs/components.md`](docs/components.md).
 - For upstream parity tracking against shadcn/ui, see [`docs/upstream/component-parity.md`](docs/upstream/component-parity.md).
-- For migrating from prior Mivama releases, see [`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md).
+- For migrating from prior Mivabyte releases, see [`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md).
 - The authoritative public module and stylesheet catalog is generated from the component registry and package export map in [`docs/generated/exports.md`](docs/generated/exports.md). Do not maintain a second export inventory in this README.
 
 ## Component documentation

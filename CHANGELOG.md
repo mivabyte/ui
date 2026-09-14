@@ -17,7 +17,7 @@
   - Add `Slider` interactive primitive with track, indicator, and thumb.
   - Add `ScrollArea` component with customized scrollbars and viewport.
   - Improve `toast` type safety with generic `ToastData` and typed action payloads, eliminating unsafe type assertions.
-  - Add invariant diagnostic to `useMivamaContext()` ensuring descriptive error messages when accessed outside `MivamaProvider`.
+  - Add invariant diagnostic to `useMivabyteContext()` ensuring descriptive error messages when accessed outside `MivabyteProvider`.
   - Raise test coverage thresholds across statements, branches, functions, and lines.
 
 - 263bf05: Modernize library architecture and implement Phase 2 core components:
@@ -28,7 +28,7 @@
   - Add `React.forwardRef` and explicit `displayName` across core primitives.
   - Introduce `FieldContext` for automated accessible form field wiring.
   - Eliminate global DOM `MutationObserver` on `document.documentElement`.
-  - Remove stacking context trapping (`isolate`) from `MivamaProvider`.
+  - Remove stacking context trapping (`isolate`) from `MivabyteProvider`.
   - Add Phase 2 primitives: `DropdownMenu`, `Popover`, `Accordion`, `Collapsible`, `Avatar`, `Table`, and `Toast` (with `Toaster` and `toast` helper).
 
 ## 3.0.1

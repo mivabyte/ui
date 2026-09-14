@@ -4,7 +4,7 @@ import type { ReactNode } from "react"
 import "@mivama-digital/ui/styles.css"
 
 export const metadata: Metadata = {
-  title: "Mivama UI Next App Router fixture",
+  title: "Mivabyte UI Next App Router fixture",
   description: "Packed-package App Router compatibility fixture",
 }
 

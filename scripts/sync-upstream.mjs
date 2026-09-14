@@ -224,7 +224,7 @@ export function renderProposal(report) {
     "",
     "## Review boundary",
     "",
-    "This is a **draft-only detection proposal**. It intentionally does not overwrite `src/components/ui` or update the baseline pin. `@mivama-digital/ui` uses package-local imports and Mivama theme tokens, so every source change must be reviewed, adapted, and pass the full package verification before the pinned SHA is advanced.",
+    "This is a **draft-only detection proposal**. It intentionally does not overwrite `src/components/ui` or update the baseline pin. `@mivama-digital/ui` uses package-local imports and Mivabyte theme tokens, so every source change must be reviewed, adapted, and pass the full package verification before the pinned SHA is advanced.",
     "",
     "- Baseline SHA: `" + report.baselineSha + "`",
     "- Candidate SHA: `" + report.targetSha + "`",

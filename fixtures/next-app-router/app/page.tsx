@@ -23,7 +23,7 @@ export default function Page() {
       <header className="space-y-2">
         <Badge>shadcn/Radix distribution</Badge>
         <h1 className="text-3xl font-bold tracking-tight">
-          Mivama UI consumer probe
+          Mivabyte UI consumer probe
         </h1>
         <p className="text-muted-foreground">
           This app imports the packed package through its public exports.

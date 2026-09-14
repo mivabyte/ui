@@ -41,7 +41,7 @@ export function App() {
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="Mivama" />
+            <Input id="name" placeholder="Mivabyte" />
           </div>
           <Select defaultValue="design">
             <SelectTrigger>
