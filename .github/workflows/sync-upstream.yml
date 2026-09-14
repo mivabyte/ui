@@ -71,7 +71,7 @@ jobs:
 
             - It **does not overwrite component source**.
             - It **does not advance the pinned baseline SHA**.
-            - It **does not publish `@mivama-digital/ui`**.
+            - It **does not publish `@mivabyte/ui`**.
 
             Review `docs/upstream/pending-sync.md`, adapt only the intended source changes, update the baseline and parity records, then run the full package verification before marking this PR ready.
           add-paths: |

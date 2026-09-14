@@ -3,7 +3,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@mivama-digital/ui"
+} from "@mivabyte/ui"
 
 export function KeyboardTestbed() {
   return (

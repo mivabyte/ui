@@ -1,25 +1,25 @@
-# @mivama-digital/ui
+# @mivabyte/ui
 
-Shared Mivama design tokens and React UI primitives for websites, portals, and product surfaces. Complete shadcn/ui distribution with exactly 64 official components and no proprietary React extensions, built on Base UI 1.7.0.
+Shared Mivabyte design tokens and React UI primitives for websites, portals, and product surfaces. Complete shadcn/ui distribution with exactly 64 official components and no proprietary React extensions, built on Base UI 1.7.0.
 
 ## Installation
 
-Applications install `@mivama-digital/ui` directly as a pre-built, tree-shakeable package from npm. You do not need to copy and paste code via the shadcn CLI:
+Applications install `@mivabyte/ui` directly as a pre-built, tree-shakeable package from npm. You do not need to copy and paste code via the shadcn CLI:
 
 ```bash
-npm install @mivama-digital/ui
+npm install @mivabyte/ui
 ```
 
 ## Quick start
 
 ```tsx
-import { Button } from "@mivama-digital/ui/button"
-import { Toaster } from "@mivama-digital/ui/toast"
-import "@mivama-digital/ui/styles.css"
+import { Button } from "@mivabyte/ui/button"
+import { Toaster } from "@mivabyte/ui/toast"
+import "@mivabyte/ui/styles.css"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div data-mivama-theme="product">
+    <div data-mivabyte-theme="product">
       {children}
       <Toaster />
     </div>
@@ -27,22 +27,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 }
 ```
 
-Theming and density are applied directly via `data-mivama-theme` and `data-density` shell attributes or classes. Overlays (Dialog, Sheet, Drawer, Popover, Tooltip) render into portals with optional custom `container` props.
+Theming and density are applied directly via `data-mivabyte-theme` and `data-density` shell attributes or classes. Overlays (Dialog, Sheet, Drawer, Popover, Tooltip) render into portals with optional custom `container` props.
 
 Frequently used modules can bypass the root barrel using clean subpath imports:
 
 ```tsx
-import { Button } from "@mivama-digital/ui/button"
-import { Card } from "@mivama-digital/ui/card"
-import { Field } from "@mivama-digital/ui/field"
-import { Input } from "@mivama-digital/ui/input"
-import { DataTable } from "@mivama-digital/ui/data-table"
-import { ChartContainer } from "@mivama-digital/ui/chart"
+import { Button } from "@mivabyte/ui/button"
+import { Card } from "@mivabyte/ui/card"
+import { Field } from "@mivabyte/ui/field"
+import { Input } from "@mivabyte/ui/input"
+import { DataTable } from "@mivabyte/ui/data-table"
+import { ChartContainer } from "@mivabyte/ui/chart"
 ```
 
 - For the complete API catalog and usage examples for all 64 official components, see [`docs/components.md`](docs/components.md).
 - For upstream parity tracking against shadcn/ui, see [`docs/upstream/component-parity.md`](docs/upstream/component-parity.md).
-- For migrating from prior Mivama releases, see [`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md).
+- For migrating from prior Mivabyte releases, see [`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md).
 - The authoritative public module and stylesheet catalog is generated from the component registry and package export map in [`docs/generated/exports.md`](docs/generated/exports.md). Do not maintain a second export inventory in this README.
 
 ## Component documentation
@@ -57,13 +57,13 @@ TypeScript and API Extractor remain the public API contract. Storybook documents
 
 ## Styling and themes
 
-Import `@mivama-digital/ui/styles.css` once for the canonical aggregate stylesheet. It contains the self-hosted Onest variable font, Tailwind utilities, tokens, themes, and component styles.
+Import `@mivabyte/ui/styles.css` once for the canonical aggregate stylesheet. It contains the self-hosted Onest variable font, Tailwind utilities, tokens, themes, and component styles.
 
 Advanced consumers may import the lower-level stylesheets explicitly:
 
 ```ts
-import "@mivama-digital/ui/tokens.css"
-import "@mivama-digital/ui/themes.css"
+import "@mivabyte/ui/tokens.css"
+import "@mivabyte/ui/themes.css"
 ```
 
 When importing them separately, load tokens before themes and include the component styles needed by the application.
@@ -71,15 +71,15 @@ When importing them separately, load tokens before themes and include the compon
 Themes and density are applied via HTML attributes or CSS classes on the application container or root element:
 
 ```html
-<main data-mivama-theme="portal" data-density="compact" class="dark">...</main>
+<main data-mivabyte-theme="portal" data-density="compact" class="dark">...</main>
 ```
 
 Supported themes are `product`, `editorial`, and `portal`. Supported densities are `comfortable` and `compact`. The root stylesheet defaults to product/comfortable so a consumer still has a complete zero-configuration base theme.
 
-For the editorial palette, use `data-mivama-theme="editorial"`:
+For the editorial palette, use `data-mivabyte-theme="editorial"`:
 
 ```tsx
-<div data-mivama-theme="editorial">
+<div data-mivabyte-theme="editorial">
   <section className="space-y-4">
     <Heading variant="statement" tone="inherit">
       Clear systems. Useful outcomes.
@@ -89,7 +89,7 @@ For the editorial palette, use `data-mivama-theme="editorial"`:
 </div>
 ```
 
-The old `.mivama-editorial-theme` class remains only as a v3 compatibility alias. New code must use `data-mivama-theme="editorial"`; removal of the alias is tracked for v4 in issue #59.
+The old `.mivabyte-editorial-theme` class remains only as a v3 compatibility alias. New code must use `data-mivabyte-theme="editorial"`; removal of the alias is tracked for v4 in issue #59.
 
 ## Design tokens
 

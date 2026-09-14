@@ -30,7 +30,7 @@ export async function prepareAppConsumer({
       ],
       npmOptions
     )
-    await runNpm(["ls", "@mivama-digital/ui", "--depth=0"], npmOptions)
+    await runNpm(["ls", "@mivabyte/ui", "--depth=0"], npmOptions)
   } catch (error) {
     await packageSource.cleanup()
     throw error

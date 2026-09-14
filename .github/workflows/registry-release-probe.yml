@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Exact published @mivama-digital/ui version to verify
+        description: Exact published @mivabyte/ui version to verify
         required: true
         type: string
 

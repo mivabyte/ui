@@ -24,7 +24,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@mivama-digital/ui"
+} from "@mivabyte/ui"
 
 export function App() {
   const [accepted, setAccepted] = useState(false)
@@ -35,13 +35,13 @@ export function App() {
         <CardHeader>
           <CardTitle>Vite consumer probe</CardTitle>
           <CardDescription>
-            Imports the packed @mivama-digital/ui public API.
+            Imports the packed @mivabyte/ui public API.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="Mivama" />
+            <Input id="name" placeholder="Mivabyte" />
           </div>
           <Select defaultValue="design">
             <SelectTrigger>

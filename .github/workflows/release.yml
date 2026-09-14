@@ -112,7 +112,7 @@ jobs:
           try {
             output = execFileSync(
               "npm",
-              ["view", "@mivama-digital/ui", "versions", "--json"],
+              ["view", "@mivabyte/ui", "versions", "--json"],
               { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] }
             )
           } catch (error) {
@@ -123,7 +123,7 @@ jobs:
           const parsed = JSON.parse(output)
           const versions = Array.isArray(parsed) ? parsed : [parsed]
           if (versions.includes(process.env.VERSION)) {
-            throw new Error(`@mivama-digital/ui@${process.env.VERSION} is already published`)
+            throw new Error(`@mivabyte/ui@${process.env.VERSION} is already published`)
           }
           NODE
       - run: npm audit --omit=dev

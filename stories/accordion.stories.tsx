@@ -35,7 +35,7 @@ export const Basic: Story = {
       <AccordionItem value="item-2">
         <AccordionTrigger>Is it styled?</AccordionTrigger>
         <AccordionContent>
-          Yes. It comes with default styles that match the Mivama design system.
+          Yes. It comes with default styles that match the Mivabyte design system.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">

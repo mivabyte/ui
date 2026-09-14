@@ -8,7 +8,7 @@ import { runCommand } from "./lib/process.mjs"
 const root = path.resolve(import.meta.dirname, "..")
 const consumer = await prepareIsolatedPackageConsumer({
   root,
-  tempPrefix: "mivama-ui-ssr-",
+  tempPrefix: "mivabyte-ui-ssr-",
 })
 
 try {
@@ -23,9 +23,9 @@ try {
       `  const namespace = await import(specifier);\n` +
       `  if (Object.keys(namespace).length === 0) throw new Error(\`Empty module: \${specifier}\`);\n` +
       `}\n` +
-      `const card = await import("@mivama-digital/ui/card");\n` +
-      `const button = await import("@mivama-digital/ui/button");\n` +
-      `const badge = await import("@mivama-digital/ui/badge");\n` +
+      `const card = await import("@mivabyte/ui/card");\n` +
+      `const button = await import("@mivabyte/ui/button");\n` +
+      `const badge = await import("@mivabyte/ui/badge");\n` +
       `const tree = React.createElement(\n` +
       `  "main",\n` +
       `  null,\n` +

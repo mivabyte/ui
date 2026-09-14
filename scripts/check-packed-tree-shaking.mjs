@@ -30,11 +30,11 @@ try {
   await mkdir(workspace, { recursive: true })
   await writeFile(
     path.join(workspace, "direct.js"),
-    'import { Button } from "@mivama-digital/ui/button"; console.log(Button)\n'
+    'import { Button } from "@mivabyte/ui/button"; console.log(Button)\n'
   )
   await writeFile(
     path.join(workspace, "root.js"),
-    'import { Button } from "@mivama-digital/ui"; console.log(Button)\n'
+    'import { Button } from "@mivabyte/ui"; console.log(Button)\n'
   )
   await writeFile(
     path.join(workspace, "vite.config.mjs"),

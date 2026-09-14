@@ -1,6 +1,6 @@
 # Changesets
 
-Use a changeset for changes that alter the published `@mivama-digital/ui` consumer contract or should appear in the package changelog.
+Use a changeset for changes that alter the published `@mivabyte/ui` consumer contract or should appear in the package changelog.
 
 - `patch`: bug fixes, accessibility corrections, compatible behavior changes, and internal improvements that affect the published package.
 - `minor`: new backwards-compatible components, variants, exports, or public capabilities.

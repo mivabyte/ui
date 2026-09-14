@@ -49,7 +49,7 @@ export async function prepareIsolatedPackageConsumer({
     const packageDir = path.join(
       workspace,
       "node_modules",
-      "@mivama-digital",
+      "@mivabyte",
       "ui"
     )
     const installedPackage = JSON.parse(
