@@ -18,7 +18,7 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm transition-[background-color,box-shadow,transform] duration-150 ease-out hover:bg-secondary/80 [@media(hover:hover)_and_(pointer:fine)_and_(prefers-reduced-motion:no-preference)]:hover:-translate-y-px [@media(hover:hover)_and_(pointer:fine)_and_(prefers-reduced-motion:no-preference)]:hover:shadow-md",
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         inverse:
           "bg-foreground text-background shadow-sm hover:bg-foreground/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
