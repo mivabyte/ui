@@ -1,6 +1,6 @@
 # Releases
 
-`@mivama-digital/ui` uses Changesets for release intent and a manual GitHub Actions workflow for npm publishing.
+`@mivabyte/ui` uses Changesets for release intent and a manual GitHub Actions workflow for npm publishing.
 
 ## Release policy
 
@@ -33,9 +33,9 @@ Do not publish directly from a feature branch.
 
 The repository contains `.github/workflows/release.yml`, but npm must trust that workflow before the first OIDC publish can succeed.
 
-Configure the `@mivama-digital/ui` package on npm with a GitHub Actions trusted publisher using exactly:
+Configure the `@mivabyte/ui` package on npm with a GitHub Actions trusted publisher using exactly:
 
-- GitHub organization: `mivama-digital`
+- GitHub organization: `mivabyte`
 - Repository: `ui`
 - Workflow filename: `release.yml`
 - Environment: `npm`
@@ -83,7 +83,7 @@ No `NPM_TOKEN` or other long-lived npm write credential is required for publishi
 npm and GitHub release metadata are one release identity:
 
 - package version: `<version>`
-- npm package: `@mivama-digital/ui@<version>`
+- npm package: `@mivabyte/ui@<version>`
 - Git tag: `v<version>`
 - GitHub Release: `v<version>`
 - source revision: the `main` commit that the `Release` workflow published
@@ -121,7 +121,7 @@ Once trusted publishing is confirmed to work, the exact registry version passes 
 
 ## Failure modes
 
-- `ENEEDAUTH`: verify the npm Trusted Publisher configuration matches `mivama-digital/ui`, `release.yml`, and environment `npm` exactly.
+- `ENEEDAUTH`: verify the npm Trusted Publisher configuration matches `mivabyte/ui`, `release.yml`, and environment `npm` exactly.
 - Missing `npm` GitHub environment: create the environment before dispatching the release workflow.
 - Environment waiting for approval: expected when deployment protection is enabled.
 - Repository visibility failure: provenance is a required release contract; do not publish until the repository visibility and release policy agree.

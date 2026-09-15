@@ -1,6 +1,6 @@
 # Design-system governance
 
-`@mivama-digital/ui` is maintained as a design system, not as a collection of copied application components. New work should strengthen one canonical implementation instead of introducing aliases, parallel primitives, or compatibility layers without a concrete migration need.
+`@mivabyte/ui` is maintained as a design system, not as a collection of copied application components. New work should strengthen one canonical implementation instead of introducing aliases, parallel primitives, or compatibility layers without a concrete migration need.
 
 ## Sources of truth
 
@@ -10,7 +10,7 @@
 | Public component inventory     | `config/components.mjs`                                            |
 | Published package entry points | `package.json#exports`                                             |
 | Generated export documentation | `docs/generated/exports.md`                                        |
-| TypeScript public API contract | `etc/api/mivama-ui.api.md` via API Extractor                       |
+| TypeScript public API contract | `etc/api/mivabyte-ui.api.md` via API Extractor                     |
 | Release intent                 | Changesets plus the PR release-policy gate                         |
 | Component behavior             | Runtime and browser tests                                          |
 | Repository security policy     | Permanent workflows plus `docs/maintainers/repository-settings.md` |

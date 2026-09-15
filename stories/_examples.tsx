@@ -356,7 +356,7 @@ function SidebarNavigation() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-2 text-xs">mivama-ui</SidebarFooter>
+      <SidebarFooter className="p-2 text-xs">mivabyte-ui</SidebarFooter>
     </>
   )
 }

@@ -1,6 +1,6 @@
 # Storybook stories
 
-Storybook is the interactive usage documentation for `@mivama-digital/ui`. It is not a second component registry or public API definition.
+Storybook is the interactive usage documentation for `@mivabyte/ui`. It is not a second component registry or public API definition.
 
 ## Sources of truth
 

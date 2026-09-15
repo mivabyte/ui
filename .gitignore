@@ -4,7 +4,7 @@ storybook-static/
 *.tsbuildinfo
 npm-debug.log*
 .DS_Store
-mivama-ui-*.tgz
+mivabyte-ui-*.tgz
 
 # Test & report artifacts
 coverage/

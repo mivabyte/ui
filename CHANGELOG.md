@@ -1,4 +1,4 @@
-# @mivama/ui
+# @mivabyte/ui
 
 ## 26.9.9-1
 
@@ -17,23 +17,23 @@
   - Add `Slider` interactive primitive with track, indicator, and thumb.
   - Add `ScrollArea` component with customized scrollbars and viewport.
   - Improve `toast` type safety with generic `ToastData` and typed action payloads, eliminating unsafe type assertions.
-  - Add invariant diagnostic to `useMivamaContext()` ensuring descriptive error messages when accessed outside `MivamaProvider`.
+  - Add invariant diagnostic to `useMivabyteContext()` ensuring descriptive error messages when accessed outside `MivabyteProvider`.
   - Raise test coverage thresholds across statements, branches, functions, and lines.
 
 - 263bf05: Modernize library architecture and implement Phase 2 core components:
 
   - Introduce dual ESM/CJS bundling with `tsup` targeting ES2022.
   - Decouple `tailwindcss` peer dependency and provide precompiled CSS.
-  - Extract global element resets into `@mivama/ui/reset.css`.
+  - Extract global element resets into `@mivabyte/ui/reset.css`.
   - Add `React.forwardRef` and explicit `displayName` across core primitives.
   - Introduce `FieldContext` for automated accessible form field wiring.
   - Eliminate global DOM `MutationObserver` on `document.documentElement`.
-  - Remove stacking context trapping (`isolate`) from `MivamaProvider`.
+  - Remove stacking context trapping (`isolate`) from `MivabyteProvider`.
   - Add Phase 2 primitives: `DropdownMenu`, `Popover`, `Accordion`, `Collapsible`, `Avatar`, `Table`, and `Toast` (with `Toaster` and `toast` helper).
 
 ## 3.0.1
 
 ### Patch Changes
 
-- 79a97f0: Point the published package metadata and release identity checks at the canonical `mivama-digital/ui` repository so npm provenance and Trusted Publishing use the current repository identity.
+- 79a97f0: Point the published package metadata and release identity checks at the canonical `mivabyte/ui` repository so npm provenance and Trusted Publishing use the current repository identity.
 - 0df1398: Isolate ScrollLayer reveal and parallax effects with anonymous view timelines so repeated and nested ScrollScene compositions cannot resolve to one shared global named timeline.

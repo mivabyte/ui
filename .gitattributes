@@ -12,5 +12,5 @@
 *.cjs text=auto
 *.txt text=auto
 *.md text=auto
-etc/api/mivama-ui.api.md text eol=lf
+etc/api/mivabyte-ui.api.md text eol=lf
 docs/generated/exports.md text eol=lf

@@ -16,9 +16,9 @@ type VisualState = {
 }
 
 async function applyVisualState(page: Page, state: VisualState) {
-  const shell = page.locator("[data-mivama-theme]")
+  const shell = page.locator("[data-mivabyte-theme]")
   await shell.evaluate((node, nextState) => {
-    node.setAttribute("data-mivama-theme", nextState.theme)
+    node.setAttribute("data-mivabyte-theme", nextState.theme)
     node.setAttribute("data-density", nextState.density)
     node.classList.toggle("dark", nextState.mode === "dark")
   }, state)

@@ -3,7 +3,7 @@ import test from "node:test"
 
 import { readJson, readRoot } from "./lib/source.mjs"
 
-const repositoryUrl = "https://github.com/mivama-digital/ui"
+const repositoryUrl = "https://github.com/mivabyte/ui"
 
 test("published package metadata points at the canonical repository", async () => {
   const packageJson = await readJson("package.json")
@@ -21,7 +21,7 @@ test("release identity follows the current GitHub repository", async () => {
 
   assert.match(workflow, /GITHUB_SERVER_URL/)
   assert.match(workflow, /GITHUB_REPOSITORY/)
-  assert.doesNotMatch(workflow, /mivama-digital\/mivama-ui/)
-  assert.match(releaseDocs, /mivama-digital\/ui/)
-  assert.doesNotMatch(releaseDocs, /mivama-digital\/mivama-ui/)
+  assert.doesNotMatch(workflow, /mivabyte\/mivabyte-ui/)
+  assert.match(releaseDocs, /mivabyte\/ui/)
+  assert.doesNotMatch(releaseDocs, /mivabyte\/mivabyte-ui/)
 })

@@ -89,17 +89,11 @@ test("GitHub release synchronization runs only after verified publishing", () =>
 test("release workflow validates the canonical package repository", () => {
   assert.deepEqual(packageJson.repository, {
     type: "git",
-    url: "git+https://github.com/mivama-digital/ui.git",
+    url: "git+https://github.com/mivabyte/ui.git",
   })
-  assert.equal(
-    packageJson.bugs?.url,
-    "https://github.com/mivama-digital/ui/issues"
-  )
-  assert.equal(
-    packageJson.homepage,
-    "https://github.com/mivama-digital/ui#readme"
-  )
+  assert.equal(packageJson.bugs?.url, "https://github.com/mivabyte/ui/issues")
+  assert.equal(packageJson.homepage, "https://github.com/mivabyte/ui#readme")
   assert.match(workflow, /GITHUB_SERVER_URL/)
   assert.match(workflow, /GITHUB_REPOSITORY/)
-  assert.doesNotMatch(workflow, /mivama-digital\/mivama-ui/)
+  assert.doesNotMatch(workflow, /mivabyte\/mivabyte-ui/)
 })

@@ -4,12 +4,12 @@
 
 - **Catalog:** `config/components.mjs` (65 component slugs)
 - **Source modules:** `src/components/ui/`
-- **Style entry point:** `src/styles.css` → `@mivama-digital/ui/styles.css`
+- **Style entry point:** `src/styles.css` → `@mivabyte/ui/styles.css`
 - **Release checks:** registry, contracts, Storybook coverage, package linting, packed consumer builds, and API extraction
 
 ## Runtime baseline
 
-`@mivama-digital/ui` follows the official shadcn component approach:
+`@mivabyte/ui` follows the official shadcn component approach:
 
 - React 19 and Tailwind CSS 4;
 - Radix primitives where the corresponding shadcn component uses them;

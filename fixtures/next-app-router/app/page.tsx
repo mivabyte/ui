@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
   Separator,
-} from "@mivama-digital/ui"
+} from "@mivabyte/ui"
 
 import { ClientShowcase } from "../components/client-showcase"
 
@@ -23,7 +23,7 @@ export default function Page() {
       <header className="space-y-2">
         <Badge>shadcn/Radix distribution</Badge>
         <h1 className="text-3xl font-bold tracking-tight">
-          Mivama UI consumer probe
+          Mivabyte UI consumer probe
         </h1>
         <p className="text-muted-foreground">
           This app imports the packed package through its public exports.
@@ -42,7 +42,7 @@ export default function Page() {
             <AlertTitle>Package CSS loaded</AlertTitle>
             <AlertDescription>
               The Next App Router fixture imports{" "}
-              <code>@mivama-digital/ui/styles.css</code>.
+              <code>@mivabyte/ui/styles.css</code>.
             </AlertDescription>
           </Alert>
         </CardContent>

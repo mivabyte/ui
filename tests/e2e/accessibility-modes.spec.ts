@@ -50,19 +50,21 @@ test("increased contrast promotes semantic borders to foreground contrast", asyn
   await page.emulateMedia({ contrast: "more" })
   await page.goto("/")
 
-  const state = await page.locator("[data-mivama-theme]").evaluate((shell) => {
-    const probe = document.createElement("div")
-    probe.style.border = "1px solid var(--border-strong)"
-    probe.style.color = "var(--foreground)"
-    shell.append(probe)
+  const state = await page
+    .locator("[data-mivabyte-theme]")
+    .evaluate((shell) => {
+      const probe = document.createElement("div")
+      probe.style.border = "1px solid var(--border-strong)"
+      probe.style.color = "var(--foreground)"
+      shell.append(probe)
 
-    const style = getComputedStyle(probe)
-    return {
-      increasedContrast: matchMedia("(prefers-contrast: more)").matches,
-      borderColor: style.borderTopColor,
-      foregroundColor: style.color,
-    }
-  })
+      const style = getComputedStyle(probe)
+      return {
+        increasedContrast: matchMedia("(prefers-contrast: more)").matches,
+        borderColor: style.borderTopColor,
+        foregroundColor: style.color,
+      }
+    })
 
   expect(state.increasedContrast).toBe(true)
   expect(state.borderColor).toBe(state.foregroundColor)
