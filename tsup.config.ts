@@ -61,8 +61,5 @@ export default defineConfig({
   treeshake: true,
   splitting: false,
   bundle: true,
-  banner: {
-    js: '"use client";',
-  },
   tsconfig: "tsconfig.build.json",
 })

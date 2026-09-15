@@ -11,20 +11,33 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        primary:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground shadow-sm transition-[background-color,box-shadow,transform] duration-150 ease-out hover:bg-secondary/80 [@media(hover:hover)_and_(pointer:fine)_and_(prefers-reduced-motion:no-preference)]:hover:-translate-y-px [@media(hover:hover)_and_(pointer:fine)_and_(prefers-reduced-motion:no-preference)]:hover:shadow-md",
+        inverse:
+          "bg-foreground text-background shadow-sm hover:bg-foreground/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
+        navigation: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",
+        compact: "h-8 px-3 text-xs",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
+        xs: "h-7 rounded px-2 text-xs",
         icon: "h-9 w-9",
+        "icon-xs": "h-7 w-7",
+        "icon-lg": "h-10 w-10",
+      },
+      wrap: {
+        true: "whitespace-normal text-wrap",
+        false: "whitespace-nowrap",
       },
     },
     defaultVariants: {
@@ -39,15 +52,45 @@ export interface ButtonProps
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  wrap?: boolean
+  loading?: boolean
+  render?: React.ReactElement
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      wrap,
+      asChild = false,
+      loading = false,
+      render,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    const isDisabled = disabled || loading
+    if (render) {
+      return React.cloneElement(render as React.ReactElement<any>, {
+        ref,
+        className: cn(
+          buttonVariants({ variant, size, wrap, className }),
+          (render as any).props?.className
+        ),
+        children: props.children ?? (render as any).props?.children,
+        disabled: isDisabled,
+        ...props,
+      })
+    }
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, wrap, className }))}
         ref={ref}
+        disabled={isDisabled}
         {...props}
       />
     )

@@ -1,18 +1,21 @@
 import * as React from "react"
 
-interface AspectRatioProps extends React.HTMLAttributes<HTMLDivElement> {
+import { cn } from "@/lib/utils"
+
+export interface AspectRatioProps extends React.HTMLAttributes<HTMLDivElement> {
   ratio?: number
 }
 
 export function AspectRatio({
   ratio = 16 / 9,
   className,
+  style,
   ...props
 }: AspectRatioProps) {
   return (
     <div
-      className={`relative w-full overflow-hidden ${className || ""}`}
-      style={{ paddingTop: `${ratio * 100}%` }}
+      className={cn("relative w-full overflow-hidden", className)}
+      style={{ aspectRatio: ratio, ...style }}
       {...props}
     />
   )

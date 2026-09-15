@@ -1,0 +1,16 @@
+:root {
+  --radius: 0.625rem;
+  --shape-control-sm: calc(var(--radius) * 0.6);
+  --shape-control: calc(var(--radius) * 0.8);
+  --shape-surface: var(--radius);
+  --shape-panel: calc(var(--radius) * 1.4);
+  --control-height: 44px;
+}
+
+[data-density="comfortable"] {
+  --control-height: 44px;
+}
+
+[data-density="compact"] {
+  --control-height: 32px;
+}

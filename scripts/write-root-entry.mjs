@@ -16,17 +16,19 @@ const esmModules = fs
   .map((name) => `./components/ui/${name}`)
   .sort()
 
+if (fs.existsSync(path.join(dist, "lib", "utils.js"))) {
+  esmModules.push("./lib/utils.js")
+}
+
 if (esmModules.length === 0) {
   throw new Error("No built public modules found in dist/")
 }
 
 const esm = [
-  '"use client";',
   ...esmModules.map((modulePath) => `export * from "${modulePath}";`),
   "",
 ].join("\n")
 const cjs = [
-  '"use client";',
   ...esmModules.map(
     (modulePath) =>
       `Object.assign(exports, require("${modulePath.replace(/\.js$/, ".cjs")}"));`

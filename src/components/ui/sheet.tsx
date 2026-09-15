@@ -7,9 +7,61 @@ import { cn } from "@/lib/utils"
 
 const Sheet = SheetPrimitive.Root
 
-const SheetTrigger = SheetPrimitive.Trigger
+const SheetTrigger = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger> & {
+    render?: React.ReactElement
+  }
+>(({ render, children, ...props }, ref) => {
+  if (render) {
+    const renderedChild = React.isValidElement(render)
+      ? React.cloneElement(
+          render,
+          undefined,
+          (render.props as { children?: React.ReactNode }).children ?? children
+        )
+      : render
+    return (
+      <SheetPrimitive.Trigger ref={ref} asChild {...props}>
+        {renderedChild}
+      </SheetPrimitive.Trigger>
+    )
+  }
+  return (
+    <SheetPrimitive.Trigger ref={ref} {...props}>
+      {children}
+    </SheetPrimitive.Trigger>
+  )
+})
+SheetTrigger.displayName = SheetPrimitive.Trigger.displayName
 
-const SheetClose = SheetPrimitive.Close
+const SheetClose = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Close>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close> & {
+    render?: React.ReactElement
+  }
+>(({ render, children, ...props }, ref) => {
+  if (render) {
+    const renderedChild = React.isValidElement(render)
+      ? React.cloneElement(
+          render,
+          undefined,
+          (render.props as { children?: React.ReactNode }).children ?? children
+        )
+      : render
+    return (
+      <SheetPrimitive.Close ref={ref} asChild {...props}>
+        {renderedChild}
+      </SheetPrimitive.Close>
+    )
+  }
+  return (
+    <SheetPrimitive.Close ref={ref} {...props}>
+      {children}
+    </SheetPrimitive.Close>
+  )
+})
+SheetClose.displayName = SheetPrimitive.Close.displayName
 
 const SheetPortal = SheetPrimitive.Portal
 
@@ -50,27 +102,52 @@ const sheetVariants = cva(
 interface SheetContentProps
   extends
     React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+    VariantProps<typeof sheetVariants> {
+  overlayClassName?: string
+  showCloseButton?: boolean
+  size?: "sm" | "default" | "md" | "lg" | "xl" | "full" | string
+}
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
-      {children}
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
+>(
+  (
+    {
+      side = "right",
+      className,
+      children,
+      overlayClassName,
+      showCloseButton = true,
+      size,
+      ...props
+    },
+    ref
+  ) => (
+    <SheetPortal>
+      <SheetOverlay className={overlayClassName} />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(
+          sheetVariants({ side }),
+          size === "full" && "max-w-full sm:max-w-full",
+          size === "lg" && "sm:max-w-lg",
+          size === "xl" && "sm:max-w-xl",
+          className
+        )}
+        {...props}
+      >
+        {showCloseButton && (
+          <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
+        {children}
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+)
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({

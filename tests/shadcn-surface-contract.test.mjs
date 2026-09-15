@@ -26,6 +26,7 @@ const expectedSlugs = [
   "collapsible",
   "combobox",
   "command",
+  "container",
   "context-menu",
   "data-table",
   "date-picker",
@@ -77,7 +78,7 @@ const expectedSlugs = [
 const root = path.resolve(import.meta.dirname, "..")
 
 test("the package exposes exactly the official shadcn component surface", async () => {
-  assert.equal(expectedSlugs.length, 65)
+  assert.equal(expectedSlugs.length, 66)
   assert.deepEqual([...officialShadcnComponentSlugs], expectedSlugs)
 
   const sourceSlugs = (await readdir(path.join(root, "src/components/ui")))

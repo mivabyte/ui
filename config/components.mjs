@@ -28,6 +28,7 @@ export const officialShadcnComponentSlugs = Object.freeze([
   "collapsible",
   "combobox",
   "command",
+  "container",
   "context-menu",
   "data-table",
   "date-picker",

@@ -185,6 +185,15 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - CommonJS types: `./dist/components/ui/command.d.cts`
 - CommonJS runtime: `./dist/components/ui/command.cjs`
 
+## `@mivabyte/ui/container`
+
+- Official component: Container
+- Source: `src/components/ui/container.tsx`
+- ESM types: `./dist/components/ui/container.d.ts`
+- ESM runtime: `./dist/components/ui/container.js`
+- CommonJS types: `./dist/components/ui/container.d.cts`
+- CommonJS runtime: `./dist/components/ui/container.cjs`
+
 ## `@mivabyte/ui/context-menu`
 
 - Official component: Context Menu

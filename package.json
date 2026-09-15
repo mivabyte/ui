@@ -254,6 +254,17 @@
       },
       "default": "./dist/components/ui/command.js"
     },
+    "./container": {
+      "import": {
+        "types": "./dist/components/ui/container.d.ts",
+        "default": "./dist/components/ui/container.js"
+      },
+      "require": {
+        "types": "./dist/components/ui/container.d.cts",
+        "default": "./dist/components/ui/container.cjs"
+      },
+      "default": "./dist/components/ui/container.js"
+    },
     "./context-menu": {
       "import": {
         "types": "./dist/components/ui/context-menu.d.ts",
@@ -801,7 +812,7 @@
     "release:status": "changeset status",
     "release:version": "changeset version && node scripts/sync-package-lock-version.mjs",
     "build:js": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/write-root-entry.mjs",
-    "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify"
+    "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify && cp src/tokens.css dist/tokens.css"
   },
   "peerDependencies": {
     "react": ">=19 <20",

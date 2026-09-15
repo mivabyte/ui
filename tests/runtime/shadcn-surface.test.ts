@@ -32,6 +32,7 @@ const officialComponents = [
   "collapsible",
   "combobox",
   "command",
+  "container",
   "context-menu",
   "data-table",
   "date-picker",

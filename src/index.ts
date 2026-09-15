@@ -27,6 +27,7 @@ export {
 } from "./components/ui/alert-dialog"
 
 // Aspect Ratio
+export type { AspectRatioProps } from "./components/ui/aspect-ratio"
 export { AspectRatio } from "./components/ui/aspect-ratio"
 
 // Attachment
@@ -65,6 +66,7 @@ export { ButtonGroup } from "./components/ui/button-group"
 export { Calendar, CalendarDayButton } from "./components/ui/calendar"
 
 // Card
+export type { CardProps } from "./components/ui/card"
 export {
   Card,
   CardContent,
@@ -125,6 +127,10 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from "./components/ui/command"
+
+// Container
+export type { ContainerProps } from "./components/ui/container"
+export { Container, containerVariants } from "./components/ui/container"
 
 // Context Menu
 export {
@@ -436,6 +442,7 @@ export {
 } from "./components/ui/table"
 
 // Tabs
+export type { TabsListProps } from "./components/ui/tabs"
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
 
 // Textarea
@@ -459,5 +466,19 @@ export {
 } from "./components/ui/tooltip"
 
 // Typography
-export type { TypographyProps } from "./components/ui/typography"
-export { Typography } from "./components/ui/typography"
+export type {
+  HeadingProps,
+  TextProps,
+  TypographyProps,
+} from "./components/ui/typography"
+export {
+  Eyebrow,
+  Heading,
+  Text,
+  Typography,
+  headingVariants,
+  textVariants,
+} from "./components/ui/typography"
+
+// Utilities
+export { cn } from "./lib/utils"

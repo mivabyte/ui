@@ -9,12 +9,13 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { ClassProp } from 'class-variance-authority/types';
+import { ClassValue } from 'clsx';
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
 import { DayButton } from 'react-day-picker';
 import { DayPicker } from 'react-day-picker';
 import { DialogCloseProps } from '@radix-ui/react-dialog';
-import { DialogContentProps } from '@radix-ui/react-dialog';
+import { DialogContentProps as DialogContentProps_2 } from '@radix-ui/react-dialog';
 import { DialogDescriptionProps } from '@radix-ui/react-dialog';
 import { DialogOverlayProps } from '@radix-ui/react-dialog';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -70,7 +71,7 @@ export const AccordionTrigger: React_2.ForwardRefExoticComponent<Omit<AccordionP
 
 // @public (undocumented)
 export const Alert: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
-    variant?: "default" | "destructive" | null | undefined;
+    variant?: "default" | "destructive" | "success" | null | undefined;
 } & ClassProp) | undefined) => string> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
@@ -118,10 +119,14 @@ export const AlertDialogTrigger: React_2.ForwardRefExoticComponent<AlertDialogPr
 // @public (undocumented)
 export const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
-// Warning: (ae-forgotten-export) The symbol "AspectRatioProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function AspectRatio(input: AspectRatioProps): React_2.JSX.Element;
+
+// @public (undocumented)
+export interface AspectRatioProps extends React_2.HTMLAttributes<HTMLDivElement> {
+    // (undocumented)
+    ratio?: number;
+}
 
 // @public (undocumented)
 export function Attachment(input: AttachmentProps): React_2.JSX.Element;
@@ -144,6 +149,10 @@ export function Badge(input: BadgeProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface BadgeProps extends React_2.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+    // (undocumented)
+    asChild?: boolean;
+    // (undocumented)
+    render?: React_2.ReactElement;
 }
 
 // @public (undocumented)
@@ -199,12 +208,19 @@ export function ButtonGroup(input: ButtonGroupProps): React_2.JSX.Element;
 export interface ButtonProps extends React_2.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     // (undocumented)
     asChild?: boolean;
+    // (undocumented)
+    loading?: boolean;
+    // (undocumented)
+    render?: React_2.ReactElement;
+    // (undocumented)
+    wrap?: boolean;
 }
 
 // @public (undocumented)
 export const buttonVariants: (props?: ({
-    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+    variant?: "link" | "navigation" | "default" | "destructive" | "primary" | "outline" | "secondary" | "inverse" | "ghost" | null | undefined;
+    size?: "default" | "compact" | "sm" | "lg" | "xs" | "icon" | "icon-xs" | "icon-lg" | null | undefined;
+    wrap?: boolean | null | undefined;
 } & ClassProp) | undefined) => string;
 
 // @public (undocumented)
@@ -216,7 +232,7 @@ export function Calendar(input: React_2.ComponentProps<typeof DayPicker> & {
 export function CalendarDayButton(input: React_2.ComponentProps<typeof DayButton>): React_2.JSX.Element;
 
 // @public (undocumented)
-export const Card: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLDivElement> & React_2.RefAttributes<HTMLDivElement>>;
+export const Card: React_2.ForwardRefExoticComponent<CardProps & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
 export const CardContent: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLDivElement> & React_2.RefAttributes<HTMLDivElement>>;
@@ -229,6 +245,12 @@ export const CardFooter: React_2.ForwardRefExoticComponent<React_2.HTMLAttribute
 
 // @public (undocumented)
 export const CardHeader: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLDivElement> & React_2.RefAttributes<HTMLDivElement>>;
+
+// @public (undocumented)
+export interface CardProps extends React_2.HTMLAttributes<HTMLDivElement> {
+    // (undocumented)
+    variant?: "default" | "surface" | "outline" | string;
+}
 
 // @public (undocumented)
 export const CardTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLDivElement> & React_2.RefAttributes<HTMLDivElement>>;
@@ -305,6 +327,9 @@ export type ChartTooltipContentProps = React_2.ComponentProps<"div"> & RechartsP
 
 // @public (undocumented)
 export const Checkbox: React_2.ForwardRefExoticComponent<Omit<CheckboxPrimitive.CheckboxProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
+
+// @public (undocumented)
+export function cn(...inputs: ClassValue[]): string;
 
 // @public (undocumented)
 export const Collapsible: ForwardRefExoticComponent<CollapsiblePrimitive.CollapsibleProps & RefAttributes<HTMLDivElement>>;
@@ -440,6 +465,21 @@ export const CommandShortcut: {
 };
 
 // @public (undocumented)
+export const Container: React_2.ForwardRefExoticComponent<ContainerProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @public (undocumented)
+export interface ContainerProps extends React_2.HTMLAttributes<HTMLDivElement>, VariantProps<typeof containerVariants> {
+    // (undocumented)
+    asChild?: boolean;
+}
+
+// @public (undocumented)
+export const containerVariants: (props?: ({
+    size?: "standard" | "reading" | "wide" | null | undefined;
+    gutter?: boolean | null | undefined;
+} & ClassProp) | undefined) => string;
+
+// @public (undocumented)
 export const ContextMenu: React_2.FC<ContextMenuPrimitive.ContextMenuProps>;
 
 // @public (undocumented)
@@ -525,13 +565,20 @@ export function DatePicker(input: DatePickerProps): React_2.JSX.Element;
 export type DatePickerProps = React_2.ComponentProps<typeof Calendar>;
 
 // @public (undocumented)
-export const Dialog: React_2.FC<DialogPrimitive.DialogProps>;
+export const Dialog: {
+    (input: DialogProps_2): React_2.JSX.Element;
+    displayName: string | undefined;
+};
 
 // @public (undocumented)
-export const DialogClose: React_2.ForwardRefExoticComponent<DialogPrimitive.DialogCloseProps & React_2.RefAttributes<HTMLButtonElement>>;
+export const DialogClose: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogCloseProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & {
+    render?: React_2.ReactElement;
+} & React_2.RefAttributes<HTMLButtonElement>>;
 
+// Warning: (ae-forgotten-export) The symbol "DialogContentProps" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export const DialogContent: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogContentProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
+export const DialogContent: React_2.ForwardRefExoticComponent<DialogContentProps & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
 export const DialogDescription: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogDescriptionProps & React_2.RefAttributes<HTMLParagraphElement>, "ref"> & React_2.RefAttributes<HTMLParagraphElement>>;
@@ -558,7 +605,9 @@ export const DialogPortal: React_2.FC<DialogPrimitive.DialogPortalProps>;
 export const DialogTitle: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React_2.RefAttributes<HTMLHeadingElement>, "ref"> & React_2.RefAttributes<HTMLHeadingElement>>;
 
 // @public (undocumented)
-export const DialogTrigger: React_2.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React_2.RefAttributes<HTMLButtonElement>>;
+export const DialogTrigger: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTriggerProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & {
+    render?: React_2.ReactElement;
+} & React_2.RefAttributes<HTMLButtonElement>>;
 
 export { DirectionProvider }
 
@@ -572,7 +621,7 @@ export const Drawer: {
 export const DrawerClose: React_2.ForwardRefExoticComponent<DialogCloseProps & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
-export const DrawerContent: React_2.ForwardRefExoticComponent<Omit<Omit<DialogContentProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
+export const DrawerContent: React_2.ForwardRefExoticComponent<Omit<Omit<DialogContentProps_2 & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
 export const DrawerDescription: React_2.ForwardRefExoticComponent<Omit<DialogDescriptionProps & React_2.RefAttributes<HTMLParagraphElement>, "ref"> & React_2.RefAttributes<HTMLParagraphElement>>;
@@ -675,6 +724,9 @@ export function EmptyMedia(input: React.ComponentProps<"div"> & VariantProps<typ
 // @public (undocumented)
 export function EmptyTitle(input: React.ComponentProps<"div">): JSX.Element;
 
+// @public (undocumented)
+export function Eyebrow(input: TextProps): React_2.JSX.Element;
+
 // Warning: (ae-forgotten-export) The symbol "fieldVariants" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -714,6 +766,28 @@ export function FieldSet(input: React.ComponentProps<"fieldset">): JSX.Element;
 
 // @public (undocumented)
 export function FieldTitle(input: React.ComponentProps<"div">): JSX.Element;
+
+// @public (undocumented)
+export const Heading: React_2.ForwardRefExoticComponent<HeadingProps & React_2.RefAttributes<HTMLHeadingElement>>;
+
+// @public (undocumented)
+export interface HeadingProps extends React_2.HTMLAttributes<HTMLHeadingElement> {
+    // (undocumented)
+    asChild?: boolean;
+    // (undocumented)
+    render?: React_2.ReactElement;
+    // (undocumented)
+    tone?: "default" | "inherit" | string;
+    // (undocumented)
+    variant?: "h1" | "h2" | "h3" | "h4" | "hero" | "statement" | "display" | "page" | "section" | "title" | "card";
+}
+
+// @public (undocumented)
+export const headingVariants: (options?: {
+    variant?: string;
+    tone?: string;
+    className?: string;
+}) => string;
 
 // @public (undocumented)
 export const HoverCard: React_2.FC<HoverCardPrimitive.HoverCardProps>;
@@ -1029,7 +1103,9 @@ export const Separator: React_2.ForwardRefExoticComponent<Omit<SeparatorPrimitiv
 export const Sheet: React_2.FC<DialogPrimitive.DialogProps>;
 
 // @public (undocumented)
-export const SheetClose: React_2.ForwardRefExoticComponent<DialogPrimitive.DialogCloseProps & React_2.RefAttributes<HTMLButtonElement>>;
+export const SheetClose: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogCloseProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & {
+    render?: React_2.ReactElement;
+} & React_2.RefAttributes<HTMLButtonElement>>;
 
 // Warning: (ae-forgotten-export) The symbol "SheetContentProps" needs to be exported by the entry point index.d.ts
 //
@@ -1061,7 +1137,9 @@ export const SheetPortal: React_2.FC<DialogPrimitive.DialogPortalProps>;
 export const SheetTitle: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React_2.RefAttributes<HTMLHeadingElement>, "ref"> & React_2.RefAttributes<HTMLHeadingElement>>;
 
 // @public (undocumented)
-export const SheetTrigger: React_2.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React_2.RefAttributes<HTMLButtonElement>>;
+export const SheetTrigger: React_2.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTriggerProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & {
+    render?: React_2.ReactElement;
+} & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
 export const Sidebar: React_2.ForwardRefExoticComponent<Omit<React_2.ClassAttributes<HTMLDivElement> & React_2.HTMLAttributes<HTMLDivElement> & {
@@ -1214,13 +1292,42 @@ export const Tabs: React_2.ForwardRefExoticComponent<TabsPrimitive.TabsProps & R
 export const TabsContent: React_2.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsContentProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
-export const TabsList: React_2.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsListProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
+export const TabsList: React_2.ForwardRefExoticComponent<TabsListProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @public (undocumented)
+export interface TabsListProps extends React_2.ComponentPropsWithoutRef<typeof TabsPrimitive.List> {
+    // (undocumented)
+    variant?: "default" | "solid" | "ghost" | string;
+}
 
 // @public (undocumented)
 export const TabsTrigger: React_2.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsTriggerProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
+const Text_2: React_2.ForwardRefExoticComponent<TextProps & React_2.RefAttributes<HTMLParagraphElement>>;
+export { Text_2 as Text }
+
+// @public (undocumented)
 export const Textarea: React_2.ForwardRefExoticComponent<Omit<React_2.DetailedHTMLProps<React_2.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, "ref"> & React_2.RefAttributes<HTMLTextAreaElement>>;
+
+// @public (undocumented)
+export interface TextProps extends React_2.HTMLAttributes<HTMLParagraphElement> {
+    // (undocumented)
+    asChild?: boolean;
+    // (undocumented)
+    render?: React_2.ReactElement;
+    // (undocumented)
+    tone?: "default" | "inherit" | string;
+    // (undocumented)
+    variant?: "p" | "lead" | "small" | "body" | "meta" | "eyebrow" | "signal";
+}
+
+// @public (undocumented)
+export const textVariants: (options?: {
+    variant?: string;
+    tone?: string;
+    className?: string;
+}) => string;
 
 // @public (undocumented)
 export const THEMES: {
@@ -1269,18 +1376,24 @@ export const TooltipProvider: React_2.FC<TooltipPrimitive.TooltipProviderProps>;
 export const TooltipTrigger: React_2.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
-export function Typography(input: TypographyProps): React_2.JSX.Element;
+export const Typography: React_2.ForwardRefExoticComponent<TypographyProps & React_2.RefAttributes<HTMLElement>>;
 
+// Warning: (ae-forgotten-export) The symbol "typographyVariants" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export interface TypographyProps extends React_2.HTMLAttributes<HTMLElement> {
+export interface TypographyProps extends React_2.HTMLAttributes<HTMLElement>, VariantProps<typeof typographyVariants> {
     // (undocumented)
-    variant?: "h1" | "h2" | "h3" | "h4" | "p" | "small" | "lead";
+    asChild?: boolean;
 }
 
 export { useDirection }
 
 // @public (undocumented)
 export function useSidebar(): SidebarContextProps;
+
+// Warnings were encountered during analysis:
+//
+// src/components/ui/dialog.tsx:15:13 - (ae-forgotten-export) The symbol "DialogProps_2" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
