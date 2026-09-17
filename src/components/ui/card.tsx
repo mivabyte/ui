@@ -3,19 +3,25 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "surface" | "outline" | string
+  variant?:
+    | "default"
+    | "surface"
+    | "outline"
+    | "elevated"
+    | "interactive"
+    | "accent"
+    | "glass"
+    | "highlighted"
+    | (string & {})
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, ...props }, ref) => (
+  ({ className, variant = "default", ...props }, ref) => (
     <div
       ref={ref}
       data-slot="card"
       data-variant={variant}
-      className={cn(
-        "rounded-xl border bg-card text-card-foreground shadow",
-        className
-      )}
+      className={cn("ui-card", className)}
       {...props}
     />
   )
@@ -29,7 +35,10 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     data-slot="card-header"
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn(
+      "flex flex-col space-y-1.5 p-[var(--panel-padding)]",
+      className
+    )}
     {...props}
   />
 ))
@@ -42,7 +51,7 @@ const CardTitle = React.forwardRef<
   <div
     ref={ref}
     data-slot="card-title"
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn("ui-heading ui-card-heading", className)}
     {...props}
   />
 ))
@@ -68,7 +77,7 @@ const CardContent = React.forwardRef<
   <div
     ref={ref}
     data-slot="card-content"
-    className={cn("p-6 pt-0", className)}
+    className={cn("p-[var(--panel-padding)] pt-0", className)}
     {...props}
   />
 ))
@@ -81,7 +90,7 @@ const CardFooter = React.forwardRef<
   <div
     ref={ref}
     data-slot="card-footer"
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn("flex items-center p-[var(--panel-padding)] pt-0", className)}
     {...props}
   />
 ))

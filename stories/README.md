@@ -17,6 +17,6 @@ Storybook is the interactive usage documentation for `@mivabyte/ui`. It is not a
 - Keep CSF metadata statically analyzable by Storybook rather than hiding it behind helper factories.
 - Reuse `_examples.tsx` only for example composition shared by story files; it must not become an alternate component implementation.
 - Put API details in TypeScript/API Extractor instead of maintaining hand-written prop tables.
-- Use the global toolbar for product/editorial/portal theme, light/dark mode, comfortable/compact density, and LTR/RTL direction.
+- Use the global toolbar for light/dark mode and LTR/RTL direction. To preview density, apply `data-density="compact"` to a composition region. `stories/design/` holds system-level foundation and composition stories outside the component registry.
 
 Run `npm run storybook:typecheck` and `npm run storybook:build` before merging Storybook changes. Generated `storybook-static/` output is intentionally ignored and must not be committed.

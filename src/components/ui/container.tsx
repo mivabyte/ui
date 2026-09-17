@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils"
 const containerVariants = cva("mx-auto w-full min-w-0", {
   variants: {
     size: {
-      standard: "max-w-[72rem]",
-      reading: "max-w-[48rem]",
-      wide: "max-w-[80rem]",
+      standard: "max-w-[var(--content-width)]",
+      reading: "max-w-[var(--reading-width)]",
+      wide: "max-w-[var(--wide-width)]",
     },
     gutter: {
-      true: "px-[clamp(1.25rem,3vw,2.5rem)]",
+      true: "px-[var(--page-gutter)]",
       false: null,
     },
   },

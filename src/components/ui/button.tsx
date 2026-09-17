@@ -5,20 +5,23 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "ui-button ui-focus inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow-surface hover:bg-primary-hover",
         primary:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow-surface hover:bg-primary-hover",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-surface shadow-surface hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-muted-foreground/10",
+          "bg-secondary text-secondary-foreground shadow-surface hover:bg-surface-interactive",
+        accent:
+          "bg-accent-muted text-accent-foreground hover:bg-accent shadow-surface",
+        subtle: "bg-accent text-accent-foreground hover:bg-accent-muted",
         inverse:
           "bg-foreground text-background shadow-sm hover:bg-foreground/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -26,14 +29,14 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-9 px-4 py-2",
+        default: "h-[var(--control-height)] px-4 py-2",
         compact: "h-8 px-3 text-xs",
         sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        lg: "h-12 rounded-md px-6",
         xs: "h-7 rounded px-2 text-xs",
-        icon: "h-9 w-9",
+        icon: "size-[var(--control-height)]",
         "icon-xs": "h-7 w-7",
-        "icon-lg": "h-10 w-10",
+        "icon-lg": "size-12",
       },
       wrap: {
         true: "whitespace-normal text-wrap",
@@ -68,31 +71,46 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loading = false,
       render,
       disabled,
+      children,
+      onClickCapture,
+      tabIndex,
+      type,
       ...props
     },
     ref
   ) => {
-    const isDisabled = disabled || loading
-    if (render) {
-      return React.cloneElement(render as React.ReactElement<any>, {
-        ref,
-        className: cn(
-          buttonVariants({ variant, size, wrap, className }),
-          (render as any).props?.className
-        ),
-        children: props.children ?? (render as any).props?.children,
-        disabled: isDisabled,
-        ...props,
-      })
-    }
-    const Comp = asChild ? Slot : "button"
+    const isDisabled = Boolean(disabled || loading)
+    const slotted = asChild || Boolean(render)
+    const Comp = slotted ? Slot : "button"
+    const content = render
+      ? React.cloneElement(
+          render as React.ReactElement<{ children?: React.ReactNode }>,
+          undefined,
+          children ?? (render.props as { children?: React.ReactNode }).children
+        )
+      : children
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, wrap, className }))}
-        ref={ref}
-        disabled={isDisabled}
         {...props}
-      />
+        ref={ref}
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, wrap, className }))}
+        type={type}
+        disabled={isDisabled}
+        aria-disabled={isDisabled || undefined}
+        aria-busy={loading || props["aria-busy"]}
+        tabIndex={isDisabled && slotted ? -1 : tabIndex}
+        onClickCapture={(event) => {
+          if (isDisabled) {
+            event.preventDefault()
+            event.stopPropagation()
+            return
+          }
+          onClickCapture?.(event)
+        }}
+      >
+        {content}
+      </Comp>
     )
   }
 )

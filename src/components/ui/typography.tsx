@@ -3,21 +3,64 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
+const headingClasses: Record<string, string> = {
+  h1: "ui-page",
+  h2: "ui-section-heading",
+  h3: "ui-title",
+  h4: "ui-card-heading",
+  hero: "ui-display",
+  display: "ui-display",
+  statement: "ui-statement",
+  page: "ui-page",
+  section: "ui-section-heading",
+  title: "ui-title",
+  card: "ui-card-heading",
+}
+const textClasses: Record<string, string> = {
+  p: "ui-text",
+  body: "ui-text",
+  lead: "ui-text ui-lead text-muted-foreground",
+  small: "ui-text text-sm text-muted-foreground",
+  meta: "ui-text text-xs text-muted-foreground",
+  eyebrow:
+    "text-xs font-semibold uppercase tracking-widest text-accent-foreground",
+  signal: "ui-signal text-foreground",
+}
+export const headingVariants = (options?: {
+  variant?: string
+  tone?: string
+  className?: string
+}) =>
+  cn(
+    "ui-heading",
+    headingClasses[options?.variant ?? "h2"] ?? headingClasses.h2,
+    options?.tone === "inherit" && "text-inherit",
+    options?.className
+  )
+export const textVariants = (options?: {
+  variant?: string
+  tone?: string
+  className?: string
+}) =>
+  cn(
+    textClasses[options?.variant ?? "p"] ?? textClasses.p,
+    options?.tone === "inherit" && "text-inherit",
+    options?.className
+  )
+
 const typographyVariants = cva("", {
   variants: {
     variant: {
-      h1: "text-4xl font-extrabold tracking-tight lg:text-5xl",
-      h2: "text-3xl font-bold tracking-tight lg:text-4xl",
-      h3: "text-2xl font-semibold tracking-tight",
-      h4: "text-xl font-semibold tracking-tight",
-      p: "text-base leading-7 [&:not(:first-child)]:mt-6",
-      lead: "text-base leading-7 [&:not(:first-child)]:mt-6 text-muted-foreground",
-      small: "text-sm leading-6 text-muted-foreground",
+      h1: headingVariants({ variant: "h1" }),
+      h2: headingVariants({ variant: "h2" }),
+      h3: headingVariants({ variant: "h3" }),
+      h4: headingVariants({ variant: "h4" }),
+      p: textClasses.p,
+      lead: textClasses.lead,
+      small: textClasses.small,
     },
   },
-  defaultVariants: {
-    variant: "p",
-  },
+  defaultVariants: { variant: "p" },
 })
 
 export interface TypographyProps
@@ -80,24 +123,17 @@ export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
     ref
   ) => {
     const tag =
-      variant === "h1" || variant === "hero" || variant === "display"
+      variant === "h1" ||
+      variant === "hero" ||
+      variant === "display" ||
+      variant === "page"
         ? "h1"
         : variant === "h3" || variant === "card"
           ? "h3"
           : variant === "h4"
             ? "h4"
             : "h2"
-    const baseClass = cn(
-      tag === "h1"
-        ? "text-4xl font-extrabold tracking-tight lg:text-5xl"
-        : tag === "h3"
-          ? "text-2xl font-semibold tracking-tight"
-          : tag === "h4"
-            ? "text-xl font-semibold tracking-tight"
-            : "text-3xl font-bold tracking-tight lg:text-4xl",
-      tone === "inherit" && "text-inherit",
-      className
-    )
+    const baseClass = headingVariants({ variant, tone, className })
     if (render) {
       const elementRef = (render as any).props?.ref ?? (render as any).ref
       const targetRef = ref ?? elementRef
@@ -138,17 +174,7 @@ export const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     },
     ref
   ) => {
-    const baseClass = cn(
-      variant === "lead"
-        ? "text-base leading-7 [&:not(:first-child)]:mt-6 text-muted-foreground"
-        : variant === "small" || variant === "meta"
-          ? "text-sm leading-6 text-muted-foreground"
-          : variant === "eyebrow"
-            ? "text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-            : "text-base leading-7 [&:not(:first-child)]:mt-6",
-      tone === "inherit" && "text-inherit",
-      className
-    )
+    const baseClass = textVariants({ variant, tone, className })
     if (render) {
       const elementRef = (render as any).props?.ref ?? (render as any).ref
       const targetRef = ref ?? elementRef
@@ -171,42 +197,4 @@ Text.displayName = "Text"
 
 export function Eyebrow({ className, ...props }: TextProps) {
   return <Text variant="eyebrow" className={className} {...props} />
-}
-
-export const headingVariants = (options?: {
-  variant?: string
-  tone?: string
-  className?: string
-}) => {
-  return cn(
-    options?.variant === "h1" ||
-      options?.variant === "hero" ||
-      options?.variant === "display"
-      ? "text-4xl font-extrabold tracking-tight lg:text-5xl"
-      : options?.variant === "h3" || options?.variant === "card"
-        ? "text-2xl font-semibold tracking-tight"
-        : options?.variant === "h4"
-          ? "text-xl font-semibold tracking-tight"
-          : "text-3xl font-bold tracking-tight lg:text-4xl",
-    options?.tone === "inherit" && "text-inherit",
-    options?.className
-  )
-}
-
-export const textVariants = (options?: {
-  variant?: string
-  tone?: string
-  className?: string
-}) => {
-  return cn(
-    options?.variant === "lead"
-      ? "text-base leading-7 text-muted-foreground"
-      : options?.variant === "small" || options?.variant === "meta"
-        ? "text-sm leading-6 text-muted-foreground"
-        : options?.variant === "eyebrow"
-          ? "text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-          : "text-base leading-7",
-    options?.tone === "inherit" && "text-inherit",
-    options?.className
-  )
 }

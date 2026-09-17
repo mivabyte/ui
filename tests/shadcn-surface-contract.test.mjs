@@ -144,8 +144,10 @@ test("the source and package are Radix/shadcn-only, without Base UI", async () =
 
   const styles = await readRoot("src/styles.css")
   assert.match(styles, /@import "tailwindcss"/)
-  assert.match(styles, /:root/)
-  assert.match(styles, /\.dark/)
+  assert.match(styles, /@import "\.\/tokens\.css"/)
+  const tokens = await readRoot("src/tokens.css")
+  assert.match(tokens, /:root/)
+  assert.match(tokens, /\.dark/)
 })
 
 test("legacy Mivabyte shell helpers are absent from the build source", async () => {

@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+@import "./system.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-border: hsl(var(--border));
@@ -47,116 +52,35 @@
   --color-mivabyte-slate: var(--mivabyte-slate);
   --color-mivabyte-dark-border: var(--mivabyte-dark-border);
 
+  --color-section: hsl(var(--section));
+  --color-surface: hsl(var(--surface));
+  --color-surface-elevated: hsl(var(--surface-elevated));
+  --color-surface-interactive: hsl(var(--surface-interactive));
+  --color-primary-hover: hsl(var(--primary-hover));
+  --color-accent-muted: hsl(var(--accent-muted));
+  --color-accent-strong: hsl(var(--accent-strong));
+  --color-border-strong: hsl(var(--border-strong));
+  --color-success: hsl(var(--success));
+  --color-success-subtle: hsl(var(--success-subtle));
+  --color-warning: hsl(var(--warning));
+  --color-warning-subtle: hsl(var(--warning-subtle));
+  --color-info: hsl(var(--info));
+  --color-info-subtle: hsl(var(--info-subtle));
+  --color-destructive-subtle: hsl(var(--destructive-subtle));
+  --color-overlay: hsl(var(--overlay));
+
+  --animate-in: enter var(--tw-animation-duration, var(--motion-duration-base))
+    var(--motion-easing-out);
+  --animate-out: exit var(--tw-animation-duration, var(--motion-duration-base))
+    var(--motion-easing-in);
+  --font-sans: "Onest", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+  --shadow-surface: var(--elevation-surface);
+  --shadow-elevated: var(--elevation-elevated);
+  --shadow-overlay: var(--elevation-overlay);
+  --shadow-accent: var(--elevation-accent);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-}
-
-:root {
-  /* Mivabyte Canonical Brand Primitives */
-  --mivabyte-main: #0a8ec3;
-  --mivabyte-midnight: #080d18;
-  --mivabyte-midnight-surface: #111827;
-  --mivabyte-cyan: #22d3ee;
-  --mivabyte-cyan-dark: #06b6d4;
-  --mivabyte-azure: #3b82f6;
-  --mivabyte-azure-dark: #2563eb;
-  --mivabyte-white: #f8fafc;
-  --mivabyte-slate: #94a3b8;
-  --mivabyte-dark-border: #1e293b;
-  --mivabyte-light-bg: #f7f8fa;
-  --mivabyte-light-border: #cbd5e1;
-
-  /* Mivabyte Semantic Tokens - Light Theme */
-  --background: 220 20% 97.5%;
-  --foreground: 221.3 50% 6.3%;
-  --card: 0 0% 100%;
-  --card-foreground: 221.3 50% 6.3%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 221.3 50% 6.3%;
-  --primary: 197.2 90.2% 40.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 221.3 50% 6.3%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 197 60% 95%;
-  --accent-foreground: 197.2 90.2% 40.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 212.7 26.8% 83.9%;
-  --input: 212.7 26.8% 83.9%;
-  --ring: 197.2 90.2% 40.2%;
-  --radius: 0.5rem;
-
-  --chart-1: hsl(197.2 90.2% 40.2%);
-  --chart-2: hsl(187.9 85.7% 53.3%);
-  --chart-3: hsl(160 60% 40%);
-  --chart-4: hsl(38 92% 50%);
-  --chart-5: hsl(280 65% 55%);
-
-  --sidebar-background: 220 20% 97.5%;
-  --sidebar-foreground: 221.3 50% 6.3%;
-  --sidebar-primary: 197.2 90.2% 40.2%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 197 60% 95%;
-  --sidebar-accent-foreground: 197.2 90.2% 40.2%;
-  --sidebar-border: 212.7 26.8% 83.9%;
-  --sidebar-ring: 197.2 90.2% 40.2%;
-}
-
-.dark {
-  /* Mivabyte Semantic Tokens - Dark Theme */
-  --background: 221.3 50% 6.3%;
-  --foreground: 210 40% 98%;
-  --card: 220.9 39.3% 11%;
-  --card-foreground: 210 40% 98%;
-  --popover: 220.9 39.3% 11%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 197.2 90.2% 40.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 197 40% 16%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 197.2 90.2% 40.2%;
-
-  --chart-1: hsl(197.2 90.2% 40.2%);
-  --chart-2: hsl(187.9 85.7% 53.3%);
-  --chart-3: hsl(160 60% 45%);
-  --chart-4: hsl(38 92% 50%);
-  --chart-5: hsl(280 65% 60%);
-
-  --sidebar-background: 221.3 50% 6.3%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-primary: 197.2 90.2% 40.2%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 197 40% 16%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-border: 217.2 32.6% 17.5%;
-  --sidebar-ring: 197.2 90.2% 40.2%;
-}
-
-/* Base */
-* {
-  border-color: hsl(var(--border));
-}
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-/* Mivabyte Utilities */
-.bg-mivabyte-gradient {
-  background-image: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
-}
-
-.shadow-mivabyte-glow {
-  box-shadow: 0 0 32px rgba(34, 211, 238, 0.08);
 }

@@ -57,3 +57,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run storybook:typecheck
       - run: npm run storybook:build
+      - name: Install design test browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Verify design compositions
+        run: npm run test:design

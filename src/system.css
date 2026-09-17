@@ -1,0 +1,293 @@
+/* Package-owned foundations and composition recipes, below consumer utilities. */
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/onest-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/onest-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0300-0303, U+0305-0307, U+0309-0328, U+032A-036F, U+1D00-1DBF,
+    U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: hsl(var(--accent-muted));
+    color: hsl(var(--accent-foreground));
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .ui-section {
+    padding-block: var(--section-space);
+    background-color: hsl(var(--background));
+  }
+  .ui-section[data-tone="muted"] {
+    background-color: hsl(var(--section));
+  }
+  .ui-section[data-tone="accent"] {
+    background-color: hsl(var(--accent));
+  }
+  .ui-section[data-tone="gradient"] {
+    background-image: var(--gradient-accent);
+  }
+  .ui-section[data-tone="grid"] {
+    background-color: hsl(var(--section));
+    background-image:
+      linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+  }
+  .ui-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--content-stack);
+  }
+  .ui-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--layout-gap);
+  }
+  .ui-card {
+    border-radius: var(--shape-surface);
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    box-shadow: var(--elevation-surface);
+  }
+  .ui-card[data-variant="surface"] {
+    background-color: hsl(var(--section));
+    box-shadow: none;
+  }
+  .ui-card[data-variant="outline"] {
+    background: transparent;
+    box-shadow: none;
+  }
+  .ui-card[data-variant="elevated"] {
+    background-color: hsl(var(--surface-elevated));
+    background-image: var(--gradient-surface);
+    box-shadow: var(--elevation-elevated);
+  }
+  .ui-card[data-variant="interactive"] {
+    transition:
+      background-color var(--motion-duration-fast),
+      border-color var(--motion-duration-fast),
+      box-shadow var(--motion-duration-fast),
+      transform var(--motion-duration-fast) var(--motion-easing-out);
+  }
+  .ui-card[data-variant="interactive"]:focus-within {
+    border-color: hsl(var(--accent-strong));
+    background-color: hsl(var(--surface-interactive));
+  }
+  .ui-card[data-variant="accent"] {
+    background-color: hsl(var(--accent));
+    border-color: hsl(var(--accent-muted));
+  }
+  .ui-card[data-variant="highlighted"] {
+    border-color: hsl(var(--accent-strong));
+    background-image: var(--gradient-surface);
+    box-shadow: var(--elevation-accent);
+  }
+  .ui-card[data-variant="glass"] {
+    background-color: hsl(var(--surface) / 0.94);
+    box-shadow: var(--elevation-elevated);
+  }
+  @supports (backdrop-filter: blur(12px)) {
+    .ui-card[data-variant="glass"] {
+      backdrop-filter: blur(12px);
+    }
+  }
+  .ui-button {
+    transition:
+      background-color var(--motion-duration-fast),
+      color var(--motion-duration-fast),
+      box-shadow var(--motion-duration-fast),
+      transform var(--motion-duration-fast) var(--motion-easing-out);
+  }
+  .ui-button:active:not(:disabled, [aria-disabled="true"]) {
+    transform: translateY(1px);
+  }
+  .ui-button:is(:disabled, [aria-disabled="true"]) {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .ui-button[aria-busy="true"] {
+    cursor: progress;
+  }
+  .ui-focus:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px hsl(var(--ring));
+  }
+  .ui-control {
+    min-height: var(--control-height);
+    background-color: hsl(var(--surface));
+    transition:
+      border-color var(--motion-duration-fast),
+      box-shadow var(--motion-duration-fast);
+  }
+  .ui-control[aria-invalid="true"] {
+    border-color: hsl(var(--destructive));
+  }
+  .ui-control[readonly] {
+    background-color: hsl(var(--muted));
+  }
+  .ui-tabs {
+    min-height: var(--control-height);
+    background: hsl(var(--section));
+    border: 1px solid hsl(var(--border));
+  }
+  .ui-tabs[data-variant="ghost"] {
+    background: transparent;
+    border-color: transparent;
+  }
+  .ui-tab {
+    min-height: var(--control-height);
+  }
+  .ui-tab[data-state="active"] {
+    background: hsl(var(--surface));
+    color: hsl(var(--accent-foreground));
+    box-shadow: var(--elevation-surface);
+  }
+  .ui-tabs[data-variant="ghost"] .ui-tab[data-state="active"] {
+    background: hsl(var(--accent));
+    box-shadow: none;
+  }
+  .ui-heading {
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .ui-display {
+    font-size: var(--type-display);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+  .ui-statement {
+    font-size: var(--type-statement);
+    line-height: 1.08;
+  }
+  .ui-page {
+    font-size: var(--type-page);
+  }
+  .ui-section-heading {
+    font-size: var(--type-section);
+  }
+  .ui-title {
+    font-size: var(--type-title);
+  }
+  .ui-card-heading {
+    font-size: var(--type-card);
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+  }
+  .ui-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+  .ui-lead {
+    font-size: var(--type-lead);
+  }
+  .ui-signal {
+    font-size: var(--type-signal);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  [data-slot="dialog-content"],
+  [data-slot="sheet-content"] {
+    --tw-animation-duration: var(--motion-duration-slow);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .ui-card[data-variant="interactive"]:hover {
+      background-color: hsl(var(--surface-interactive));
+      border-color: hsl(var(--accent-strong));
+      box-shadow: var(--elevation-elevated);
+      transform: translateY(-2px);
+    }
+    .ui-control:hover:not(:disabled, [readonly], [aria-invalid="true"]) {
+      border-color: hsl(var(--ring));
+    }
+  }
+  @media (pointer: coarse) {
+    .ui-button,
+    .ui-tab {
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+    }
+  }
+  .bg-mivabyte-gradient {
+    background-image: var(--gradient-brand);
+  }
+  .shadow-mivabyte-glow {
+    box-shadow: var(--elevation-accent);
+  }
+}
+
+/* Accessibility overrides intentionally win over consumer animation utilities. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ui-card,
+  .ui-button {
+    transform: none !important;
+  }
+}
+@media (forced-colors: active) {
+  .ui-card,
+  .ui-button,
+  .ui-control,
+  .ui-tabs,
+  .ui-tab {
+    border: 1px solid ButtonText;
+    box-shadow: none;
+    background-image: none;
+  }
+  :focus-visible,
+  .ui-focus:focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 3px;
+  }
+  .ui-tab[data-state="active"],
+  [aria-current="page"] {
+    border-color: Highlight;
+    outline: 1px solid Highlight;
+  }
+}

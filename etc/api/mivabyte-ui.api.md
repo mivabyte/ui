@@ -157,7 +157,7 @@ export interface BadgeProps extends React_2.HTMLAttributes<HTMLDivElement>, Vari
 
 // @public (undocumented)
 export const badgeVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined;
+    variant?: "default" | "destructive" | "success" | "outline" | "secondary" | "accent" | "warning" | "info" | null | undefined;
 } & ClassProp) | undefined) => string;
 
 // @public (undocumented)
@@ -218,7 +218,7 @@ export interface ButtonProps extends React_2.ButtonHTMLAttributes<HTMLButtonElem
 
 // @public (undocumented)
 export const buttonVariants: (props?: ({
-    variant?: "link" | "navigation" | "default" | "destructive" | "primary" | "outline" | "secondary" | "inverse" | "ghost" | null | undefined;
+    variant?: "link" | "navigation" | "default" | "destructive" | "primary" | "outline" | "secondary" | "accent" | "subtle" | "inverse" | "ghost" | null | undefined;
     size?: "default" | "compact" | "sm" | "lg" | "xs" | "icon" | "icon-xs" | "icon-lg" | null | undefined;
     wrap?: boolean | null | undefined;
 } & ClassProp) | undefined) => string;
@@ -249,7 +249,7 @@ export const CardHeader: React_2.ForwardRefExoticComponent<React_2.HTMLAttribute
 // @public (undocumented)
 export interface CardProps extends React_2.HTMLAttributes<HTMLDivElement> {
     // (undocumented)
-    variant?: "default" | "surface" | "outline" | string;
+    variant?: "default" | "surface" | "outline" | "elevated" | "interactive" | "accent" | "glass" | "highlighted" | (string & {});
 }
 
 // @public (undocumented)
@@ -1159,6 +1159,7 @@ export type SidebarContextProps = {
     openMobile: boolean;
     setOpenMobile: (open: boolean) => void;
     isMobile: boolean;
+    triggerRef: React_2.RefObject<HTMLButtonElement | null>;
     toggleSidebar: () => void;
 };
 

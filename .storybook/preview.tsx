@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import type { Decorator, Preview } from "@storybook/react-vite"
 
 import { DirectionProvider } from "../src/components/ui/direction.js"
@@ -7,6 +8,11 @@ import "../src/styles.css"
 const withTheme: Decorator = (Story, context) => {
   const mode = String(context.globals.mode ?? "light")
   const direction = String(context.globals.direction ?? "ltr") as "ltr" | "rtl"
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", mode === "dark")
+    document.documentElement.dir = direction
+  }, [mode, direction])
 
   return (
     <DirectionProvider dir={direction}>
@@ -19,7 +25,9 @@ const withTheme: Decorator = (Story, context) => {
           }
           dir={direction}
         >
-          <div className="p-6">
+          <div
+            className={context.parameters.layout === "fullscreen" ? "" : "p-6"}
+          >
             <Story />
           </div>
         </div>

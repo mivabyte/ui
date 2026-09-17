@@ -9,6 +9,13 @@ const config: StorybookConfig = {
     options: {},
   },
   async viteFinal(viteConfig) {
+    viteConfig.resolve = {
+      ...viteConfig.resolve,
+      alias: {
+        ...viteConfig.resolve?.alias,
+        "@": decodeURIComponent(new URL("../src", import.meta.url).pathname),
+      },
+    }
     viteConfig.plugins ??= []
     viteConfig.plugins.push(tailwindcss())
     viteConfig.css = {

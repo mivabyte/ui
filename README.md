@@ -1,6 +1,6 @@
 # @mivabyte/ui
 
-Shared Mivabyte design tokens and React UI primitives for websites, portals, and product surfaces. Complete shadcn/ui distribution with exactly 64 official components and no proprietary React extensions, built on Base UI 1.7.0.
+Shared Mivabyte design tokens and React UI primitives for websites, portals, and product surfaces. 66 component modules built on Radix/shadcn primitives, with a shared Midnight/Cyan/Azure visual system.
 
 ## Installation
 
@@ -19,7 +19,7 @@ import "@mivabyte/ui/styles.css"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div data-mivabyte-theme="product">
+    <div>
       {children}
       <Toaster />
     </div>
@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 }
 ```
 
-Theming and density are applied directly via `data-mivabyte-theme` and `data-density` shell attributes or classes. Overlays (Dialog, Sheet, Drawer, Popover, Tooltip) render into portals with optional custom `container` props.
+Apply `.dark` to `<html>` for dark mode and `data-density="compact"` to deliberate dense desktop regions. Root mode also themes body portals. See the design contract below for scoped previews.
 
 Frequently used modules can bypass the root barrel using clean subpath imports:
 
@@ -40,7 +40,7 @@ import { DataTable } from "@mivabyte/ui/data-table"
 import { ChartContainer } from "@mivabyte/ui/chart"
 ```
 
-- For the complete API catalog and usage examples for all 64 official components, see [`docs/components.md`](docs/components.md).
+- For the complete API catalog and usage examples for all 66 component modules, see [`docs/components.md`](docs/components.md).
 - For upstream parity tracking against shadcn/ui, see [`docs/upstream/component-parity.md`](docs/upstream/component-parity.md).
 - For migrating from prior Mivabyte releases, see [`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md).
 - The authoritative public module and stylesheet catalog is generated from the component registry and package export map in [`docs/generated/exports.md`](docs/generated/exports.md). Do not maintain a second export inventory in this README.
@@ -59,39 +59,24 @@ TypeScript and API Extractor remain the public API contract. Storybook documents
 
 Import `@mivabyte/ui/styles.css` once for the canonical aggregate stylesheet. It contains the self-hosted Onest variable font, Tailwind utilities, tokens, themes, and component styles.
 
-Advanced consumers may import the lower-level stylesheets explicitly:
+The aggregate stylesheet is the only public CSS entry. `src/tokens.css` owns tokens internally; `src/system.css` owns foundation and composition recipes. Both are compiled into `styles.css`, with self-hosted fonts copied into the package. There are no public `tokens.css` or `themes.css` exports.
 
-```ts
-import "@mivabyte/ui/tokens.css"
-import "@mivabyte/ui/themes.css"
-```
+Use `.dark` on `<html>` for the dark palette; remove it for light mode. `.light` supports explicit light preview regions. `data-density="comfortable"` is the default; `compact` reduces default controls to 32px on desktop. Coarse pointers retain 44px targets. The historical `data-mivabyte-theme` attribute does not select additional palettes.
 
-When importing them separately, load tokens before themes and include the component styles needed by the application.
-
-Themes and density are applied via HTML attributes or CSS classes on the application container or root element:
-
-```html
-<main data-mivabyte-theme="portal" data-density="compact" class="dark">
-  ...
-</main>
-```
-
-Supported themes are `product`, `editorial`, and `portal`. Supported densities are `comfortable` and `compact`. The root stylesheet defaults to product/comfortable so a consumer still has a complete zero-configuration base theme.
-
-For the editorial palette, use `data-mivabyte-theme="editorial"`:
+Read [DESIGN.md](DESIGN.md) for the visual contract and [the audit, plan and migration guide](docs/design-system-evolution.md) for evidence and adoption guidance. Storybook's **Design System** group demonstrates foundations, a marketing website and an interactive application using the same components.
 
 ```tsx
-<div data-mivabyte-theme="editorial">
-  <section className="space-y-4">
-    <Heading variant="statement" tone="inherit">
-      Clear systems. Useful outcomes.
-    </Heading>
-    <Button variant="inverse">Start a project</Button>
-  </section>
-</div>
+<section className="ui-section" data-tone="gradient">
+  <Container className="ui-stack">
+    <Eyebrow>Designed for everyday work</Eyebrow>
+    <Heading variant="display">Clarity at every layer.</Heading>
+    <Text variant="lead">A coherent foundation for your next product.</Text>
+    <Button size="lg">Get started</Button>
+  </Container>
+</section>
 ```
 
-The old `.mivabyte-editorial-theme` class remains only as a v3 compatibility alias. New code must use `data-mivabyte-theme="editorial"`; removal of the alias is tracked for v4 in issue #59.
+Card variants: `default`, `surface`, `outline`, `elevated`, `interactive`, `accent`, `highlighted`, `glass`. Interactive cards contain an actual link or button. `highlighted` is reserved for a selected/recommended item. Statistics and features compose Card with Text/Heading/Badge; they do not need separate variants. Buttons add `subtle` and `accent`; badges add `success`, `warning`, `info`, `accent`. Section tones are `muted`, `accent`, `gradient`, `grid`, or the default canvas.
 
 ## Design tokens
 
@@ -99,14 +84,14 @@ The package owns shared color, layout, typography, shape, focus, density, shadow
 
 Common groups include:
 
-- layout: `--page-gutter`, `--layout-gap`, `--content-stack`, `--card-grid-gap`
+- layout: `--page-gutter`, `--section-space`, `--layout-gap`, `--content-stack`
 - surfaces/text: `--background`, `--foreground`, `--surface`, `--surface-elevated`, `--card`, `--popover`
 - actions: `--primary`, `--secondary`, `--accent`, `--destructive`, `--success`, `--warning`
-- controls: `--muted`, `--border`, `--border-strong`, `--input`, `--ring`, `--focus-ring`, `--overlay`
-- motion/elevation: `--shadow-*`, `--motion-duration-*`, `--motion-easing-*`, `--motion-distance-*`
+- controls: `--muted`, `--border`, `--border-strong`, `--input`, `--ring`, `--overlay`
+- motion/elevation: `--elevation-*`, `--motion-duration-*`, `--motion-easing-*`
 - sidebar: `--sidebar*`
 - shape: `--shape-*`
-- spacing/density: `--space-1` through `--space-12`, `--panel-padding`, `--control-height`, `--sidebar-row-height`
+- spacing/density: Tailwind’s 4px scale, `--panel-padding`, `--control-height`
 - typography: `--type-*`, `--font-heading`, `--font-sans`
 
 Tailwind exposes the maintained semantic color utilities such as `bg-surface`, `bg-surface-elevated`, `border-border-strong`, and `bg-overlay`. Keep foreground/background overrides at WCAG AA contrast.
@@ -146,7 +131,7 @@ Official form controls include `Input`, `Textarea`, `Checkbox`, `RadioGroup`, `S
 
 ## Accessibility
 
-Normal controls use a minimum 44px interaction target. `xs` and `icon-xs` are reserved for intentionally dense desktop interfaces and should not be used for primary, navigation, or touch actions.
+Default Button, Input, Select and tab targets use the density contract. Compact sizes (`compact`, `sm`, `xs`, `icon-xs`) are reserved for intentionally dense desktop interfaces and should not be used for primary actions. Coarse-pointer overrides protect Button and tab targets. Other primitive families still require context-specific target-size review.
 
 `Button` accepts `loading` to preserve dimensions, set `aria-busy`, and prevent repeated activation while work is pending.
 
@@ -154,7 +139,7 @@ Give `Switch` and `Progress` an accessible name with `aria-label` or `aria-label
 
 Built-in labels on Dialog, Sheet, Pagination, Breadcrumb, and Sidebar primitives are localizable through their public props.
 
-The package includes functional keyboard/focus contracts, reduced-motion/contrast/forced-colors/RTL coverage, Axe scans for maintained high-risk states, and targeted visual regression baselines.
+Run `npm run test:design` for current composition reflow, semantic contrast, Axe, keyboard, reduced-motion, density and forced-colors checks across Chromium, Firefox and WebKit. Historical `tests/e2e` snapshots target an older consumer fixture and are not evidence for the current design.
 
 ## Motion
 

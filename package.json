@@ -797,6 +797,7 @@
     "test:coverage": "vitest run --coverage",
     "test:contracts": "node --test tests/*.test.mjs",
     "test:e2e": "playwright test",
+    "test:design": "playwright test -c playwright.design.config.ts",
     "storybook": "storybook dev -p 6006",
     "storybook:check": "node scripts/check-storybook-coverage.mjs",
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
@@ -812,7 +813,7 @@
     "release:status": "changeset status",
     "release:version": "changeset version && node scripts/sync-package-lock-version.mjs",
     "build:js": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/write-root-entry.mjs",
-    "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify && cp src/tokens.css dist/tokens.css"
+    "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify && mkdir -p dist/fonts && cp src/fonts/* dist/fonts/"
   },
   "peerDependencies": {
     "react": ">=19 <20",

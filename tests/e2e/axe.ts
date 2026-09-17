@@ -15,7 +15,15 @@ type AxeViolation = Omit<AxeViolationSummary, "targets"> & {
 const wcagTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]
 
 export async function expectNoAxeViolations(page: Page) {
-  await page.addScriptTag({ content: axe.source })
+  const alreadyInjected = await page.evaluate(
+    () => typeof (window as any).__axeInjected !== "undefined"
+  )
+  if (!alreadyInjected) {
+    await page.addScriptTag({ content: axe.source })
+    await page.evaluate(() => {
+      ;(window as any).__axeInjected = true
+    })
+  }
 
   const violations = await page.evaluate(async (tags) => {
     const runtime = (

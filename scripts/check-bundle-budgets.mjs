@@ -12,15 +12,16 @@ const budgets = {
   "dist/components/ui/sheet.js": { raw: 15_000, gzip: 4_200, brotli: 3_800 },
   "dist/components/ui/tooltip.js": { raw: 7_500, gzip: 2_200, brotli: 1_900 },
   "dist/components/ui/sidebar.js": { raw: 48_000, gzip: 10_500, brotli: 9_200 },
-  "dist/components/ui/calendar.js": { raw: 10_750, gzip: 2_800, brotli: 2_500 },
+  // Calendar embeds Button; allow its new variants and loading/link semantics.
+  "dist/components/ui/calendar.js": { raw: 10_750, gzip: 2_900, brotli: 2_600 },
   "dist/components/ui/chart.js": { raw: 12_000, gzip: 3_000, brotli: 2_600 },
   "dist/components/ui/data-table.js": {
     raw: 10_000,
     gzip: 2_500,
     brotli: 2_200,
   },
-  // Official shadcn carousel baseline, measured from the current source.
-  "dist/components/ui/carousel.js": { raw: 8_500, gzip: 2_400, brotli: 2_100 },
+  // Carousel also embeds the enhanced Button (variants and loading semantics).
+  "dist/components/ui/carousel.js": { raw: 8_700, gzip: 2_400, brotli: 2_100 },
   "dist/styles.css": { raw: 185_000, gzip: 30_000, brotli: 25_000 },
 }
 
