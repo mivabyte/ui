@@ -100,14 +100,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-disabled={isDisabled || undefined}
         aria-busy={loading || props["aria-busy"]}
         tabIndex={isDisabled && slotted ? -1 : tabIndex}
-        onClickCapture={(event) => {
-          if (isDisabled) {
-            event.preventDefault()
-            event.stopPropagation()
-            return
-          }
-          onClickCapture?.(event)
-        }}
+        {...(isDisabled
+          ? {
+              onClickCapture: (event: React.MouseEvent) => {
+                event.preventDefault()
+                event.stopPropagation()
+              },
+            }
+          : onClickCapture
+            ? { onClickCapture }
+            : {})}
       >
         {content}
       </Comp>
