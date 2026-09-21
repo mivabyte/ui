@@ -1,5 +1,11 @@
 # @mivabyte/ui
 
+## 26.9.21-2
+
+### Patch Changes
+
+- Remove harsh inset highlight from elevation-surface token so surface elevations and cards do not render an artificial white top bevel.
+
 ## 26.9.21-1
 
 ### Major Changes
