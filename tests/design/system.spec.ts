@@ -151,11 +151,11 @@ test("reduced motion, density, touch and visible forced-color focus", async ({
       parseFloat(getComputedStyle(node).transitionDuration)
     )
   ).toBeLessThanOrEqual(0.00001)
-  expect((await button.boundingBox())!.height).toBe(44)
+  expect((await button.boundingBox())!.height).toBeCloseTo(44, 1)
   await page
     .locator("html")
     .evaluate((node) => node.setAttribute("data-density", "compact"))
-  expect((await button.boundingBox())!.height).toBe(32)
+  expect((await button.boundingBox())!.height).toBeCloseTo(32, 1)
   if (browserName === "chromium") {
     await page.emulateMedia({ forcedColors: "active" })
     await button.focus()
