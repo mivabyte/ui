@@ -128,6 +128,8 @@ const SheetContent = React.forwardRef<
       <SheetOverlay className={overlayClassName} />
       <SheetPrimitive.Content
         data-slot="sheet-content"
+        data-side={side}
+        data-size={size}
         ref={ref}
         className={cn(
           sheetVariants({ side }),

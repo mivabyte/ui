@@ -30,6 +30,7 @@ test.describe("keyboard-sensitive component families", () => {
 
     const profileItem = page.getByRole("menuitem", { name: "Profile" })
     await expect(profileItem).toBeVisible()
+    await expect(profileItem).toBeFocused()
 
     await page.keyboard.press("ArrowDown")
     await page.keyboard.press("Enter")

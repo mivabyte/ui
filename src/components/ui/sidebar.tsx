@@ -60,6 +60,8 @@ const SidebarProvider = React.forwardRef<
     defaultOpen?: boolean
     open?: boolean
     onOpenChange?: (open: boolean) => void
+    persistence?: "cookie" | "localStorage" | "none"
+    storageKey?: string
   }
 >(
   (
@@ -67,6 +69,8 @@ const SidebarProvider = React.forwardRef<
       defaultOpen = true,
       open: openProp,
       onOpenChange: setOpenProp,
+      persistence,
+      storageKey,
       className,
       style,
       children,
@@ -80,7 +84,15 @@ const SidebarProvider = React.forwardRef<
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
-    const [_open, _setOpen] = React.useState(defaultOpen)
+    const [_open, _setOpen] = React.useState(() => {
+      if (storageKey && typeof localStorage !== "undefined") {
+        const saved = localStorage.getItem(storageKey)
+        if (saved !== null) {
+          return saved === "true"
+        }
+      }
+      return defaultOpen
+    })
     const open = openProp ?? _open
     const setOpen = React.useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
@@ -91,10 +103,14 @@ const SidebarProvider = React.forwardRef<
           _setOpen(openState)
         }
 
+        if (storageKey && typeof localStorage !== "undefined") {
+          localStorage.setItem(storageKey, String(openState))
+        }
+
         // This sets the cookie to keep the sidebar state.
         document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
       },
-      [setOpenProp, open]
+      [setOpenProp, open, storageKey]
     )
 
     // Helper to toggle the sidebar.
@@ -111,6 +127,15 @@ const SidebarProvider = React.forwardRef<
           event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
           (event.metaKey || event.ctrlKey)
         ) {
+          const target = event.target as HTMLElement | null
+          if (
+            target &&
+            (target.tagName === "INPUT" ||
+              target.tagName === "TEXTAREA" ||
+              target.isContentEditable)
+          ) {
+            return
+          }
           event.preventDefault()
           toggleSidebar()
         }
@@ -171,6 +196,8 @@ const Sidebar = React.forwardRef<
     side?: "left" | "right"
     variant?: "sidebar" | "floating" | "inset"
     collapsible?: "offcanvas" | "icon" | "none"
+    mobileTitle?: string
+    mobileDescription?: string
   }
 >(
   (
@@ -180,6 +207,9 @@ const Sidebar = React.forwardRef<
       collapsible = "offcanvas",
       className,
       children,
+      mobileTitle,
+      mobileDescription,
+      id = "consumer-sidebar",
       ...props
     },
     ref
@@ -190,6 +220,8 @@ const Sidebar = React.forwardRef<
     if (collapsible === "none") {
       return (
         <div
+          id={id}
+          data-slot="sidebar"
           className={cn(
             "flex h-full w-[var(--sidebar-width)] flex-col bg-sidebar text-sidebar-foreground",
             className
@@ -206,11 +238,13 @@ const Sidebar = React.forwardRef<
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
           <SheetContent
+            id={id}
             onCloseAutoFocus={(event) => {
               event.preventDefault()
               triggerRef.current?.focus()
             }}
             data-sidebar="sidebar"
+            data-slot="sidebar"
             data-mobile="true"
             className="w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
             style={
@@ -221,8 +255,10 @@ const Sidebar = React.forwardRef<
             side={side}
           >
             <SheetHeader className="sr-only">
-              <SheetTitle>Sidebar</SheetTitle>
-              <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+              <SheetTitle>{mobileTitle ?? "Consumer navigation"}</SheetTitle>
+              <SheetDescription>
+                {mobileDescription ?? "Displays the mobile sidebar."}
+              </SheetDescription>
             </SheetHeader>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
@@ -233,6 +269,8 @@ const Sidebar = React.forwardRef<
     return (
       <div
         ref={ref}
+        id={id}
+        data-slot="sidebar"
         className="group peer hidden text-sidebar-foreground md:block"
         data-state={state}
         data-collapsible={state === "collapsed" ? collapsible : ""}
@@ -279,9 +317,12 @@ Sidebar.displayName = "Sidebar"
 
 const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
-  React.ComponentProps<typeof Button>
->(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar, triggerRef } = useSidebar()
+  React.ComponentProps<typeof Button> & { label?: string }
+>(({ className, onClick, label, ...props }, ref) => {
+  const { toggleSidebar, triggerRef, open, openMobile, isMobile } = useSidebar()
+  const isExpanded = isMobile ? openMobile : open
+  const triggerLabel =
+    label ?? props["aria-label"] ?? "Toggle consumer navigation"
 
   return (
     <Button
@@ -291,9 +332,13 @@ const SidebarTrigger = React.forwardRef<
         else if (ref) ref.current = node
       }}
       data-sidebar="trigger"
+      data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
       className={className}
+      aria-label={triggerLabel}
+      aria-expanded={isExpanded}
+      aria-controls={props["aria-controls"] ?? "consumer-sidebar"}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
@@ -301,7 +346,7 @@ const SidebarTrigger = React.forwardRef<
       {...props}
     >
       <PanelLeft />
-      <span className="sr-only">Toggle Sidebar</span>
+      <span className="sr-only">{triggerLabel}</span>
     </Button>
   )
 })
@@ -309,18 +354,19 @@ SidebarTrigger.displayName = "SidebarTrigger"
 
 const SidebarRail = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<"button">
->(({ className, ...props }, ref) => {
+  React.ComponentProps<"button"> & { label?: string }
+>(({ className, label, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
+  const railLabel = label ?? props["aria-label"] ?? "Toggle Sidebar"
 
   return (
     <button
       ref={ref}
       data-sidebar="rail"
-      aria-label="Toggle Sidebar"
+      aria-label={railLabel}
       tabIndex={-1}
       onClick={toggleSidebar}
-      title="Toggle Sidebar"
+      title={railLabel}
       className={cn(
         "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
         "[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize",

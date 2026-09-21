@@ -207,6 +207,8 @@ export function ButtonGroup(input: ButtonGroupProps): React_2.JSX.Element;
 // @public (undocumented)
 export interface ButtonProps extends React_2.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     // (undocumented)
+    "data-slot"?: string;
+    // (undocumented)
     asChild?: boolean;
     // (undocumented)
     loading?: boolean;
@@ -1146,6 +1148,8 @@ export const Sidebar: React_2.ForwardRefExoticComponent<Omit<React_2.ClassAttrib
     side?: "left" | "right";
     variant?: "sidebar" | "floating" | "inset";
     collapsible?: "offcanvas" | "icon" | "none";
+    mobileTitle?: string;
+    mobileDescription?: string;
 }, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
@@ -1239,16 +1243,22 @@ export const SidebarProvider: React_2.ForwardRefExoticComponent<Omit<React_2.Cla
     defaultOpen?: boolean;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    persistence?: "cookie" | "localStorage" | "none";
+    storageKey?: string;
 }, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
-export const SidebarRail: React_2.ForwardRefExoticComponent<Omit<React_2.DetailedHTMLProps<React_2.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
+export const SidebarRail: React_2.ForwardRefExoticComponent<Omit<React_2.ClassAttributes<HTMLButtonElement> & React_2.ButtonHTMLAttributes<HTMLButtonElement> & {
+    label?: string;
+}, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
 export const SidebarSeparator: React_2.ForwardRefExoticComponent<Omit<Omit<SeparatorProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
-export const SidebarTrigger: React_2.ForwardRefExoticComponent<Omit<ButtonProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
+export const SidebarTrigger: React_2.ForwardRefExoticComponent<Omit<ButtonProps & React_2.RefAttributes<HTMLButtonElement> & {
+    label?: string;
+}, "ref"> & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @public (undocumented)
 export function Skeleton(input: React.HTMLAttributes<HTMLDivElement>): JSX.Element;

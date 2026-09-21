@@ -58,6 +58,7 @@ export interface ButtonProps
   wrap?: boolean
   loading?: boolean
   render?: React.ReactElement
+  "data-slot"?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -93,7 +94,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         {...props}
         ref={ref}
-        data-slot="button"
+        data-slot={props["data-slot"] ?? "button"}
         className={cn(buttonVariants({ variant, size, wrap, className }))}
         type={type}
         disabled={isDisabled}

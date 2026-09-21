@@ -37,7 +37,7 @@ for (const [viewportName, viewport] of Object.entries(viewports)) {
           browserName,
         }) => {
           test.skip(
-            browserName !== "chromium",
+            browserName !== "chromium" || process.platform !== "linux",
             "Chromium/Linux owns deterministic visual baselines"
           )
 

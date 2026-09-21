@@ -40,10 +40,31 @@ export async function expectNoAxeViolations(page: Page) {
       }
     ).axe
 
-    const result = await runtime.run(document, {
-      runOnly: { type: "tag", values: tags },
-      resultTypes: ["violations"],
-    })
+    let result: { violations: AxeViolation[] } | null = null
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        result = await runtime.run(document, {
+          runOnly: { type: "tag", values: tags },
+          resultTypes: ["violations"],
+        })
+        break
+      } catch (err: any) {
+        if (
+          err &&
+          typeof err.message === "string" &&
+          err.message.includes("Axe is already running") &&
+          attempt < 4
+        ) {
+          await new Promise((resolve) => setTimeout(resolve, 250))
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (!result) {
+      throw new Error("Axe failed to produce results after retries")
+    }
 
     return result.violations.map(({ id, impact, help, nodes }) => ({
       id,

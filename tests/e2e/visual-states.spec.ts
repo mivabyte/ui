@@ -19,7 +19,7 @@ const screenshotOptions = {
 
 test("dialog open and focused", async ({ page, browserName }) => {
   test.skip(
-    browserName !== "chromium",
+    browserName !== "chromium" || process.platform !== "linux",
     "Chromium/Linux owns deterministic visual baselines"
   )
 
@@ -38,7 +38,7 @@ test("dialog open and focused", async ({ page, browserName }) => {
 
 test("collapsed sidebar with keyboard focus", async ({ page, browserName }) => {
   test.skip(
-    browserName !== "chromium",
+    browserName !== "chromium" || process.platform !== "linux",
     "Chromium/Linux owns deterministic visual baselines"
   )
 
@@ -57,7 +57,7 @@ test("collapsed sidebar with keyboard focus", async ({ page, browserName }) => {
 
 test("mobile sidebar open", async ({ page, browserName }) => {
   test.skip(
-    browserName !== "chromium",
+    browserName !== "chromium" || process.platform !== "linux",
     "Chromium/Linux owns deterministic visual baselines"
   )
 
