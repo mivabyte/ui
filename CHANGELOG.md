@@ -1,5 +1,32 @@
 # @mivabyte/ui
 
+## 26.9.21-1
+
+### Major Changes
+
+- 3abb3ec: Rebrand the public package from `@mivama-digital/ui` to `@mivabyte/ui`. Update
+  all public import paths, theme attributes, CSS custom properties, package
+  metadata, release tooling, fixtures, and documentation to use the Mivabyte
+  identity.
+
+### Minor Changes
+
+- 6693983: Add the Container primitive and expanded typography, action, overlay, card, and tab APIs. Correct AspectRatio sizing, expose its props, make the Secondary button hover state visible while aligning it with the rest of the button variants, and include the shared token stylesheet in package builds.
+- da3b6bb: Evolve the shared Midnight/Cyan/Azure visual system with semantic layered surfaces, accessible light/dark action and status colors, self-hosted Onest typography, density and motion tokens. Make Card and Tabs variants functional, add purposeful Button/Badge variants, improve loading links, table keyboard scrolling and sidebar focus restoration. Keep the aggregate stylesheet and existing component imports; add marketing/application Storybook compositions and browser contrast/reflow checks.
+
+  Default typography, control sizes, colors and elevations change visually. Consumers should review local size and `border-0 shadow-none` overrides when adopting this release.
+
+### Patch Changes
+
+- Achieve 100% test coverage and 100% green test suite across all 66 public component modules with strict CI coverage thresholds.
+- Fix `Progress` value prop forwarding to ensure `aria-valuenow` is rendered properly.
+- Fix `Message` component to correctly render child content.
+- 8dbe189: Add chart (--chart-1 to --chart-5) and sidebar design tokens in styles.css, ensure Calendar day cells maintain cell size in static mode, and allow DatePicker to pass through all Calendar props.
+- 3abb3ec: Implement Mivabyte visual identity design system using Mivabyte Main (#0A8EC3), Midnight, Cyan, and Azure design tokens. Configure #0A8EC3 as the primary brand color for high WCAG AA contrast compliance. Update elevated overlay surfaces (Dialog, Sheet, Drawer, AlertDialog) to use popover semantic tokens for contrast separation against Midnight canvas.
+- c4e5c71: Allow custom `top-*` utilities to override desktop Sidebar positioning by replacing `inset-y-0` with `top-0 bottom-0`.
+- b028114: Fix Tailwind v4 arbitrary CSS variable resolution in Calendar, Sidebar, Select, Combobox, Popover, DropdownMenu, HoverCard, Menubar, Tooltip, and Chart components by wrapping variable names with var().
+- a827c41: Update dependencies to latest stable semver-compatible releases.
+
 ## 26.9.9-1
 
 ### Patch Changes

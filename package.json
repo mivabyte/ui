@@ -1,6 +1,6 @@
 {
   "name": "@mivabyte/ui",
-  "version": "26.9.21",
+  "version": "26.9.21-1",
   "description": "Shared Mivabyte design tokens and React UI primitives.",
   "license": "MIT",
   "private": false,
