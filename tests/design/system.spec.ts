@@ -118,10 +118,13 @@ test("search, create, tabs and dialog keyboard behavior", async ({ page }) => {
   await page
     .getByRole("textbox", { name: "Project name" })
     .fill("Release console")
+  const submitBtn = page.getByRole("button", {
+    name: "Create project",
+    exact: true,
+  })
+  await expect(submitBtn).toBeVisible()
   await expectNoAxeViolations(page)
-  await page
-    .getByRole("button", { name: "Create project", exact: true })
-    .click()
+  await submitBtn.click()
   await expect(page.getByRole("dialog")).toHaveCount(0)
   await expect(
     page.getByRole("cell", { name: "Release console Your workspace" })

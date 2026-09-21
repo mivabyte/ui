@@ -117,9 +117,7 @@ function CreateProject({ onCreate }: { onCreate: (name: string) => void }) {
             required
             autoComplete="off"
           />
-          <Button type="submit" disabled={!name.trim()}>
-            Create project
-          </Button>
+          <Button type="submit">Create project</Button>
         </form>
       </DialogContent>
     </Dialog>
