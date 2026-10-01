@@ -26,7 +26,6 @@ const expectedSlugs = [
   "collapsible",
   "combobox",
   "command",
-  "container",
   "context-menu",
   "data-table",
   "date-picker",
@@ -36,13 +35,13 @@ const expectedSlugs = [
   "dropdown-menu",
   "empty",
   "field",
+  "form",
   "hover-card",
   "input",
   "input-group",
   "input-otp",
   "item",
   "kbd",
-  "kbd-group",
   "label",
   "marker",
   "menubar",
@@ -63,6 +62,7 @@ const expectedSlugs = [
   "sidebar",
   "skeleton",
   "slider",
+  "sonner",
   "spinner",
   "switch",
   "table",
@@ -123,24 +123,49 @@ test("the package exposes exactly the official shadcn component surface", async 
   assert.equal(packageJson.exports["./forms"], undefined)
 })
 
-test("the source and package are Radix/shadcn-only, without Base UI", async () => {
+test("Base UI is a runtime dependency, scoped to the toast component", async () => {
   const packageJson = await readJson("package.json")
-  const dependencies = {
-    ...packageJson.dependencies,
-    ...packageJson.devDependencies,
-    ...packageJson.peerDependencies,
-  }
-  assert.equal(dependencies["@base-ui/react"], undefined)
+  // Upstream shadcn/ui implements `toast` on Base UI. That parity port is
+  // deliberate, so the dependency is required rather than forbidden.
+  //
+  // It must be a RUNTIME dependency: `dist/components/ui/toast.js` imports it
+  // and the published package ships `dist` only, so a devDependency would give
+  // every consumer an unresolved-module error. Asserting against a merged map
+  // would hide exactly that regression.
+  const baseUiRange = packageJson.dependencies?.["@base-ui/react"]
+  assert.equal(typeof baseUiRange, "string")
+  assert.match(baseUiRange, /^\^1\./)
+  assert.equal(packageJson.devDependencies?.["@base-ui/react"], undefined)
+  assert.equal(packageJson.peerDependencies?.["@base-ui/react"], undefined)
 
-  const sourceFiles = (
-    await readdir(path.join(root, "src/components/ui"))
-  ).filter((file) => file.endsWith(".tsx"))
-  const source = await Promise.all(
-    sourceFiles.map((file) =>
-      readFile(path.join(root, "src/components/ui", file), "utf8")
-    )
+  // Walk all of src/ recursively. A Base UI import in src/hooks or src/lib must
+  // be visible too, and a nested component directory must not escape the scan.
+  const walk = async (dir) => {
+    const found = []
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) {
+        found.push(...(await walk(full)))
+      } else if (/\.tsx?$/.test(entry.name)) {
+        found.push(full)
+      }
+    }
+    return found
+  }
+  const entries = await Promise.all(
+    (await walk(path.join(root, "src"))).map(async (file) => ({
+      file: path.relative(path.join(root, "src"), file),
+      source: await readFile(file, "utf8"),
+    }))
   )
-  assert.doesNotMatch(source.join("\n"), /@base-ui\/react/)
+
+  // Base UI stays opt-in: only the upstream `toast` port may reach for it.
+  const baseUiConsumers = entries
+    .filter(({ source }) => /@base-ui\/react/.test(source))
+    .map(({ file }) => file)
+  assert.deepEqual(baseUiConsumers, [
+    path.join("components", "ui", "toast.tsx"),
+  ])
 
   const styles = await readRoot("src/styles.css")
   assert.match(styles, /@import "tailwindcss"/)
@@ -167,6 +192,26 @@ test("the package and lockfile publish the same version", async () => {
   ])
   assert.equal(lockfile.version, packageJson.version)
   assert.equal(lockfile.packages[""].version, packageJson.version)
+})
+
+test("the built root entry keeps colliding export names resolvable", async () => {
+  // `sonner` and `toast` both publish a `Toaster`. A wildcard re-export from
+  // both makes the name an ambiguous star export, which ESM silently drops
+  // (CommonJS would last-write-wins instead), so the two module systems would
+  // disagree. The generated root entry must alias the sonner wrapper.
+  const esm = await import("../dist/index.js")
+  // Node's CJS named-export detection does not see `Object.assign(exports, ...)`
+  // spreads, so read the CommonJS surface off the default interop export.
+  const cjs = (await import("../dist/index.cjs")).default
+
+  // Both must resolve in both module systems, and the two Toasters must be
+  // genuinely different components (base-ui vs sonner). The ESM and CJS
+  // builds are separate compilations, so identities are not shared across them.
+  for (const surface of [esm, cjs]) {
+    assert.equal(typeof surface.Toaster, "function")
+    assert.equal(typeof surface.SonnerToaster, "function")
+    assert.notEqual(surface.Toaster, surface.SonnerToaster)
+  }
 })
 
 test("the built root runtime exports only declared public values", async () => {

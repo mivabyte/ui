@@ -27,10 +27,10 @@
 
 ## Highlights
 
-- **📦 Zero Copy-Paste Required**: Shipped as a fully compiled, tree-shakeable npm package (`@mivabyte/ui`) with dual ESM and CommonJS exports and bundled TypeScript declarations.
+- **📦 Zero Copy-Paste Required**: Shipped as a fully compiled npm package (`@mivabyte/ui`) with dual ESM and CommonJS exports and bundled TypeScript declarations.
 - **🎨 Midnight, Cyan & Azure Visual System**: A cohesive, distinctive color language engineered with semantic HSL channels. Features rich deep navy dark surfaces, energetic cyan highlights, and crisp azure daylight actions.
 - **⚡ 66 Production-Ready Component Primitives**: Built on battle-tested Radix UI and `@shadcn/react` foundations, from buttons and responsive dialogs to TanStack data tables and Recharts visualizations.
-- **🎯 Precise Subpath Imports**: Fine-grained subpath exports (`@mivabyte/ui/button`, `@mivabyte/ui/card`, `@mivabyte/ui/dialog`) guarantee minimal bundle footprints and prevent barrel file bloat.
+- **🎯 Precise Subpath Imports**: Fine-grained subpath exports (`@mivabyte/ui/button`, `@mivabyte/ui/card`, `@mivabyte/ui/dialog`) bypass the root barrel, so the dependency graph stays explicit per component.
 - **♿ WCAG 2.1 AA Compliance Built-In**: Fully tested with Axe Core across all components. Keyboard traps, accessible dialog lifecycles, ARIA roles, and high-contrast focus outlines work out of the box.
 - **📏 Adaptive Density Scaling**: Seamlessly switch between spacious touch-friendly `comfortable` mode and information-dense `compact` desktop mode via `data-density`.
 - **🔤 Self-Hosted Typography**: The Onest variable font is self-hosted and compiled directly into `@mivabyte/ui/styles.css` with zero external Google Fonts network dependencies.
@@ -85,7 +85,7 @@ import {
 } from "@mivabyte/ui/card"
 import { Field, FieldDescription, FieldLabel } from "@mivabyte/ui/field"
 import { Input } from "@mivabyte/ui/input"
-import { Toaster } from "@mivabyte/ui/toast"
+import { Toaster, toast } from "@mivabyte/ui/toast"
 
 export function ProjectSetup() {
   const [name, setName] = React.useState("")
@@ -114,7 +114,11 @@ export function ProjectSetup() {
             </FieldDescription>
           </Field>
 
-          <Button className="w-full" size="default">
+          <Button
+            className="w-full"
+            size="default"
+            onClick={() => toast.add({ title: "Workspace deployed" })}
+          >
             Deploy workspace
           </Button>
         </CardContent>
@@ -133,7 +137,7 @@ export function ProjectSetup() {
 
 ### Subpath Imports (Recommended)
 
-Subpath imports bypass root barrel files, ensuring optimal tree-shaking, fast bundler startup, and minimal production bundle sizes:
+Subpath imports bypass the root barrel file, so only the modules you reference enter the build:
 
 ```tsx
 import { Button } from "@mivabyte/ui/button"
@@ -159,6 +163,19 @@ For rapid prototyping or small script bundles, all components and utilities are 
 import { Badge, Button, Card, Dialog, Input, Tabs, Tooltip } from "@mivabyte/ui"
 ```
 
+Both `sonner` and `toast` ship a component named `Toaster`, so the root barrel
+keeps the canonical `Toaster` name for the Base UI toast host and re-exports the
+sonner wrapper as `SonnerToaster`:
+
+```tsx
+import { SonnerToaster, Toaster } from "@mivabyte/ui"
+```
+
+`<SonnerToaster />` is the theme-aware wrapper around sonner: it reads the active
+theme through `next-themes` (falling back to `system` when no theme provider is
+present) and maps the token variables onto sonner's own options. Import it from
+`@mivabyte/ui/sonner` when you want an unambiguous reference.
+
 > **Authoritative Export Catalog**: For the complete machine-verified subpath and module inventory, consult [`docs/generated/exports.md`](docs/generated/exports.md).
 
 ---
@@ -167,19 +184,19 @@ import { Badge, Button, Card, Dialog, Input, Tabs, Tooltip } from "@mivabyte/ui"
 
 `@mivabyte/ui` contains **66 component modules**, grouped into logical architectural families:
 
-| Category                   | Primitives & Modules                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Actions & Triggers**     | [`Button`](docs/components.md#button), [`ButtonGroup`](docs/components.md#button-group), [`Toggle`](docs/components.md#toggle), [`ToggleGroup`](docs/components.md#toggle-group)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| **Forms & User Input**     | [`Input`](docs/components.md#input), [`InputGroup`](docs/components.md#input-group), [`InputOTP`](docs/components.md#input-otp), [`Textarea`](docs/components.md#textarea), [`Checkbox`](docs/components.md#checkbox), [`RadioGroup`](docs/components.md#radio-group), [`Select`](docs/components.md#select), [`NativeSelect`](docs/components.md#native-select), [`Switch`](docs/components.md#switch), [`Slider`](docs/components.md#slider), [`DatePicker`](docs/components.md#date-picker), [`Calendar`](docs/components.md#calendar), [`Field`](docs/components.md#field), [`Combobox`](docs/components.md#combobox), [`Questionnaire`](docs/components.md#questionnaire) |
-| **Overlays & Dialogs**     | [`Dialog`](docs/components.md#dialog), [`AlertDialog`](docs/components.md#alert-dialog), [`Sheet`](docs/components.md#sheet), [`Drawer`](docs/components.md#drawer), [`Popover`](docs/components.md#popover), [`Tooltip`](docs/components.md#tooltip), [`HoverCard`](docs/components.md#hover-card), [`ContextMenu`](docs/components.md#context-menu), [`DropdownMenu`](docs/components.md#dropdown-menu), [`Command`](docs/components.md#command)                                                                                                                                                                                                                             |
-| **Navigation**             | [`NavigationMenu`](docs/components.md#navigation-menu), [`Breadcrumb`](docs/components.md#breadcrumb), [`Pagination`](docs/components.md#pagination), [`Tabs`](docs/components.md#tabs), [`Menubar`](docs/components.md#menubar), [`Sidebar`](docs/components.md#sidebar), [`Direction`](docs/components.md#direction)                                                                                                                                                                                                                                                                                                                                                         |
-| **Layout & Structure**     | [`Container`](docs/components.md#container), [`Card`](docs/components.md#card), [`Separator`](docs/components.md#separator), [`Resizable`](docs/components.md#resizable), [`ScrollArea`](docs/components.md#scroll-area), [`AspectRatio`](docs/components.md#aspect-ratio), [`Collapsible`](docs/components.md#collapsible), [`Accordion`](docs/components.md#accordion)                                                                                                                                                                                                                                                                                                       |
-| **Data Display & Content** | [`DataTable`](docs/components.md#data-table), [`Table`](docs/components.md#table), [`Badge`](docs/components.md#badge), [`Avatar`](docs/components.md#avatar), [`Skeleton`](docs/components.md#skeleton), [`Empty`](docs/components.md#empty), [`Item`](docs/components.md#item), [`Bubble`](docs/components.md#bubble), [`Attachment`](docs/components.md#attachment), [`Marker`](docs/components.md#marker), [`Message`](docs/components.md#message), [`MessageScroller`](docs/components.md#message-scroller), [`Carousel`](docs/components.md#carousel), [`Kbd`](docs/components.md#kbd), [`KbdGroup`](docs/components.md#kbd-group)                                       |
-| **Typography**             | [`Heading`](docs/components.md#typography), [`Text`](docs/components.md#typography), [`Eyebrow`](docs/components.md#typography), [`Label`](docs/components.md#label)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| **Feedback & Status**      | [`Alert`](docs/components.md#alert), [`Progress`](docs/components.md#progress), [`Spinner`](docs/components.md#spinner), [`Toast`](docs/components.md#toast) (`Toaster`, `toast`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| **Data Visualization**     | [`Chart`](docs/components.md#chart) (`ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Category                   | Primitives & Modules                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| :------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Actions & Triggers**     | [`Button`](docs/components.md#button), [`ButtonGroup`](docs/components.md#button-group), [`Toggle`](docs/components.md#toggle), [`ToggleGroup`](docs/components.md#toggle-group)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **Forms & User Input**     | [`Field`](docs/components.md#field), [`Form`](docs/components.md#form), [`Input`](docs/components.md#input), [`InputGroup`](docs/components.md#input-group), [`InputOTP`](docs/components.md#input-otp), [`Textarea`](docs/components.md#textarea), [`Checkbox`](docs/components.md#checkbox), [`RadioGroup`](docs/components.md#radio-group), [`Select`](docs/components.md#select), [`NativeSelect`](docs/components.md#native-select), [`Switch`](docs/components.md#switch), [`Slider`](docs/components.md#slider), [`DatePicker`](docs/components.md#date-picker), [`Calendar`](docs/components.md#calendar), [`Combobox`](docs/components.md#combobox), [`Questionnaire`](docs/components.md#questionnaire) |
+| **Overlays & Dialogs**     | [`Dialog`](docs/components.md#dialog), [`AlertDialog`](docs/components.md#alert-dialog), [`Sheet`](docs/components.md#sheet), [`Drawer`](docs/components.md#drawer), [`Popover`](docs/components.md#popover), [`Tooltip`](docs/components.md#tooltip), [`HoverCard`](docs/components.md#hover-card), [`ContextMenu`](docs/components.md#context-menu), [`DropdownMenu`](docs/components.md#dropdown-menu), [`Command`](docs/components.md#command)                                                                                                                                                                                                                                                                |
+| **Navigation**             | [`NavigationMenu`](docs/components.md#navigation-menu), [`Breadcrumb`](docs/components.md#breadcrumb), [`Pagination`](docs/components.md#pagination), [`Tabs`](docs/components.md#tabs), [`Menubar`](docs/components.md#menubar), [`Sidebar`](docs/components.md#sidebar), [`Direction`](docs/components.md#direction)                                                                                                                                                                                                                                                                                                                                                                                            |
+| **Layout & Structure**     | [`Card`](docs/components.md#card), [`Separator`](docs/components.md#separator), [`Resizable`](docs/components.md#resizable), [`ScrollArea`](docs/components.md#scroll-area), [`AspectRatio`](docs/components.md#aspect-ratio), [`Collapsible`](docs/components.md#collapsible), [`Accordion`](docs/components.md#accordion)                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Data Display & Content** | [`DataTable`](docs/components.md#data-table), [`Table`](docs/components.md#table), [`Badge`](docs/components.md#badge), [`Avatar`](docs/components.md#avatar), [`Skeleton`](docs/components.md#skeleton), [`Empty`](docs/components.md#empty), [`Item`](docs/components.md#item), [`Bubble`](docs/components.md#bubble), [`Attachment`](docs/components.md#attachment), [`Marker`](docs/components.md#marker), [`Message`](docs/components.md#message), [`MessageScroller`](docs/components.md#message-scroller), [`Carousel`](docs/components.md#carousel), [`Kbd`](docs/components.md#kbd)                                                                                                                      |
+| **Typography**             | [`Heading`](docs/components.md#typography), [`Text`](docs/components.md#typography), [`Eyebrow`](docs/components.md#typography), [`Label`](docs/components.md#label)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Feedback & Status**      | [`Alert`](docs/components.md#alert), [`Progress`](docs/components.md#progress), [`Spinner`](docs/components.md#spinner), [`Toast`](docs/components.md#toast) (`Toaster`, `toast`), [`Sonner`](docs/components.md#sonner) (`Toaster`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Data Visualization**     | [`Chart`](docs/components.md#chart) (`ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
-For comprehensive API signatures, props interfaces, and code examples for every component, refer to [`docs/components.md`](docs/components.md).
+Every link above opens that component's entry in [`docs/components.md`](docs/components.md), the per-slug inventory of import subpaths, runtime exports, and exported types. Props, variants, and runtime behavior are documented in Storybook rather than duplicated here; [`docs/generated/exports.md`](docs/generated/exports.md) is the machine-verified subpath and artifact map.
 
 ---
 
@@ -284,6 +301,52 @@ import { Input } from "@mivabyte/ui/input"
 
 Compatible with `react-hook-form`, `zod`, `Formik`, or standard HTML form submissions.
 
+For `react-hook-form` specifically, the official `Form` primitives wire field
+state, generated ids, and validation messages together:
+
+```tsx
+import { useForm } from "react-hook-form"
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@mivabyte/ui/form"
+import { Input } from "@mivabyte/ui/input"
+
+export function EmailForm() {
+  const form = useForm<{ email: string }>({
+    defaultValues: { email: "" },
+  })
+
+  return (
+    <Form {...form}>
+      <FormField
+        control={form.control}
+        name="email"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input type="email" {...field} />
+            </FormControl>
+            <FormDescription>We never share your email.</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </Form>
+  )
+}
+```
+
+`react-hook-form` is a dependency of this package, but add it to your own
+`package.json` so your app resolves it directly.
+
 ---
 
 ## Accessibility & Motion
@@ -310,7 +373,7 @@ CI strictly verifies that every registered component in `config/components.mjs` 
 
 ## Development & Testing
 
-Mivabyte UI maintains an exhaustive verification suite with zero tolerance for broken types, missing exports, bundle regressions, or accessibility failures.
+Mivabyte UI maintains an exhaustive verification suite with zero tolerance for broken types, missing exports, or accessibility failures.
 
 ### Local Verification
 
@@ -331,12 +394,11 @@ The canonical `npm run verify` command runs:
 5. **`storybook:check`**: Verifies 100% story coverage across all components.
 6. **`typecheck`**: TypeScript check with strict compiler configurations.
 7. **`build`**: Builds ESM and CJS bundles (`tsup`), compiles CSS (`tailwindcss`), and emits declaration files.
-8. **`bundle:check`**: Enforces strict bundle budgets on all distribution targets.
-9. **`test:contracts`**: Verifies package export contracts and upstream baseline guarantees.
-10. **`pack:check`**: Builds a dry-run tarball and validates packed package contents.
-11. **`package:lint`**: Runs `publint` (package export health) and `attw` (Are The Types Wrong).
-12. **`api:check`**: Validates public surface against Microsoft API Extractor contract report.
-13. **`test:coverage`**: Executes Vitest unit tests with v8 code coverage reporting.
+8. **`test:contracts`**: Verifies package export contracts and upstream baseline guarantees.
+9. **`pack:check`**: Builds a dry-run tarball and validates packed package contents.
+10. **`package:lint`**: Runs `publint` (package export health) and `attw` (Are The Types Wrong).
+11. **`api:check`**: Validates public surface against Microsoft API Extractor contract report.
+12. **`test:coverage`**: Executes Vitest unit tests with v8 code coverage reporting.
 
 ### End-to-End & Design Testing
 
@@ -353,7 +415,7 @@ npm run test:design
 ## Releases & Governance
 
 - **Changeset-Driven**: All releases are declared using [Changesets](https://github.com/changesets/changesets). Every user-facing feature or fix includes a changeset markdown file.
-- **Calendar Versioning (CalVer)**: Releases follow the format `YY.M.D-patch` (e.g. `26.9.10-1`).
+- **Semantic Versioning**: The published version follows semver (`MAJOR.MINOR.PATCH`), bumped by Changesets from the highest pending intent. The release workflow rejects any version containing `-` under the `latest` dist-tag, so a `-N` prerelease suffix can only ship on `next`; the current major line is therefore plain semver. See [`docs/maintainers/releases.md`](docs/maintainers/releases.md).
 - **Cryptographic Provenance**: Published directly through GitHub Actions with OpenID Connect (OIDC) token exchange, npm provenance attestations, and zero static token storage.
 - **Registry Release Probe**: Post-publish CI job pulls the newly released package from npm and executes integration smoke tests in clean Vite and Next.js consumer fixtures.
 
@@ -363,15 +425,15 @@ See [`docs/maintainers/releases.md`](docs/maintainers/releases.md) for maintaine
 
 ## Documentation Directory
 
-| Document                                                                                         | Purpose                                                                            |
-| :----------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------- |
-| **[`DESIGN.md`](DESIGN.md)**                                                                     | Canonical design contract, color philosophy, typography, and motion specifications |
-| **[`docs/components.md`](docs/components.md)**                                                   | Complete component catalog, API signatures, and usage patterns                     |
-| **[`docs/generated/exports.md`](docs/generated/exports.md)**                                     | Machine-generated authoritative package export and subpath map                     |
-| **[`docs/upstream/component-parity.md`](docs/upstream/component-parity.md)**                     | Parity tracking against upstream shadcn/ui primitives                              |
-| **[`docs/accessibility/keyboard-interactions.md`](docs/accessibility/keyboard-interactions.md)** | Keyboard interaction and focus management specification                            |
-| **[`docs/maintainers/releases.md`](docs/maintainers/releases.md)**                               | Release workflow and publishing procedures                                         |
-| **[`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md)** | Migration guide from legacy versions to the pure Radix/shadcn distribution         |
+| Document                                                                                         | Purpose                                                                             |
+| :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| **[`DESIGN.md`](DESIGN.md)**                                                                     | Canonical design contract, color philosophy, typography, and motion specifications  |
+| **[`docs/components.md`](docs/components.md)**                                                   | Per-component catalog: import subpath, runtime exports, and exported types per slug |
+| **[`docs/generated/exports.md`](docs/generated/exports.md)**                                     | Machine-generated authoritative package export and subpath map                      |
+| **[`docs/upstream/component-parity.md`](docs/upstream/component-parity.md)**                     | Parity tracking against upstream shadcn/ui primitives                               |
+| **[`docs/accessibility/keyboard-interactions.md`](docs/accessibility/keyboard-interactions.md)** | Keyboard interaction and focus management specification                             |
+| **[`docs/maintainers/releases.md`](docs/maintainers/releases.md)**                               | Release workflow and publishing procedures                                          |
+| **[`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md)** | Migration guide from legacy versions to the pure Radix/shadcn distribution          |
 
 ---
 

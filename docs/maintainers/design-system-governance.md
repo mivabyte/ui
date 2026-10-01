@@ -4,16 +4,16 @@
 
 ## Sources of truth
 
-| Concern                        | Canonical source                                                   |
-| ------------------------------ | ------------------------------------------------------------------ |
-| Design tokens and theme values | `src/tokens.css`, `src/themes.css`, and shared CSS foundations     |
-| Public component inventory     | `config/components.mjs`                                            |
-| Published package entry points | `package.json#exports`                                             |
-| Generated export documentation | `docs/generated/exports.md`                                        |
-| TypeScript public API contract | `etc/api/mivabyte-ui.api.md` via API Extractor                     |
-| Release intent                 | Changesets plus the PR release-policy gate                         |
-| Component behavior             | Runtime and browser tests                                          |
-| Repository security policy     | Permanent workflows plus `docs/maintainers/repository-settings.md` |
+| Concern                        | Canonical source                                                    |
+| ------------------------------ | ------------------------------------------------------------------- |
+| Design tokens and theme values | `src/tokens.css`, `src/system.css`, and the `src/styles.css` bridge |
+| Public component inventory     | `config/components.mjs`                                             |
+| Published package entry points | `package.json#exports`                                              |
+| Generated export documentation | `docs/generated/exports.md`                                         |
+| TypeScript public API contract | `etc/api/mivabyte-ui.api.md` via API Extractor                      |
+| Release intent                 | Changesets plus the PR release-policy gate                          |
+| Component behavior             | Runtime and browser tests                                           |
+| Repository security policy     | Permanent workflows plus `docs/maintainers/repository-settings.md`  |
 
 Do not maintain a second hand-written list when a source above can generate or validate it.
 
@@ -73,11 +73,12 @@ Component documentation should have one primary interactive surface once Storybo
 
 Storybook should consume the real package source and expose the supported matrices:
 
-- product, editorial, and portal themes
-- light and dark modes
-- comfortable and compact density
-- LTR and RTL direction
+- light and dark color modes, via the global toolbar
+- LTR and RTL direction, via the global toolbar
+- comfortable and compact density, applied per composition with `data-density`
 - accessibility notes and keyboard behavior
+
+There is no theme matrix. `data-mivabyte-theme` is historical metadata and must not be presented as a selectable product, editorial, or portal theme; see the "Agent / Consumer Rules" section of [`DESIGN.md`](../../DESIGN.md).
 
 The registry remains the inventory source; Storybook becomes the usage and interaction documentation surface rather than another registry.
 

@@ -15,8 +15,9 @@ export default defineConfig({
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/index.ts",
+        // `direction` is a pure two-line re-export of the Radix primitive with
+        // no first-party logic to cover.
         "src/components/ui/direction.tsx",
-        "src/components/ui/toast.tsx",
         "src/hooks/use-direction.ts",
         "**/*.d.ts",
       ],

@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  Container,
   Eyebrow,
   Heading,
   Text,
@@ -71,10 +70,15 @@ function ProductEvidence() {
   )
 }
 
+// Page-width layout shell. `Container` was not an upstream shadcn/ui component
+// and was removed, so story compositions inline the equivalent wrapper.
+const shell =
+  "mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]"
+
 export function MarketingComposition() {
   return (
     <div>
-      <Container asChild>
+      <div className={shell}>
         <header className="flex flex-wrap items-center justify-between gap-4 py-5">
           <a
             href="#home"
@@ -94,10 +98,12 @@ export function MarketingComposition() {
             </Button>
           </nav>
         </header>
-      </Container>
+      </div>
       <main id="home">
         <section className="ui-section" data-tone="gradient">
-          <Container className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+          <div
+            className={`${shell} grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]`}
+          >
             <div className="ui-stack">
               <Eyebrow>Design intelligence. Engineering discipline.</Eyebrow>
               <Heading variant="display">
@@ -124,10 +130,10 @@ export function MarketingComposition() {
               </Text>
             </div>
             <ProductEvidence />
-          </Container>
+          </div>
         </section>
         <section className="ui-section" id="capabilities">
-          <Container className="ui-stack">
+          <div className={`${shell} ui-stack`}>
             <div className="grid gap-6 md:grid-cols-2 md:items-end">
               <div className="ui-stack">
                 <Eyebrow>From ambition to operation</Eyebrow>
@@ -174,10 +180,12 @@ export function MarketingComposition() {
                 </Card>
               ))}
             </div>
-          </Container>
+          </div>
         </section>
         <section className="ui-section" data-tone="muted" id="contact">
-          <Container className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div
+            className={`${shell} grid gap-8 md:grid-cols-[1fr_auto] md:items-center`}
+          >
             <div className="ui-stack">
               <Eyebrow>Make the next move</Eyebrow>
               <Heading variant="section">
@@ -193,17 +201,17 @@ export function MarketingComposition() {
                 Describe your project <ArrowUpRight aria-hidden="true" />
               </a>
             </Button>
-          </Container>
+          </div>
         </section>
       </main>
-      <Container asChild>
+      <div className={shell}>
         <footer className="flex flex-wrap justify-between gap-4 py-8">
           <Text variant="meta">Mivabyte / Design system composition</Text>
           <Text variant="meta">
             Illustrative content · Built with shared primitives
           </Text>
         </footer>
-      </Container>
+      </div>
     </div>
   )
 }

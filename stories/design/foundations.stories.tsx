@@ -6,7 +6,6 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-  Container,
   Heading,
   Text,
   Eyebrow,
@@ -28,7 +27,7 @@ type Story = StoryObj<typeof meta>
 
 export const TokensAndStates: Story = {
   render: () => (
-    <Container className="ui-stack py-12">
+    <div className="mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)] ui-stack py-12">
       <header className="ui-stack">
         <Eyebrow>Mivabyte / Design foundations</Eyebrow>
         <Heading variant="display">
@@ -132,6 +131,6 @@ export const TokensAndStates: Story = {
           </Text>
         </div>
       </section>
-    </Container>
+    </div>
   ),
 }

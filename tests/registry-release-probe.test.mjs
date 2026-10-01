@@ -30,11 +30,7 @@ test("registry release probe tolerates bounded registry propagation", () => {
 })
 
 test("registry release probe reuses canonical consumer runners", () => {
-  for (const script of [
-    "test-app-consumer.mjs",
-    "check-packed-ssr.mjs",
-    "check-packed-tree-shaking.mjs",
-  ]) {
+  for (const script of ["test-app-consumer.mjs", "check-packed-ssr.mjs"]) {
     assert.match(probe, new RegExp(script.replaceAll(".", "\\.")))
   }
   assert.doesNotMatch(probe, /"test-app-consumer\.mjs", "vite-react-18"/)

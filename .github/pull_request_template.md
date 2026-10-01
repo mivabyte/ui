@@ -8,7 +8,7 @@ Describe what changed and why.
 - [ ] CodeQL completed successfully when available for the repository plan and visibility
 - [ ] Tests cover behavior changes
 - [ ] Accessibility impact was reviewed
-- [ ] Bundle-size impact was reviewed
+- [ ] Public API surface impact was reviewed (`registry:check`, `pack:check`, `package:lint`)
 - [ ] New or changed public API is documented
 
 ## Release impact

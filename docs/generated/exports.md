@@ -185,15 +185,6 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - CommonJS types: `./dist/components/ui/command.d.cts`
 - CommonJS runtime: `./dist/components/ui/command.cjs`
 
-## `@mivabyte/ui/container`
-
-- Official component: Container
-- Source: `src/components/ui/container.tsx`
-- ESM types: `./dist/components/ui/container.d.ts`
-- ESM runtime: `./dist/components/ui/container.js`
-- CommonJS types: `./dist/components/ui/container.d.cts`
-- CommonJS runtime: `./dist/components/ui/container.cjs`
-
 ## `@mivabyte/ui/context-menu`
 
 - Official component: Context Menu
@@ -275,6 +266,15 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - CommonJS types: `./dist/components/ui/field.d.cts`
 - CommonJS runtime: `./dist/components/ui/field.cjs`
 
+## `@mivabyte/ui/form`
+
+- Official component: Form
+- Source: `src/components/ui/form.tsx`
+- ESM types: `./dist/components/ui/form.d.ts`
+- ESM runtime: `./dist/components/ui/form.js`
+- CommonJS types: `./dist/components/ui/form.d.cts`
+- CommonJS runtime: `./dist/components/ui/form.cjs`
+
 ## `@mivabyte/ui/hover-card`
 
 - Official component: Hover Card
@@ -328,15 +328,6 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - ESM runtime: `./dist/components/ui/kbd.js`
 - CommonJS types: `./dist/components/ui/kbd.d.cts`
 - CommonJS runtime: `./dist/components/ui/kbd.cjs`
-
-## `@mivabyte/ui/kbd-group`
-
-- Official component: Kbd Group
-- Source: `src/components/ui/kbd-group.tsx`
-- ESM types: `./dist/components/ui/kbd-group.d.ts`
-- ESM runtime: `./dist/components/ui/kbd-group.js`
-- CommonJS types: `./dist/components/ui/kbd-group.d.cts`
-- CommonJS runtime: `./dist/components/ui/kbd-group.cjs`
 
 ## `@mivabyte/ui/label`
 
@@ -517,6 +508,15 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - ESM runtime: `./dist/components/ui/slider.js`
 - CommonJS types: `./dist/components/ui/slider.d.cts`
 - CommonJS runtime: `./dist/components/ui/slider.cjs`
+
+## `@mivabyte/ui/sonner`
+
+- Official component: Sonner
+- Source: `src/components/ui/sonner.tsx`
+- ESM types: `./dist/components/ui/sonner.d.ts`
+- ESM runtime: `./dist/components/ui/sonner.js`
+- CommonJS types: `./dist/components/ui/sonner.d.cts`
+- CommonJS runtime: `./dist/components/ui/sonner.cjs`
 
 ## `@mivabyte/ui/spinner`
 

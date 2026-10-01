@@ -50,12 +50,12 @@ These are not solved by saturating more UI. Typography and layout must carry the
 
 // Website: shared section tone and spacing; utility layout remains composable.
 <section className="ui-section" data-tone="gradient">
-  <Container>
+  <div className="mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]">
     <Eyebrow>Designed to move you forward</Eyebrow>
     <Heading variant="display">Technology with a clear purpose.</Heading>
     <Text variant="lead">One coherent system, from first visit to everyday work.</Text>
     <Button size="lg">Start a project</Button>
-  </Container>
+  </div>
 </section>
 
 // Application: statistics are composition, not another Card variant.
@@ -80,11 +80,11 @@ Do not introduce separate statistic/feature cards, new app shells or brand-speci
 
 ## Implemented scope
 
-The existing 66-module registry and CSS import path are unchanged. Tokens are consolidated in `src/tokens.css`; `src/styles.css` is the aggregate/Tailwind bridge; `src/system.css` supplies font faces, reusable composition classes, component surface recipes and accessibility fallbacks. There is no second palette or theme provider.
+The existing 66-module registry and CSS import path are unchanged. Registry membership itself has since moved with the shadcn/ui re-baseline — see [`migration/shadcn-compatible-release.md`](migration/shadcn-compatible-release.md) for the current 66 slugs, the added `form`/`sonner` modules, and the removed `container`/`kbd-group` modules. Tokens are consolidated in `src/tokens.css`; `src/styles.css` is the aggregate/Tailwind bridge; `src/system.css` supplies font faces, reusable composition classes, component surface recipes and accessibility fallbacks. There is no second palette or theme provider.
 
 Implemented real Card variants; differentiated Heading/Text roles; semantic Button and Badge variants; field and table contrast; floating-surface elevation; working animation utilities and motion tokens; responsive Sidebar navigation with focus restoration; loading semantics for native and slotted buttons. Ordinary native button submit behavior remains compatible—forms should still declare type explicitly. Compact Card padding is token-driven. The default example application supports search, creating a project, notifications, tabs, empty states and a labeled chart.
 
-Source/API checks remain intact. The source-theme contract now checks the imported token owner rather than requiring all declarations inline. Storybook composition stories live under `stories/design/`, leaving the registry's one-story-per-component contract intact. Calendar and Carousel embed Button, so their narrowly adjusted bundle ceilings account for the new action variants and loading semantics; no other budgets were increased.
+Source/API checks remain intact. The source-theme contract now checks the imported token owner rather than requiring all declarations inline. Storybook composition stories live under `stories/design/`, leaving the registry's one-story-per-component contract intact. There are no per-module bundle size budgets in this tree; `pack:check`, `publint`, and `attw` validate the published artifact instead.
 
 ## Remaining adoption boundaries
 

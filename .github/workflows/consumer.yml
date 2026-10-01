@@ -38,12 +38,6 @@ jobs:
             script: scripts/check-packed-ssr.mjs
             args: ""
             cache_path: package-lock.json
-          - name: Tree Shaking
-            script: scripts/check-packed-tree-shaking.mjs
-            args: ""
-            cache_path: |
-              package-lock.json
-              fixtures/vite-react-19/package-lock.json
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

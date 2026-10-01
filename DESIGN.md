@@ -83,9 +83,9 @@ Keyboard focus uses a double offset ring plus forced-colors outline. Under `forc
 
 ## 9. Layout
 
-Use semantic section markup with package-owned `ui-section` and `data-tone="muted|accent|gradient|grid"`. Compose Container, Heading, Text and Card. This avoids a new shell/component API and keeps the existing 66 module registry stable.
+Use semantic section markup with package-owned `ui-section` and `data-tone="muted|accent|gradient|grid"`. Compose a page-width wrapper (`mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]`) with Heading, Text and Card. This avoids a new shell/component API and keeps the existing 66 module registry stable.
 
-Marketing: asymmetric hero with real product evidence, generous section rhythm, readable measures, alternating section tones, one prominent CTA. Features and case studies use interactive cards with actual links; pricing highlights only the recommended plan; testimonials use semantic blockquotes; blog/article content uses the reading Container. No decorative illustration is required when a useful product preview can explain the offer.
+Marketing: asymmetric hero with real product evidence, generous section rhythm, readable measures, alternating section tones, one prominent CTA. Features and case studies use interactive cards with actual links; pricing highlights only the recommended plan; testimonials use semantic blockquotes; blog/article content uses a reading-measure wrapper (`max-w-[var(--reading-width)]`). No decorative illustration is required when a useful product preview can explain the offer.
 
 Applications: Sidebar + topbar + page heading/actions + statistics + main table/chart + activity. Stable neutral surfaces, tighter spacing, labeled icons, clear selection. Settings/auth/onboarding use elevated forms; command/search/dialog/drawer share popover elevation; filters and tabs use quiet accent selection; empty states explain the next action. Charts need visible labels, accessible summary and distinguishable line/marker patterns.
 

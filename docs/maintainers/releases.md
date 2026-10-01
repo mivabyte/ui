@@ -18,6 +18,16 @@ Pull requests that change `src/**` or release-relevant `package.json` fields are
 
 The no-release declaration is an escape hatch for genuinely internal work, not a way to skip versioning for consumer-visible changes.
 
+## Version format and dist-tags
+
+The published version is plain semantic versioning — `MAJOR.MINOR.PATCH`, with no calendar component and no prerelease suffix. Changesets derives it from the highest pending bump type.
+
+The release workflow enforces one additional rule before publishing: it fails when the committed version contains `-` and the requested dist-tag is `latest` ("Pre-release versions must use the next dist-tag"). A version containing a dash can therefore only ever be published on `next`, and the workflow marks `next` publishes as GitHub pre-releases. `latest` accepts dash-free versions only.
+
+That rule decided the outcome of the `26.9.x` line. It was versioned in a Calendar Versioning style — `26.9.10-1`, `26.9.21-1`, `26.9.21-2` — which always carried a `-N` suffix. Under the dist-tag rule those releases could not be published as `latest`, so they shipped on `next` and npm `latest` remained on the last dash-free version, `26.9.21`. Semver also cannot continue that line: `semver.inc("26.9.21-2", "minor")` is `26.10.0`, and `semver.inc("26.9.21-2", "major")` is `27.0.0`.
+
+The shadcn/ui re-baseline is therefore the first release to leave CalVer behind. Its `major` changeset produces `27.0.0` — a dash-free version — so it is the first release on this line eligible for the `latest` dist-tag. Do not reintroduce CalVer version strings; a dash in the version demotes the release to a `next` prerelease.
+
 ## Release preparation
 
 1. Published-package changes include a Changeset with the appropriate `patch`, `minor`, or `major` bump.
@@ -58,7 +68,7 @@ The release workflow itself also refuses to publish when it is not running from 
 Run the `Release` workflow manually from `main` and provide:
 
 - `version`: the exact version currently committed in `package.json`
-- `tag`: `latest` for stable versions or `next` for pre-release versions
+- `tag`: `latest` for dash-free stable versions, or `next` for pre-release versions. Any version containing `-` must use `next`; the workflow rejects it under `latest`.
 
 The workflow then:
 
@@ -101,7 +111,6 @@ The canonical `scripts/check-registry-release.mjs` probe verifies the exact pack
 - Vite React 19 production build
 - Next.js App Router production build
 - SSR import/render path and public JavaScript/TypeScript subpaths
-- root-barrel tree shaking
 - npm provenance metadata
 - `npm audit signatures`
 
@@ -126,6 +135,7 @@ Once trusted publishing is confirmed to work, the exact registry version passes 
 - Environment waiting for approval: expected when deployment protection is enabled.
 - Repository visibility failure: provenance is a required release contract; do not publish until the repository visibility and release policy agree.
 - Version mismatch: enter the exact `package.json` version or merge the correct version PR first.
+- Pre-release version rejected for `latest`: the committed version contains `-`. Publish it on `next`, or cut a dash-free version.
 - Repository metadata mismatch: `package.json` must point at the current GitHub repository; the workflow derives the expected URL from `GITHUB_SERVER_URL` and `GITHUB_REPOSITORY` instead of hard-coding a historical repository name.
 - Existing Git tag: the version is already associated with a source revision; create a new version instead of moving or replacing the tag.
 - Version already published: create and merge a new version instead of retrying the same package version.

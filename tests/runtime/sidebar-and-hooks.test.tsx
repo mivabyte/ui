@@ -1,6 +1,12 @@
 import * as React from "react"
 import { renderToString } from "react-dom/server"
-import { fireEvent, render, renderHook, screen } from "@testing-library/react"
+import {
+  act,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+} from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
 import {
@@ -29,7 +35,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Toast, toast } from "@/components/ui/toast"
+import { Toaster, toast } from "@/components/ui/toast"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 function SidebarConsumer() {
@@ -318,11 +324,132 @@ describe("Sidebar, Hooks & Toast", () => {
   })
 
   describe("Toast", () => {
-    it("renders Toast container and allows calling toast() function", () => {
-      render(<Toast />)
-      expect(typeof toast).toBe("function")
-      expect(typeof toast.success).toBe("function")
-      expect(typeof toast.error).toBe("function")
+    it("renders the toast viewport with an accessible label", () => {
+      // ToastViewport renders through ToastPortal, so it lands in document.body
+      // rather than inside the render container.
+      render(<Toaster />)
+
+      const viewport = document.body.querySelector(
+        "[data-slot='toast-viewport']"
+      )
+      expect(viewport).not.toBeNull()
+      // The viewport is the live region a screen reader announces through.
+      // It is deliberately NOT a focus trap: toasts do not steal focus.
+      expect(viewport).toHaveAttribute("role", "region")
+      expect(viewport).toHaveAttribute("aria-live", "polite")
+      expect(viewport).toHaveAttribute("aria-label", "Notifications")
+    })
+
+    it("announces politely without moving focus, and keeps close focusable", () => {
+      render(<Toaster />)
+      const before = document.activeElement
+
+      act(() => {
+        toast.add({ title: "Announced" })
+      })
+
+      // Live region, not a modal: focus must stay where the user left it.
+      expect(document.activeElement).toBe(before)
+
+      // Each toast is its own dialog so AT can navigate into it on demand.
+      const root = document.body.querySelector("[data-slot='toast']")
+      expect(root).toHaveAttribute("role", "dialog")
+
+      // The close affordance is a real, keyboard-reachable button.
+      const close = root?.querySelector("[data-slot='toast-close']")
+      expect(close?.tagName).toBe("BUTTON")
+      expect(close).toHaveAttribute("tabindex", "0")
+      expect(close).toHaveAttribute("aria-label", "Close toast")
+    })
+
+    it("adds a toast and renders its title and description", () => {
+      render(<Toaster />)
+
+      act(() => {
+        toast.add({ title: "Scheduled", description: "Catch up" })
+      })
+
+      const toastRoot = document.body.querySelector("[data-slot='toast']")
+      expect(toastRoot).not.toBeNull()
+      expect(
+        toastRoot?.querySelector("[data-slot='toast-title']")?.textContent
+      ).toBe("Scheduled")
+      expect(
+        toastRoot?.querySelector("[data-slot='toast-description']")?.textContent
+      ).toBe("Catch up")
+    })
+
+    it.each([
+      ["success", "lucide-circle-check"],
+      ["info", "lucide-info"],
+      ["warning", "lucide-triangle-alert"],
+      ["error", "lucide-octagon-x"],
+      ["loading", "lucide-loader-circle"],
+    ])("renders the %s icon for a typed toast", (type, expectedClass) => {
+      render(<Toaster />)
+
+      act(() => {
+        toast.add({ title: "Typed", type })
+      })
+
+      const icon = document.body.querySelector("[data-slot='toast-icon']")
+      expect(icon).not.toBeNull()
+      expect(icon?.querySelector("svg")?.getAttribute("class")).toContain(
+        expectedClass
+      )
+    })
+
+    it("renders no icon for an untyped toast", () => {
+      render(<Toaster />)
+
+      act(() => {
+        toast.add({ title: "Plain" })
+      })
+
+      expect(document.body.querySelector("[data-slot='toast-icon']")).toBeNull()
+    })
+
+    it("labels the close control", () => {
+      render(<Toaster />)
+
+      act(() => {
+        toast.add({ title: "Dismissible" })
+      })
+
+      const close = document.body.querySelector("[data-slot='toast-close']")
+      expect(close).not.toBeNull()
+      expect(close).toHaveAttribute("aria-label", "Close toast")
+    })
+
+    it("updates a toast in place", () => {
+      render(<Toaster />)
+
+      let id = ""
+      act(() => {
+        id = toast.add({ title: "Scheduled" })
+      })
+      expect(document.body.textContent).toContain("Scheduled")
+
+      act(() => {
+        toast.update(id, { title: "Rescheduled" })
+      })
+      expect(document.body.textContent).toContain("Rescheduled")
+      expect(document.body.textContent).not.toContain("Scheduled")
+    })
+
+    it("closes a toast through the manager", () => {
+      render(<Toaster />)
+
+      let id = ""
+      act(() => {
+        id = toast.add({ title: "Temporary" })
+      })
+      expect(document.body.textContent).toContain("Temporary")
+
+      act(() => {
+        toast.close(id)
+      })
+      expect(document.body.textContent).not.toContain("Temporary")
     })
   })
 })

@@ -4,6 +4,7 @@ coverage
 src/fonts
 *.tgz
 .artifacts
+.opencode
 playwright-report
 test-results
 storybook-static

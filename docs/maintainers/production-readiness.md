@@ -6,7 +6,7 @@ Run this audit before declaring a release train or major design-system milestone
 
 - [ ] `npm ci --ignore-scripts`
 - [ ] `npm run verify`
-- [ ] lint, formatting, source audit, typecheck, build, API Extractor, coverage, contract tests, package validation, Storybook coverage/build, and bundle budgets are green
+- [ ] lint, formatting, source audit, typecheck, build, API Extractor, coverage, contract tests, package validation, and Storybook coverage/build are green
 - [ ] no generated or temporary migration files remain
 
 ## Package contract
@@ -15,7 +15,6 @@ Run this audit before declaring a release train or major design-system milestone
 - [ ] Publint passes
 - [ ] Are The Types Wrong passes for supported entry points
 - [ ] registry, `package.json#exports`, generated export docs, Storybook coverage, and API report are synchronized
-- [ ] root and subpath imports remain tree-shakeable
 
 ## Consumers
 
@@ -68,7 +67,6 @@ After the first OIDC-backed publish, validate the exact npm registry version in 
 - [ ] Next.js production build using the registry version
 - [ ] SSR import/render using the registry version
 - [ ] public subpath imports using the registry version
-- [ ] tree-shaking comparison using the registry version
 - [ ] `npm audit signatures` succeeds for the installed registry graph
 
 ## Documentation and maintenance

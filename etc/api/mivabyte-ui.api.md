@@ -12,6 +12,7 @@ import { ClassProp } from 'class-variance-authority/types';
 import { ClassValue } from 'clsx';
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
+import { ControllerProps } from 'react-hook-form';
 import { DayButton } from 'react-day-picker';
 import { DayPicker } from 'react-day-picker';
 import { DialogCloseProps } from '@radix-ui/react-dialog';
@@ -25,10 +26,15 @@ import { DialogTriggerProps } from '@radix-ui/react-dialog';
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { Drawer as Drawer_2 } from 'vaul';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { FieldError as FieldError_2 } from 'react-hook-form';
+import { FieldPath } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
+import { FormProviderProps } from 'react-hook-form';
 import { ForwardRefExoticComponent } from 'react';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import { JSX } from 'react';
 import * as LabelPrimitive from '@radix-ui/react-label';
+import { Locale } from 'react-day-picker';
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
@@ -45,10 +51,12 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import { SeparatorProps } from '@radix-ui/react-separator';
 import * as SliderPrimitive from '@radix-ui/react-slider';
+import { Slot } from '@radix-ui/react-slot';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { Toaster as Toast } from 'sonner';
-import { toast } from 'sonner';
+import { Toast as Toast_2 } from '@base-ui/react/toast';
+import { ToasterProps } from 'sonner';
+import { ToastManager } from '@base-ui/react/toast';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
@@ -231,7 +239,9 @@ export function Calendar(input: React_2.ComponentProps<typeof DayPicker> & {
 }): React_2.JSX.Element;
 
 // @public (undocumented)
-export function CalendarDayButton(input: React_2.ComponentProps<typeof DayButton>): React_2.JSX.Element;
+export function CalendarDayButton(input: React_2.ComponentProps<typeof DayButton> & {
+    locale?: Partial<Locale>;
+}): React_2.JSX.Element;
 
 // @public (undocumented)
 export const Card: React_2.ForwardRefExoticComponent<CardProps & React_2.RefAttributes<HTMLDivElement>>;
@@ -467,21 +477,6 @@ export const CommandShortcut: {
 };
 
 // @public (undocumented)
-export const Container: React_2.ForwardRefExoticComponent<ContainerProps & React_2.RefAttributes<HTMLDivElement>>;
-
-// @public (undocumented)
-export interface ContainerProps extends React_2.HTMLAttributes<HTMLDivElement>, VariantProps<typeof containerVariants> {
-    // (undocumented)
-    asChild?: boolean;
-}
-
-// @public (undocumented)
-export const containerVariants: (props?: ({
-    size?: "standard" | "reading" | "wide" | null | undefined;
-    gutter?: boolean | null | undefined;
-} & ClassProp) | undefined) => string;
-
-// @public (undocumented)
 export const ContextMenu: React_2.FC<ContextMenuPrimitive.ContextMenuProps>;
 
 // @public (undocumented)
@@ -534,6 +529,9 @@ export const ContextMenuSubTrigger: React_2.ForwardRefExoticComponent<Omit<Conte
 
 // @public (undocumented)
 export const ContextMenuTrigger: React_2.ForwardRefExoticComponent<ContextMenuPrimitive.ContextMenuTriggerProps & React_2.RefAttributes<HTMLSpanElement>>;
+
+// @public (undocumented)
+export const createToastManager: typeof Toast_2.createToastManager;
 
 // @public (undocumented)
 export function DataTable<TData>(input: DataTableProps<TData>): React_2.JSX.Element;
@@ -770,6 +768,27 @@ export function FieldSet(input: React.ComponentProps<"fieldset">): JSX.Element;
 export function FieldTitle(input: React.ComponentProps<"div">): JSX.Element;
 
 // @public (undocumented)
+export const Form: <TFieldValues extends FieldValues, TContext = any, TTransformedValues = TFieldValues>(input: FormProviderProps<TFieldValues, TContext, TTransformedValues>) => React_2.JSX.Element;
+
+// @public (undocumented)
+export function FormControl(input: React_2.ComponentProps<typeof Slot>): React_2.JSX.Element;
+
+// @public (undocumented)
+export function FormDescription(input: React_2.ComponentProps<"p">): React_2.JSX.Element;
+
+// @public (undocumented)
+export const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(input: ControllerProps<TFieldValues, TName>) => React_2.JSX.Element;
+
+// @public (undocumented)
+export function FormItem(input: React_2.ComponentProps<"div">): React_2.JSX.Element;
+
+// @public (undocumented)
+export function FormLabel(input: React_2.ComponentProps<typeof LabelPrimitive.Root>): React_2.JSX.Element;
+
+// @public (undocumented)
+export function FormMessage(input: React_2.ComponentProps<"p">): React_2.JSX.Element | null;
+
+// @public (undocumented)
 export const Heading: React_2.ForwardRefExoticComponent<HeadingProps & React_2.RefAttributes<HTMLHeadingElement>>;
 
 // @public (undocumented)
@@ -861,15 +880,6 @@ export function Item(input: ItemProps): React_2.JSX.Element;
 //
 // @public (undocumented)
 export function Kbd(input: KbdProps): React_2.JSX.Element;
-
-// Warning: (ae-forgotten-export) The symbol "KbdGroupProps" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export function KbdGroup(input: KbdGroupProps): React_2.JSX.Element;
-
-// @public (undocumented)
-export interface KbdGroupPropsInternal extends KbdGroupProps {
-}
 
 // @public (undocumented)
 export const Label: React_2.ForwardRefExoticComponent<Omit<LabelPrimitive.LabelProps & React_2.RefAttributes<HTMLLabelElement>, "ref"> & VariantProps<(props?: ClassProp | undefined) => string> & React_2.RefAttributes<HTMLLabelElement>>;
@@ -1267,6 +1277,9 @@ export function Skeleton(input: React.HTMLAttributes<HTMLDivElement>): JSX.Eleme
 export const Slider: React_2.ForwardRefExoticComponent<Omit<SliderPrimitive.SliderProps & React_2.RefAttributes<HTMLSpanElement>, "ref"> & React_2.RefAttributes<HTMLSpanElement>>;
 
 // @public (undocumented)
+export const SonnerToaster: (input: ToasterProps) => React_2.JSX.Element;
+
+// @public (undocumented)
 export function Spinner(input: React.ComponentProps<"svg">): JSX.Element;
 
 // @public (undocumented)
@@ -1346,9 +1359,38 @@ export const THEMES: {
     readonly dark: ".dark";
 };
 
-export { Toast }
+// @public (undocumented)
+export function Toast(input: Toast_2.Root.Props): React_2.JSX.Element;
 
-export { toast }
+// @public (undocumented)
+export const toast: ToastManager<any>;
+
+// @public (undocumented)
+export function ToastAction(input: Toast_2.Action.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastClose(input: Toast_2.Close.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastContent(input: Toast_2.Content.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastDescription(input: Toast_2.Description.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function Toaster(input: Toast_2.Provider.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastPortal(input: Toast_2.Portal.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastProvider(input: Toast_2.Provider.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastTitle(input: Toast_2.Title.Props): React_2.JSX.Element;
+
+// @public (undocumented)
+export function ToastViewport(input: Toast_2.Viewport.Props): React_2.JSX.Element;
 
 // @public (undocumented)
 export const Toggle: React_2.ForwardRefExoticComponent<Omit<TogglePrimitive.ToggleProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & VariantProps<(props?: ({
@@ -1400,7 +1442,24 @@ export interface TypographyProps extends React_2.HTMLAttributes<HTMLElement>, Va
 export { useDirection }
 
 // @public (undocumented)
+export const useFormField: () => {
+    invalid: boolean;
+    isDirty: boolean;
+    isTouched: boolean;
+    isValidating: boolean;
+    error?: FieldError_2 | undefined;
+    id: string;
+    name: string;
+    formItemId: string;
+    formDescriptionId: string;
+    formMessageId: string;
+};
+
+// @public (undocumented)
 export function useSidebar(): SidebarContextProps;
+
+// @public (undocumented)
+export const useToastManager: typeof Toast_2.useToastManager;
 
 // Warnings were encountered during analysis:
 //

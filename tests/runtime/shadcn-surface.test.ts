@@ -4,6 +4,8 @@ import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import * as publicApi from "../../src/index"
+import * as sonnerExports from "../../src/components/ui/sonner"
+import * as toastExports from "../../src/components/ui/toast"
 
 const repo = process.cwd()
 const componentDirectory = path.join(repo, "src", "components", "ui")
@@ -32,7 +34,6 @@ const officialComponents = [
   "collapsible",
   "combobox",
   "command",
-  "container",
   "context-menu",
   "data-table",
   "date-picker",
@@ -42,13 +43,13 @@ const officialComponents = [
   "dropdown-menu",
   "empty",
   "field",
+  "form",
   "hover-card",
   "input",
   "input-group",
   "input-otp",
   "item",
   "kbd",
-  "kbd-group",
   "label",
   "marker",
   "menubar",
@@ -69,6 +70,7 @@ const officialComponents = [
   "sidebar",
   "skeleton",
   "slider",
+  "sonner",
   "spinner",
   "switch",
   "table",
@@ -97,27 +99,52 @@ describe("official shadcn component surface", () => {
     expect(packageComponents).toEqual([...officialComponents].sort())
   })
 
-  it("keeps every official component in the root barrel without Base UI", () => {
+  it("keeps every official component in the root barrel", () => {
     const rootComponentPaths = new Set(
       [...rootBarrel.matchAll(/from "\.\/components\/ui\/([^"\n]+)"/g)].map(
         (match) => match[1]
       )
     )
-    const sourceText = readdirSync(componentDirectory)
-      .filter((file) => file.endsWith(".tsx"))
-      .map((file) => readFileSync(path.join(componentDirectory, file), "utf8"))
-      .join("\n")
 
     expect([...rootComponentPaths].sort()).toEqual(
       [...officialComponents].sort()
     )
-    expect(sourceText).not.toContain("@base-ui/react")
     expect(publicApi).toEqual(
       expect.objectContaining({
         Button: expect.anything(),
         DirectionProvider: expect.anything(),
+        Form: expect.anything(),
+        Toaster: expect.anything(),
         Toast: expect.anything(),
       })
     )
+  })
+
+  it("resolves the canonical Toaster to base-ui and aliases sonner's", () => {
+    // `sonner` and `toast` both export a `Toaster`. Assert identity, not mere
+    // existence: a swap between the two would leave every `expect.anything()`
+    // check above satisfied.
+    expect(publicApi.Toaster).toBe(toastExports.Toaster)
+    expect(publicApi.SonnerToaster).toBe(sonnerExports.Toaster)
+    expect(publicApi.SonnerToaster).not.toBe(publicApi.Toaster)
+  })
+
+  it("confines Base UI to the upstream toast port", () => {
+    // Walk all of src/ recursively so a Base UI import in src/hooks or
+    // src/lib, or a nested component directory, cannot escape the scan.
+    const walk = (dir: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        const full = path.join(dir, entry.name)
+        if (entry.isDirectory()) return walk(full)
+        return /\.tsx?$/.test(entry.name) ? [full] : []
+      })
+
+    const baseUiConsumers = walk(path.join(repo, "src"))
+      .filter((file) => readFileSync(file, "utf8").includes("@base-ui/react"))
+      .map((file) => path.relative(path.join(repo, "src"), file))
+
+    expect(baseUiConsumers).toEqual([
+      path.join("components", "ui", "toast.tsx"),
+    ])
   })
 })

@@ -8,7 +8,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { InputGroup } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
-import { KbdGroup } from "@/components/ui/kbd-group"
 import { Label } from "@/components/ui/label"
 import { NativeSelect } from "@/components/ui/native-select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -386,34 +385,16 @@ describe("Primitives: Form & Controls", () => {
     })
   })
 
-  describe("Kbd & KbdGroup", () => {
-    it("renders Kbd and KbdGroup", () => {
+  describe("Kbd", () => {
+    it("renders Kbd standalone", () => {
       render(
-        <KbdGroup className="kbd-wrap">
+        <div className="kbd-wrap">
           <Kbd>Cmd</Kbd>
           <Kbd>K</Kbd>
-        </KbdGroup>
+        </div>
       )
       expect(screen.getByText("Cmd")).toBeInTheDocument()
       expect(screen.getByText("K")).toBeInTheDocument()
-
-      // Test single child and without className
-      render(
-        <KbdGroup>
-          <Kbd>Shift</Kbd>
-        </KbdGroup>
-      )
-      expect(screen.getByText("Shift")).toBeInTheDocument()
-
-      // Test separator=false
-      render(
-        <KbdGroup separator={false}>
-          <Kbd>Ctrl</Kbd>
-          <Kbd>Alt</Kbd>
-        </KbdGroup>
-      )
-      expect(screen.getByText("Ctrl")).toBeInTheDocument()
-      expect(screen.getByText("Alt")).toBeInTheDocument()
     })
   })
 })

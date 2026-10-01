@@ -14,7 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Container, containerVariants } from "@/components/ui/container"
 import {
   Empty,
   EmptyContent,
@@ -138,27 +137,6 @@ describe("Primitives: Display & Content", () => {
         expect(screen.getByText("Footer")).toBeInTheDocument()
         unmount()
       })
-    })
-  })
-
-  describe("Container", () => {
-    it("renders container with sizes and asChild", () => {
-      const { rerender } = render(
-        <Container size="wide" gutter={true} className="container-custom">
-          <span>Inside container</span>
-        </Container>
-      )
-      expect(screen.getByText("Inside container")).toBeInTheDocument()
-      expect(containerVariants({ size: "reading", gutter: false })).toContain(
-        "max-w-[var(--reading-width)]"
-      )
-
-      rerender(
-        <Container asChild size="standard">
-          <section data-testid="section-container">Slotted Container</section>
-        </Container>
-      )
-      expect(screen.getByTestId("section-container")).toHaveClass("mx-auto")
     })
   })
 
