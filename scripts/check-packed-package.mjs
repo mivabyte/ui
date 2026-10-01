@@ -85,7 +85,10 @@ try {
       'import { Carousel, CarouselNext, CarouselPrevious } from "@mivabyte/ui/carousel";',
       'import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@mivabyte/ui/chart";',
       'import { Field, FieldLabel } from "@mivabyte/ui/field";',
+      'import { Form, FormField, FormLabel, FormControl, FormDescription, FormMessage, FormItem, useFormField } from "@mivabyte/ui/form";',
       'import { Sidebar, SidebarTrigger } from "@mivabyte/ui/sidebar";',
+      'import { Toaster as ToastHost, Toast, toast } from "@mivabyte/ui/toast";',
+      'import { Toaster } from "@mivabyte/ui/sonner";',
       "",
       "export type RootModule = typeof Root;",
       "export type ButtonComponent = typeof Button;",
@@ -98,8 +101,20 @@ try {
       "export type ChartTooltipContentComponent = typeof ChartTooltipContent;",
       "export type FieldComponent = typeof Field;",
       "export type FieldLabelComponent = typeof FieldLabel;",
+      "export type FormComponent = typeof Form;",
+      "export type FormFieldComponent = typeof FormField;",
+      "export type FormLabelComponent = typeof FormLabel;",
+      "export type FormControlComponent = typeof FormControl;",
+      "export type FormDescriptionComponent = typeof FormDescription;",
+      "export type FormMessageComponent = typeof FormMessage;",
+      "export type FormItemComponent = typeof FormItem;",
+      "export type UseFormFieldComponent = typeof useFormField;",
       "export type SidebarComponent = typeof Sidebar;",
       "export type SidebarTriggerComponent = typeof SidebarTrigger;",
+      "export type ToastHostComponent = typeof ToastHost;",
+      "export type ToastComponent = typeof Toast;",
+      "export type ToastManagerComponent = typeof toast;",
+      "export type SonnerToasterComponent = typeof Toaster;",
     ].join("\n")
   )
 
@@ -114,7 +129,10 @@ try {
       'import { Carousel, CarouselNext, CarouselPrevious } from "@mivabyte/ui/carousel";',
       'import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@mivabyte/ui/chart";',
       'import { Field, FieldLabel } from "@mivabyte/ui/field";',
+      'import { Form, FormField, FormLabel, FormControl, FormDescription, FormMessage, FormItem, useFormField } from "@mivabyte/ui/form";',
       'import { Sidebar, SidebarTrigger } from "@mivabyte/ui/sidebar";',
+      'import { Toaster as ToastHost, Toast, toast } from "@mivabyte/ui/toast";',
+      'import { Toaster } from "@mivabyte/ui/sonner";',
       "",
       "export type CjsRootModule = typeof Root;",
       "export type CjsButtonComponent = typeof Button;",
@@ -129,6 +147,18 @@ try {
       "export type CjsFieldLabelComponent = typeof FieldLabel;",
       "export type CjsSidebarComponent = typeof Sidebar;",
       "export type CjsSidebarTriggerComponent = typeof SidebarTrigger;",
+      "export type CjsFormComponent = typeof Form;",
+      "export type CjsFormFieldComponent = typeof FormField;",
+      "export type CjsFormLabelComponent = typeof FormLabel;",
+      "export type CjsFormControlComponent = typeof FormControl;",
+      "export type CjsFormDescriptionComponent = typeof FormDescription;",
+      "export type CjsFormMessageComponent = typeof FormMessage;",
+      "export type CjsFormItemComponent = typeof FormItem;",
+      "export type CjsUseFormFieldComponent = typeof useFormField;",
+      "export type CjsToastHostComponent = typeof ToastHost;",
+      "export type CjsToastComponent = typeof Toast;",
+      "export type CjsToastManagerComponent = typeof toast;",
+      "export type CjsSonnerToasterComponent = typeof Toaster;",
     ].join("\n")
   )
 
@@ -139,7 +169,7 @@ try {
     commandOptions
   )
   console.log(
-    "Successfully typechecked root, calendar, carousel, chart, field, and sidebar via TypeScript (NodeNext resolution)"
+    "Successfully typechecked root, calendar, carousel, chart, field, form, sidebar, toast, and sonner via TypeScript (NodeNext resolution)"
   )
 
   const declarationChecks = [

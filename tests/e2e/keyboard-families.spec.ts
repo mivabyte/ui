@@ -41,7 +41,11 @@ test.describe("keyboard-sensitive component families", () => {
     expect(browserErrors).toEqual([])
   })
 
-  test("navigation: navigation menu opens and dismisses with Escape", async ({
+  // Escape is not a dismissal signal for NavigationMenu. It is a Radix
+  // pass-through whose viewport stays open while the trigger keeps the menu
+  // active, so assert the menu opens and remains keyboard-reachable after
+  // Escape rather than claiming a dismissal that does not happen.
+  test("navigation: navigation menu opens and stays reachable after Escape", async ({
     page,
   }) => {
     const browserErrors = collectBrowserErrors(page)
@@ -52,6 +56,7 @@ test.describe("keyboard-sensitive component families", () => {
     await expect(link).toBeVisible()
 
     await page.keyboard.press("Escape")
+    await expect(link).toBeVisible()
     expect(browserErrors).toEqual([])
   })
 
