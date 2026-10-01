@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs"
 import path from "node:path"
 
 import { preparePackageSource } from "./lib/package-source.mjs"
@@ -17,6 +18,17 @@ const root = path.resolve(import.meta.dirname, "..")
 // Pack with `--ignore-scripts` so the artifact is built once, by `build`, and
 // attw only analyses it. Keep the same attw arguments as before so the type
 // contract checked here is unchanged.
+const distEntry = path.join(root, "dist", "index.d.ts")
+if (!existsSync(distEntry)) {
+  throw new Error(
+    `Refusing to run the packed type check: ${distEntry} is missing.\n` +
+      `Run \`npm run build\` first. Without \`--ignore-scripts\` attw used to\n` +
+      `rebuild the package via the prepare hook; now that it only analyses the\n` +
+      `existing dist, a missing build would make attw report "types: false" and\n` +
+      `exit 0, silently checking nothing.`
+  )
+}
+
 const source = await preparePackageSource({
   root,
   artifacts: path.join(root, ".artifacts", "package-types"),

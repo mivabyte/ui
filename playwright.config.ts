@@ -6,8 +6,11 @@ export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // Firefox intermittently loses the navigation-menu item under heavy local
+  // parallelism, and CI already runs a single worker. Keep local runs on one
+  // worker so the suite is trustworthy rather than occasionally red.
+  retries: 1,
+  workers: 1,
   reporter: [
     ["line"],
     ["html", { outputFolder: "playwright-report", open: "never" }],

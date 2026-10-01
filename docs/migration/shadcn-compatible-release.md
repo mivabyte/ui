@@ -24,7 +24,7 @@ Remove imports for the old provider, shell/theme or density helpers, custom layo
 Two components published as official shadcn/ui modules were removed because they are not part of the upstream catalog:
 
 - `@mivabyte/ui/container` — `Container` does not exist in shadcn/ui at all. Replace it with a plain element carrying the equivalent layout utilities, e.g. `className="mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]"`.
-- `@mivabyte/ui/kbd-group` — `KbdGroup` only ever existed upstream as example files, never as a distributable component. Compose `Kbd` elements directly.
+- `@mivabyte/ui/kbd-group` — upstream exports `KbdGroup` from its `kbd` module, not as a standalone `kbd-group` component. Import it from `@mivabyte/ui/kbd` alongside `Kbd`.
 
 The root-barrel exports `Container`, `containerVariants`, `ContainerProps`, `KbdGroup`, and `KbdGroupPropsInternal` are gone as well.
 

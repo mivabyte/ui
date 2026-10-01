@@ -3,7 +3,10 @@ import { defineConfig, devices } from "@playwright/test"
 export default defineConfig({
   testDir: "./tests/design",
   fullyParallel: true,
-  workers: 2,
+  // Firefox fails intermittently with `browserContext.close: ENOENT` on trace
+  // artifacts when workers write into the same output directory concurrently.
+  // The suite is small, so serialise it rather than let artefact cleanup race.
+  workers: 1,
   timeout: 60000,
   use: { baseURL: "http://localhost:6006", trace: "retain-on-failure" },
   projects: [

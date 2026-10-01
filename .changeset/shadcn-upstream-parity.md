@@ -4,10 +4,11 @@
 
 Align the component registry with the official shadcn/ui catalog.
 
-**Breaking removals.** `container` and `kbd-group` were published as official
-shadcn/ui components but are not part of the upstream catalog: `container` does
-not exist in shadcn/ui at all, and `kbd-group` only ever existed as example
-files, never as a distributable component. Both are removed, along with their
+**Breaking removals.** `container` and `kbd-group` were published here as
+separate top-level components, which does not match how upstream shadcn/ui
+organises them: `container` does not exist in shadcn/ui at all, and upstream
+exports `KbdGroup` from its `kbd` module rather than as a standalone
+`kbd-group` component. Both subpaths are removed, along with their
 package subpaths (`@mivabyte/ui/container`, `@mivabyte/ui/kbd-group`) and root
 barrel exports (`Container`, `containerVariants`, `ContainerProps`,
 `KbdGroup`, `KbdGroupPropsInternal`).
