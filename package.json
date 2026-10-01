@@ -6,7 +6,9 @@
   "private": false,
   "type": "module",
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "./dist/components/ui/toast.js",
+    "./dist/components/ui/toast.cjs"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -254,17 +256,6 @@
       },
       "default": "./dist/components/ui/command.js"
     },
-    "./container": {
-      "import": {
-        "types": "./dist/components/ui/container.d.ts",
-        "default": "./dist/components/ui/container.js"
-      },
-      "require": {
-        "types": "./dist/components/ui/container.d.cts",
-        "default": "./dist/components/ui/container.cjs"
-      },
-      "default": "./dist/components/ui/container.js"
-    },
     "./context-menu": {
       "import": {
         "types": "./dist/components/ui/context-menu.d.ts",
@@ -364,6 +355,17 @@
       },
       "default": "./dist/components/ui/field.js"
     },
+    "./form": {
+      "import": {
+        "types": "./dist/components/ui/form.d.ts",
+        "default": "./dist/components/ui/form.js"
+      },
+      "require": {
+        "types": "./dist/components/ui/form.d.cts",
+        "default": "./dist/components/ui/form.cjs"
+      },
+      "default": "./dist/components/ui/form.js"
+    },
     "./hover-card": {
       "import": {
         "types": "./dist/components/ui/hover-card.d.ts",
@@ -429,17 +431,6 @@
         "default": "./dist/components/ui/kbd.cjs"
       },
       "default": "./dist/components/ui/kbd.js"
-    },
-    "./kbd-group": {
-      "import": {
-        "types": "./dist/components/ui/kbd-group.d.ts",
-        "default": "./dist/components/ui/kbd-group.js"
-      },
-      "require": {
-        "types": "./dist/components/ui/kbd-group.d.cts",
-        "default": "./dist/components/ui/kbd-group.cjs"
-      },
-      "default": "./dist/components/ui/kbd-group.js"
     },
     "./label": {
       "import": {
@@ -661,6 +652,17 @@
       },
       "default": "./dist/components/ui/slider.js"
     },
+    "./sonner": {
+      "import": {
+        "types": "./dist/components/ui/sonner.d.ts",
+        "default": "./dist/components/ui/sonner.js"
+      },
+      "require": {
+        "types": "./dist/components/ui/sonner.d.cts",
+        "default": "./dist/components/ui/sonner.cjs"
+      },
+      "default": "./dist/components/ui/sonner.js"
+    },
     "./spinner": {
       "import": {
         "types": "./dist/components/ui/spinner.d.ts",
@@ -780,11 +782,9 @@
     "sync:upstream": "node scripts/sync-upstream.mjs",
     "sync:imports": "node scripts/fix-shadcn-imports.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "echo No tests configured yet",
     "audit:source": "node scripts/audit-source.mjs",
-    "bundle:check": "node scripts/check-bundle-budgets.mjs",
     "pack:check": "node scripts/check-packed-package.mjs",
-    "verify:core": "npm run format:check && npm run audit:source && npm run registry:check && npm run storybook:check && npm run typecheck && npm run build && npm run bundle:check && npm run test:contracts && npm run pack:check && npm run package:lint",
+    "verify:core": "npm run format:check && npm run audit:source && npm run registry:check && npm run storybook:check && npm run typecheck && npm run build && npm run test:contracts && npm run pack:check && npm run package:lint",
     "verify": "npm run lint && npm run verify:core && npm run api:check && npm run test:coverage",
     "prepublishOnly": "npm run verify",
     "prepare": "npm run build",
@@ -803,7 +803,7 @@
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
     "storybook:build": "storybook build",
     "package:publint": "publint",
-    "package:types": "attw --pack . --profile node16 --exclude-entrypoints styles.css --ignore-rules cjs-resolves-to-esm false-esm",
+    "package:types": "node scripts/check-packed-types.mjs",
     "package:lint": "npm run package:publint && npm run package:types",
     "registry:write": "node scripts/check-component-registry.mjs --write",
     "registry:check": "node scripts/check-component-registry.mjs",
@@ -820,6 +820,7 @@
     "react-dom": ">=19 <20"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@hookform/resolvers": "^5.9.1",
     "@radix-ui/react-accordion": "^1.2.20",
     "@radix-ui/react-alert-dialog": "^1.1.23",

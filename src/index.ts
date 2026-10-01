@@ -128,10 +128,6 @@ export {
   CommandShortcut,
 } from "./components/ui/command"
 
-// Container
-export type { ContainerProps } from "./components/ui/container"
-export { Container, containerVariants } from "./components/ui/container"
-
 // Context Menu
 export {
   ContextMenu,
@@ -236,6 +232,18 @@ export {
   FieldTitle,
 } from "./components/ui/field"
 
+// Form
+export {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
+} from "./components/ui/form"
+
 // Hover Card
 export {
   HoverCard,
@@ -263,10 +271,6 @@ export { Item } from "./components/ui/item"
 
 // Kbd
 export { Kbd } from "./components/ui/kbd"
-
-// Kbd Group
-export type { KbdGroupPropsInternal } from "./components/ui/kbd-group"
-export { KbdGroup } from "./components/ui/kbd-group"
 
 // Label
 export { Label } from "./components/ui/label"
@@ -423,6 +427,12 @@ export { Skeleton } from "./components/ui/skeleton"
 // Slider
 export { Slider } from "./components/ui/slider"
 
+// Sonner
+// Aliased: `sonner` and `toast` both expose a `Toaster`. The root barrel keeps
+// the upstream base-ui `Toaster` under its canonical name; the sonner wrapper is
+// available as `SonnerToaster` and as `@mivabyte/ui/sonner`.
+export { Toaster as SonnerToaster } from "./components/ui/sonner"
+
 // Spinner
 export { Spinner } from "./components/ui/spinner"
 
@@ -449,7 +459,21 @@ export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
 export { Textarea } from "./components/ui/textarea"
 
 // Toast
-export { Toast, toast } from "./components/ui/toast"
+export {
+  Toast,
+  Toaster,
+  ToastAction,
+  ToastClose,
+  ToastContent,
+  ToastDescription,
+  ToastPortal,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+  createToastManager,
+  toast,
+  useToastManager,
+} from "./components/ui/toast"
 
 // Toggle
 export { Toggle, toggleVariants } from "./components/ui/toggle"

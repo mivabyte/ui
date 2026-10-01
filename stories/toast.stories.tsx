@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { toast, Toast } from "../src/components/ui/toast.js"
+import { toast, Toaster } from "../src/components/ui/toast.js"
 import { Button } from "../src/components/ui/button.js"
 
 const meta = {
@@ -22,11 +22,12 @@ type Story = StoryObj<typeof meta>
 export const Basic: Story = {
   render: () => (
     <div>
-      <Toast />
+      <Toaster />
       <div className="flex gap-2">
         <Button
           onClick={() =>
-            toast("Scheduled: Catch up", {
+            toast.add({
+              title: "Scheduled: Catch up",
               description: "Friday, February 10, 2026 at 5:57 PM",
             })
           }
@@ -36,12 +37,52 @@ export const Basic: Story = {
         <Button
           variant="destructive"
           onClick={() =>
-            toast.error("Uh oh! Something went wrong.", {
+            toast.add({
+              type: "error",
+              title: "Uh oh! Something went wrong.",
               description: "There was a problem with your request.",
             })
           }
         >
           Destructive Toast
+        </Button>
+      </div>
+    </div>
+  ),
+}
+
+export const Types: Story = {
+  render: () => (
+    <div>
+      <Toaster />
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant="outline"
+          onClick={() => toast.add({ type: "success", title: "Changes saved" })}
+        >
+          Success
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() =>
+            toast.add({ type: "info", title: "New version available" })
+          }
+        >
+          Info
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() =>
+            toast.add({ type: "warning", title: "Storage is almost full" })
+          }
+        >
+          Warning
+        </Button>
+        <Button
+          variant="destructive"
+          onClick={() => toast.add({ type: "error", title: "Request failed" })}
+        >
+          Error
         </Button>
       </div>
     </div>

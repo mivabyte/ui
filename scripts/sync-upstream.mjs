@@ -233,7 +233,7 @@ export function renderProposal(report) {
       " → " +
       report.targetComponents,
     "- Changed base-registry components: " + report.changes.length,
-    "- Changes in the @mivabyte/ui 64-component catalog: " +
+    "- Changes in the @mivabyte/ui component catalog: " +
       report.trackedChanges.length,
     "",
   ]

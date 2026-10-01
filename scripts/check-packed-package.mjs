@@ -175,7 +175,14 @@ try {
     }
   }
 
-  assert.deepEqual(installedPackage.sideEffects, ["**/*.css"])
+  // The toast module calls `createToastManager()` at module-evaluation time, so
+  // it is NOT side-effect-free. Both build formats must be declared, otherwise
+  // a bundler may prune the module and the toast manager stops working.
+  assert.deepEqual(installedPackage.sideEffects, [
+    "**/*.css",
+    "./dist/components/ui/toast.js",
+    "./dist/components/ui/toast.cjs",
+  ])
   for (const stylesheet of ["styles.css"]) {
     assert.equal(
       installedPackage.exports[`./${stylesheet}`],

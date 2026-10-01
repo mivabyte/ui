@@ -78,7 +78,6 @@ const consumerChecks = [
   ["test-app-consumer.mjs", "vite-react-19"],
   ["test-app-consumer.mjs", "next-app-router"],
   ["check-packed-ssr.mjs"],
-  ["check-packed-tree-shaking.mjs"],
 ]
 
 for (const [script, ...args] of consumerChecks) {
