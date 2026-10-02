@@ -5,7 +5,7 @@
     --mivabyte-midnight: #080d18;
     --mivabyte-midnight-surface: #111827;
     --mivabyte-cyan: #22d3ee;
-    --mivabyte-cyan-dark: #06b6d4;
+    --mivabyte-cyan-dark: hsl(var(--brand-cyan-500));
     --mivabyte-azure: #3b82f6;
     --mivabyte-azure-dark: #2563eb;
     --mivabyte-white: #f8fafc;
@@ -13,6 +13,33 @@
     --mivabyte-dark-border: #1e293b;
     --mivabyte-light-bg: #f7f8fa;
     --mivabyte-light-border: #cbd5e1;
+    /* Single cyan ramp for the whole system, anchored on the brand colour.
+       Hue stays at 188 across every step so light and dark share one brand.
+       Contrast against the theme canvases, measured:
+         step | vs light bg #f2f9fd | vs dark bg #060d19
+          50  |  1.02               | 18.68
+         100  |  1.04               | 17.62
+         200  |  1.16               | 15.70
+         300  |  1.36               | 13.43
+         400  |  1.57               | 11.64
+         500  |  2.33               |  7.84   <- #06B6D4 brand anchor
+         600  |  3.62               |  5.06
+         700  |  6.22               |  2.94
+         800  |  7.94               |  2.30
+         900  | 10.46               |  1.75
+       500 is the brand colour and stays decorative: at 2.33:1 it cannot carry
+       text or a control fill on the light canvas. Readable roles therefore sit
+       at 700 on light and at 400 on dark. */
+    --brand-cyan-50: 188 90% 97%;
+    --brand-cyan-100: 188 86% 93%;
+    --brand-cyan-200: 188 84% 85%;
+    --brand-cyan-300: 188 82% 74%;
+    --brand-cyan-400: 188 90% 58%;
+    --brand-cyan-500: 188 93% 42%;
+    --brand-cyan-600: 188 88% 34%;
+    --brand-cyan-700: 188 82% 25%;
+    --brand-cyan-800: 188 80% 21%;
+    --brand-cyan-900: 188 70% 17%;
     --radius: 0.625rem;
     --shape-control-sm: 0.375rem;
     --shape-control: 0.5rem;
@@ -53,17 +80,20 @@
     --surface: 0 0% 100%;
     --surface-elevated: 200 75% 99%;
     --surface-interactive: 198 63% 95%;
-    --primary: 198 92% 31%;
-    --primary-hover: 198 92% 25%;
+    --primary: 188 82% 25%;
+    --primary-hover: 188 80% 21%;
     --primary-foreground: 0 0% 100%;
     --secondary: 202 42% 90%;
     --secondary-foreground: 222 38% 20%;
     --muted: 202 42% 93%;
     --muted-foreground: 211 27% 35%;
     --accent: 192 78% 91%;
-    --accent-foreground: 198 90% 25%;
+    /* One step below --primary: hue 188 at the same lightness is lighter than
+       the previous hue 198, so the value is pulled down to keep at least
+       6:1 against both accent surfaces. */
+    --accent-foreground: 188 82% 21%;
     --accent-muted: 191 65% 84%;
-    --accent-strong: 197 89% 33%;
+    --accent-strong: 188 82% 25%;
     --destructive: 0 72% 43%;
     --destructive-foreground: 0 0% 100%;
     --destructive-subtle: 0 80% 96%;
@@ -71,14 +101,14 @@
     --success-subtle: 155 50% 94%;
     --warning: 32 90% 28%;
     --warning-subtle: 43 90% 94%;
-    --info: 198 92% 31%;
-    --info-subtle: 198 85% 95%;
+    --info: 188 82% 25%;
+    --info-subtle: 188 60% 95%;
     --border: 202 35% 82%;
     --border-strong: 203 31% 44%;
     --input: 203 31% 44%;
-    --ring: 198 92% 31%;
+    --ring: 188 82% 25%;
     --overlay: 222 47% 8% / 0.6;
-    --chart-1: hsl(198 92% 31%);
+    --chart-1: hsl(188 82% 25%);
     --chart-2: hsl(170 80% 27%);
     --chart-3: hsl(267 60% 46%);
     --chart-4: hsl(31 90% 34%);
@@ -97,8 +127,8 @@
     --surface: 215 47% 12%;
     --surface-elevated: 214 42% 17%;
     --surface-interactive: 211 43% 21%;
-    --primary: 188 86% 53%;
-    --primary-hover: 188 90% 65%;
+    --primary: 188 90% 58%;
+    --primary-hover: 188 82% 74%;
     --primary-foreground: 222 50% 6%;
     --secondary: 214 36% 20%;
     --secondary-foreground: 199 42% 95%;
@@ -107,7 +137,7 @@
     --accent: 194 57% 17%;
     --accent-foreground: 187 93% 74%;
     --accent-muted: 195 50% 24%;
-    --accent-strong: 188 78% 48%;
+    --accent-strong: 188 90% 58%;
     --destructive: 0 85% 72%;
     --destructive-foreground: 222 50% 6%;
     --destructive-subtle: 0 40% 16%;
@@ -115,14 +145,14 @@
     --success-subtle: 160 35% 13%;
     --warning: 43 94% 68%;
     --warning-subtle: 35 40% 13%;
-    --info: 203 96% 76%;
-    --info-subtle: 208 50% 17%;
+    --info: 188 82% 74%;
+    --info-subtle: 194 50% 17%;
     --border: 212 37% 25%;
     --border-strong: 205 28% 53%;
     --input: 205 28% 53%;
-    --ring: 188 86% 53%;
+    --ring: 188 90% 58%;
     --overlay: 218 63% 3% / 0.72;
-    --chart-1: hsl(188 86% 60%);
+    --chart-1: hsl(188 90% 58%);
     --chart-2: hsl(158 65% 65%);
     --chart-3: hsl(263 85% 77%);
     --chart-4: hsl(43 94% 68%);
