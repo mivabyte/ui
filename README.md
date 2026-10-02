@@ -209,10 +209,34 @@ Every link above opens that component's entry in [`docs/components.md`](docs/com
 
 The Mivabyte design system balances technical precision with warm human typography and deliberate visual depth. Read [DESIGN.md](DESIGN.md) for the complete design contract.
 
-### The Midnight, Cyan & Azure Palette
+### Cyan-led Multicolor Palette
 
-- **Light Mode (`:root` / `.light`)**: A clean, cool canvas (`--background: 202 68% 97%`) anchored by an Azure action tone (`--primary: 198 92% 31%`), providing high clarity without harsh starkness.
-- **Dark Mode (`.dark`)**: A rich Midnight navy canvas (`--background: 218 63% 6%`) illuminated by vibrant Cyan accents (`--primary: 188 86% 53%` and `--accent: 194 57% 17%`).
+Exact `#06B6D4` is the primary fill in both modes, paired with Midnight labels (`#0B1220`). Links and essential control strokes use a separate `--link` role: dark Cyan (`#0E7490`) on light surfaces and exact brand Cyan on dark surfaces. Use `text-link` for links and readable cyan text; `bg-primary text-primary-foreground` for filled actions.
+
+Cyan stays the main color. Apricot identifies secondary actions; Cyan tints identify selections; Amber marks attention, Emerald success, Coral errors, and Azure information. Each family has readable light/dark shades rather than making every component cyan.
+
+The [research rationale and measured contrasts](docs/palette-research.md) explain the evidence behind these roles. Secondary buttons use warm Apricot surfaces (`#FFEDD5` / `#4A2816`) with readable text and borders. Cyan tints (`#CFFAFE` / `#083344`) identify selection. Highlighted cards keep a neutral content surface with a Cyan border. Use `text-secondary-strong` for warm supporting emphasis and `text-accent-strong` for Cyan emphasis.
+
+| Family  | Brand color | UI role                                            |
+| ------- | ----------- | -------------------------------------------------- |
+| Cyan    | `#06B6D4`   | Primary actions, links, focus, selected navigation |
+| Apricot | `#FDBA74`   | Secondary actions and supporting context           |
+| Amber   | `#F59E0B`   | Warnings and attention                             |
+| Emerald | `#10B981`   | Success and positive trends                        |
+| Coral   | `#F43F5E`   | Errors and destructive actions                     |
+| Azure   | `#3B82F6`   | Information and processing                         |
+
+| Role                 | Light mode | Dark mode |
+| -------------------- | ---------- | --------- |
+| Brand / primary fill | `#06B6D4`  | `#06B6D4` |
+| Background           | `#F8FAFC`  | `#0B1220` |
+| Cards                | `#FFFFFF`  | `#111C2E` |
+| Main text            | `#0F172A`  | `#F8FAFC` |
+| Secondary text       | `#475569`  | `#94A3B8` |
+| Borders              | `#CBD5E1`  | `#2A3A50` |
+| Links                | `#0E7490`  | `#06B6D4` |
+
+`--brand-cyan-500`, `--mivabyte-main`, `--mivabyte-cyan`, and `--mivabyte-cyan-dark` resolve to exact `#06B6D4`. The existing HSL-channel convention preserves these hex colors at full precision. Primary controls have an identifiable border, and checked switches use Midnight thumbs. Focus rings, slider/progress fills, and radio indicators use readable cyan strokes.
 
 To enable dark mode, toggle the `.dark` class on the `<html>` or `<body>` element:
 

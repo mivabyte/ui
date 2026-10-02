@@ -12,8 +12,13 @@
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-primary: hsl(var(--primary));
+  --color-link: hsl(var(--link));
+  --color-primary-border: hsl(var(--primary-border));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-secondary: hsl(var(--secondary));
+  --color-secondary-strong: hsl(var(--secondary-strong));
+  --color-secondary-border: hsl(var(--secondary-border));
+  --color-secondary-hover: hsl(var(--secondary-hover));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
@@ -46,6 +51,13 @@
   --color-mivabyte-midnight-surface: var(--mivabyte-midnight-surface);
   --color-mivabyte-cyan: var(--mivabyte-cyan);
   --color-mivabyte-cyan-dark: var(--mivabyte-cyan-dark);
+  --color-mivabyte-violet: var(--mivabyte-violet);
+  --color-mivabyte-steel: var(--mivabyte-steel);
+  --color-mivabyte-apricot: var(--mivabyte-apricot);
+  --color-mivabyte-blue: var(--mivabyte-blue);
+  --color-mivabyte-amber: var(--mivabyte-amber);
+  --color-mivabyte-emerald: var(--mivabyte-emerald);
+  --color-mivabyte-coral: var(--mivabyte-coral);
   --color-mivabyte-azure: var(--mivabyte-azure);
   --color-mivabyte-azure-dark: var(--mivabyte-azure-dark);
   --color-mivabyte-white: var(--mivabyte-white);

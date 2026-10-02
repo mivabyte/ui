@@ -22,9 +22,14 @@ function ProductEvidence() {
     <Card variant="elevated" className="overflow-hidden">
       <CardHeader className="border-b">
         <div className="flex items-center justify-between gap-4">
-          <Text variant="small" className="font-medium text-foreground">
-            Release overview
-          </Text>
+          <div className="flex items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
+              <Workflow className="size-4" aria-hidden="true" />
+            </span>
+            <Text variant="small" className="font-medium text-foreground">
+              Release overview
+            </Text>
+          </div>
           <Badge variant="success">All systems ready</Badge>
         </div>
       </CardHeader>
@@ -83,7 +88,7 @@ export function MarketingComposition() {
             href="#home"
             className="ui-focus inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight"
           >
-            <Layers className="size-5 text-primary" aria-hidden="true" />
+            <Layers className="size-5 text-link" aria-hidden="true" />
             mivabyte
           </a>
           <nav aria-label="Main navigation" className="flex gap-2">
@@ -108,7 +113,7 @@ export function MarketingComposition() {
               <Heading variant="display">
                 Built to work.
                 <br />
-                <span className="text-primary">Made to matter.</span>
+                <span className="text-accent-strong">Made to matter.</span>
               </Heading>
               <Text variant="lead" className="max-w-xl">
                 From the first idea to the tools your team uses every day.
@@ -120,22 +125,18 @@ export function MarketingComposition() {
                     Start a project <ArrowUpRight aria-hidden="true" />
                   </a>
                 </Button>
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="secondary">
                   <a href="#capabilities">Explore our approach</a>
                 </Button>
               </div>
-              <Text variant="meta">
-                Strategy, design and engineering. One connected team.
-              </Text>
             </div>
             <ProductEvidence />
           </div>
         </section>
         <section className="ui-section" id="capabilities">
           <div className={`${shell} ui-stack`}>
-            <div className="grid gap-6 md:grid-cols-2 md:items-end">
+            <div className="ui-stack max-w-2xl">
               <div className="ui-stack">
-                <Eyebrow>From ambition to operation</Eyebrow>
                 <Heading variant="statement" render={<h2 />}>
                   The whole system.
                   <br />
@@ -167,10 +168,11 @@ export function MarketingComposition() {
               ].map(({ icon: Icon, title, copy }, i) => (
                 <Card variant={i === 0 ? "highlighted" : "default"} key={title}>
                   <CardHeader className="gap-4">
-                    <Icon
-                      aria-hidden="true"
-                      className="size-6 text-accent-foreground"
-                    />
+                    <span
+                      className={`flex size-11 items-center justify-center rounded-lg ${i === 0 ? "bg-accent text-accent-foreground" : i === 1 ? "bg-secondary text-secondary-foreground" : "bg-success-subtle text-success"}`}
+                    >
+                      <Icon aria-hidden="true" className="size-5" />
+                    </span>
                     <Heading variant="card" render={<h3 />}>
                       {title}
                     </Heading>
@@ -186,7 +188,6 @@ export function MarketingComposition() {
             className={`${shell} grid gap-8 md:grid-cols-[1fr_auto] md:items-center`}
           >
             <div className="ui-stack">
-              <Eyebrow>Make the next move</Eyebrow>
               <Heading variant="section">
                 A better system starts with a conversation.
               </Heading>

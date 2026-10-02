@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>
 export const Basic: Story = {
   render: () => (
     <div className="flex items-center gap-2">
-      <Spinner className="size-5 text-primary" />
+      <Spinner className="size-5 text-link" />
       <span className="text-sm text-muted-foreground">Loading assets...</span>
     </div>
   ),

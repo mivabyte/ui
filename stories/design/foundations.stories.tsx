@@ -40,6 +40,29 @@ export const TokensAndStates: Story = {
           workflow.
         </Text>
       </header>
+      <section className="ui-stack" aria-label="Brand palette">
+        <Heading variant="section">
+          One main color. Distinct supporting roles.
+        </Heading>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+          {[
+            ["Cyan / Primary", "#06B6D4", "bg-mivabyte-cyan"],
+            ["Apricot / Secondary", "#FDBA74", "bg-mivabyte-apricot"],
+            ["Amber / Attention", "#F59E0B", "bg-mivabyte-amber"],
+            ["Emerald / Success", "#10B981", "bg-mivabyte-emerald"],
+            ["Coral / Error", "#F43F5E", "bg-mivabyte-coral"],
+            ["Azure / Information", "#3B82F6", "bg-mivabyte-azure"],
+          ].map(([label, hex, color]) => (
+            <div key={label} className="ui-stack gap-2">
+              <div className={`h-16 rounded-lg ${color}`} aria-hidden="true" />
+              <Text variant="small" className="font-medium">
+                {label}
+              </Text>
+              <Text variant="meta">{hex}</Text>
+            </div>
+          ))}
+        </div>
+      </section>
       <section className="ui-stack" aria-label="Surface hierarchy">
         <Heading variant="section">A surface for every layer</Heading>
         <div className="ui-grid">
@@ -80,6 +103,7 @@ export const TokensAndStates: Story = {
           <Button variant="subtle">Subtle</Button>
           <Button variant="accent">Accent</Button>
           <Button variant="ghost">Ghost</Button>
+          <Button variant="link">View details</Button>
           <Button variant="destructive">Delete item</Button>
           <Button loading>Saving…</Button>
           <Button disabled>Unavailable</Button>

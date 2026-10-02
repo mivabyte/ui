@@ -9,6 +9,8 @@ import {
   Search,
   Settings,
   Layers,
+  CheckCircle2,
+  CalendarDays,
 } from "lucide-react"
 import {
   SidebarProvider,
@@ -35,6 +37,7 @@ import {
   Input,
   Label,
   Text,
+  Progress,
   Table,
   TableBody,
   TableCell,
@@ -131,7 +134,7 @@ function DeliveryChart() {
           <Heading variant="card" render={<h2 />}>
             Delivery momentum
           </Heading>
-          <Badge variant="secondary">Last 6 weeks</Badge>
+          <Text variant="meta">Last 6 weeks</Text>
         </div>
         <CardDescription>
           Completed milestones increased from 12 to 38 per week.
@@ -166,8 +169,20 @@ function DeliveryChart() {
           />
         </svg>
         <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-foreground">
-          <span>— Completed</span>
-          <span>┄ Planned</span>
+          <span className="inline-flex items-center gap-2">
+            <span
+              aria-hidden="true"
+              className="w-5 border-t-2 border-chart-1"
+            />
+            Completed
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span
+              aria-hidden="true"
+              className="w-5 border-t-2 border-dashed border-chart-3"
+            />
+            Planned
+          </span>
           <span className="ms-auto">Week 1 → Week 6</span>
         </div>
       </CardContent>
@@ -194,15 +209,15 @@ function ProjectTable({
           Priorities, progress and the next delivery.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="max-sm:px-3">
         {visible.length ? (
-          <Table>
+          <Table className="max-sm:[&_td]:px-1 max-sm:[&_th]:px-1">
             <TableHeader>
               <TableRow>
                 <TableHead>Project</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Progress</TableHead>
-                <TableHead>Delivery</TableHead>
+                <TableHead className="hidden sm:table-cell">Delivery</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -213,12 +228,28 @@ function ProjectTable({
                     <span className="text-xs text-muted-foreground">
                       {p.team}
                     </span>
+                    <span className="block text-xs text-muted-foreground sm:hidden">
+                      Due {p.date}
+                    </span>
                   </TableCell>
                   <TableCell>
                     <Badge variant={p.variant}>{p.status}</Badge>
                   </TableCell>
-                  <TableCell>{p.progress}</TableCell>
-                  <TableCell className="whitespace-nowrap">{p.date}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3 sm:min-w-28">
+                      <Progress
+                        value={Number.parseInt(p.progress, 10)}
+                        aria-label={`${p.name} progress`}
+                        className="hidden h-1.5 w-16 sm:block"
+                      />
+                      <span className="whitespace-nowrap tabular-nums">
+                        {p.progress}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden whitespace-nowrap sm:table-cell">
+                    {p.date}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -250,7 +281,7 @@ export function ApplicationComposition() {
             href="#workspace"
             className="ui-focus inline-flex min-h-11 items-center gap-2 px-2 font-semibold"
           >
-            <Layers aria-hidden="true" className="size-5 text-primary" />
+            <Layers aria-hidden="true" className="size-5 text-link" />
             mivabyte<Text variant="meta">/ workspace</Text>
           </a>
         </SidebarHeader>
@@ -347,31 +378,51 @@ export function ApplicationComposition() {
           <p role="status" className="sr-only">
             {notice}
           </p>
-          <div className="ui-grid">
+          <Card
+            className="grid overflow-hidden md:grid-cols-3"
+            aria-label="Workspace metrics"
+          >
             {[
               {
                 label: "Active projects",
                 value: String(projects.length).padStart(2, "0"),
                 note: "Across your workspace",
+                icon: FolderKanban,
+                color: "bg-accent text-accent-foreground",
               },
               {
                 label: "Milestones completed",
                 value: "38",
                 note: "12 more than last week",
+                icon: CheckCircle2,
+                color: "bg-success-subtle text-success",
               },
               {
                 label: "On-time delivery",
                 value: "96.8%",
                 note: "Above the 95% target",
+                icon: CalendarDays,
+                color: "bg-secondary text-secondary-foreground",
               },
             ].map((metric, i) => (
-              <Card
+              <div
                 key={metric.label}
-                variant={i === 2 ? "highlighted" : "default"}
+                className="min-w-0 border-border p-6 not-first:border-t md:not-first:border-t-0 md:not-first:border-s"
               >
-                <CardHeader className="gap-3">
-                  <CardDescription>{metric.label}</CardDescription>
-                  <Text variant="signal">{metric.value}</Text>
+                <div className="ui-stack gap-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <Text variant="small" className="text-muted-foreground">
+                      {metric.label}
+                    </Text>
+                    <span
+                      className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${metric.color}`}
+                    >
+                      <metric.icon className="size-4" aria-hidden="true" />
+                    </span>
+                  </div>
+                  <Text variant="signal" className={i === 0 ? "text-link" : ""}>
+                    {metric.value}
+                  </Text>
                   <Text variant="meta" className={i > 0 ? "text-success" : ""}>
                     {i > 0 && (
                       <ArrowUpRight
@@ -381,10 +432,10 @@ export function ApplicationComposition() {
                     )}
                     {metric.note}
                   </Text>
-                </CardHeader>
-              </Card>
+                </div>
+              </div>
             ))}
-          </div>
+          </Card>
           <Tabs defaultValue="projects" id="projects">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
               <TabsList variant="ghost" aria-label="Workspace views">
@@ -452,7 +503,9 @@ export function ApplicationComposition() {
                   "Analytics checkpoint added",
                 ].map((text, i) => (
                   <div key={text} className="flex gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                    <span
+                      className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${i === 0 ? "bg-secondary text-secondary-foreground" : i === 1 ? "bg-success-subtle text-success" : "bg-accent text-accent-foreground"}`}
+                    >
                       <Settings className="size-4" aria-hidden="true" />
                     </span>
                     <div>

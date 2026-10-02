@@ -37,3 +37,37 @@ export const Basic: Story = {
     </div>
   ),
 }
+
+export const Types: Story = {
+  render: () => (
+    <div>
+      <Toaster />
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant="outline"
+          onClick={() => toast.success("Changes saved")}
+        >
+          Success
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.info("New version available")}
+        >
+          Info
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => toast.warning("Storage is almost full")}
+        >
+          Warning
+        </Button>
+        <Button
+          variant="destructive"
+          onClick={() => toast.error("Request failed")}
+        >
+          Error
+        </Button>
+      </div>
+    </div>
+  ),
+}

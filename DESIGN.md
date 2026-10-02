@@ -1,4 +1,4 @@
-# Mivabyte — Midnight / Cyan / Azure
+# Mivabyte — Cyan, Apricot & purposeful color
 
 ## 0. Meta
 
@@ -15,32 +15,37 @@ This is the design contract; `src/tokens.css` is its executable source of truth,
 
 ## 1. Brand Narrative & Philosophy
 
-Precise technology, warm human typography, and quiet depth. Midnight anchors the canvas; Cyan signals attention in dark mode; Azure carries actions in light mode. Distinction comes from composition, tonal layers and type before decoration. Dense applications and spacious websites share the same components, with different layout rhythms. Most surfaces remain neutral. Use one highlighted object or section per visual group.
+Precise technology, warm human typography, and quiet depth. Midnight anchors dark canvases; cool Slate grounds light canvases; exact Cyan (#06B6D4) carries primary actions in both modes. Apricot gives secondary actions a warm, distinct role. Cyan tints identify selection. Amber, Emerald, Coral and Azure communicate warnings, success, errors and information. Distinction comes from composition, tonal layers and type before decoration. Dense applications and spacious websites share the same components, with different layout rhythms. Use Cyan for the main action; Apricot supports secondary actions and planning context. Blue belongs to informational feedback. Keep large data surfaces neutral and use small, meaningful color areas rather than saturated statistic cards. Most surfaces remain neutral. Use one highlighted object or section per visual group.
 
 ## 2. Color System
 
 Semantic HSL channels are consumed as `hsl(var(--token))`. Chart, shadow and gradient tokens are complete CSS values. Keep brand primitives for identity assets; components consume roles.
 
-| Role             | Token / Tailwind mapping                                           | Intent                                                       |
-| ---------------- | ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| Canvas           | `--background` / `--color-background`                              | Cool off-white / Midnight                                    |
-| Text             | `--foreground`, `--muted-foreground`                               | Strong headings, readable secondary copy                     |
-| Section          | `--section`                                                        | Tonal separation without another border                      |
-| Surface          | `--surface`, `--card`                                              | Content layer                                                |
-| Raised           | `--surface-elevated`, `--popover`                                  | Floating and foreground content                              |
-| Interactive      | `--surface-interactive`                                            | Hover and active spatial feedback                            |
-| Action           | `--primary`, `--primary-hover`, `--primary-foreground`             | Azure + white / Cyan + Midnight                              |
-| Quiet selection  | `--accent`, `--accent-foreground`                                  | Subtle tinted background with readable ink                   |
-| Intensities      | `--accent-muted`, `--accent-strong`, `--accent-glow`               | Stronger tint, explicit border, rare highlight               |
-| Secondary accent | `--info`, `--info-subtle`                                          | Azure informational content                                  |
-| Feedback         | `--success`, `--warning`, `--destructive`, corresponding `-subtle` | Always accompany color with a label or icon                  |
-| Boundaries       | `--border`, `--border-strong`, `--input`                           | Decorative division vs identifiable controls                 |
-| Focus            | `--ring`                                                           | Visible against adjacent surfaces; double offset ring        |
-| Data             | `--chart-1` through `--chart-5`                                    | Azure/Cyan, teal, violet, amber, rose; use labels/dashes too |
+| Role             | Token / Tailwind mapping                                                           | Intent                                                      |
+| ---------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Canvas           | `--background` / `--color-background`                                              | Cool off-white / Midnight                                   |
+| Text             | `--foreground`, `--muted-foreground`                                               | Strong headings, readable secondary copy                    |
+| Section          | `--section`                                                                        | Tonal separation without another border                     |
+| Surface          | `--surface`, `--card`                                                              | Content layer                                               |
+| Raised           | `--surface-elevated`, `--popover`                                                  | Floating and foreground content                             |
+| Interactive      | `--surface-interactive`                                                            | Hover and active spatial feedback                           |
+| Action           | `--primary`, `--primary-hover`, `--primary-foreground`                             | Exact Cyan + Midnight labels in both modes                  |
+| Links            | `--link` / `--color-link`                                                          | Dark Cyan (#0E7490) on light; exact Cyan on dark            |
+| Action boundary  | `--primary-border` / `--color-primary-border`                                      | Identifiable filled-control outline                         |
+| Secondary action | `--secondary`, `--secondary-hover`, `--secondary-foreground`, `--secondary-border` | Warm Apricot surfaces with readable ink and boundaries      |
+| Quiet selection  | `--accent`, `--accent-foreground`                                                  | Cyan selection surfaces with readable ink                   |
+| Intensities      | `--accent-muted`, `--accent-strong`, `--accent-glow`                               | Stronger tint, explicit border, rare highlight              |
+| Secondary accent | `--info`, `--info-subtle`                                                          | Azure informational content                                 |
+| Feedback         | `--success`, `--warning`, `--destructive`, corresponding `-subtle`                 | Always accompany color with a label or icon                 |
+| Boundaries       | `--border`, `--border-strong`, `--input`                                           | Decorative division vs identifiable controls                |
+| Focus            | `--ring`                                                                           | Visible against adjacent surfaces; double offset ring       |
+| Data             | `--chart-1` through `--chart-5`                                                    | Cyan, Emerald, Apricot, Amber, Coral; use labels/dashes too |
 
 The generic skill's roles `--color-bg`, `--color-fg`, `--color-fg-muted`, `--color-focus-ring`, `--color-danger`, `--color-accent-hover` map to the existing background, foreground, muted-foreground, ring, destructive, primary-hover tokens; these are documentation mappings, not duplicate CSS aliases. `--color-surface`, `--color-border`, `--color-accent`, `--color-success` are Tailwind mappings.
 
-Text pairs target 4.5:1; essential control boundaries and focus target 3:1. Decorative card borders need not reach 3:1. Bright brand Cyan is not small text on white. Accent/gradient sections retain foreground text, not white text on a bright gradient. Glass is opt-in with a sufficiently opaque base; never place important copy over unknown imagery.
+Text pairs target 4.5:1; essential control boundaries and focus target 3:1. Decorative card borders need not reach 3:1. Bright brand Cyan is not small text on white: use `text-link` for readable cyan text and `bg-primary text-primary-foreground` for exact Cyan fills with Midnight labels. Filled primary controls use `border-primary-border`; secondary buttons use `border-secondary-border`. `--secondary-strong` provides readable Apricot-family text or icons on neutral surfaces. Accent/gradient sections retain foreground text, not white text on a bright gradient. Glass is opt-in with a sufficiently opaque base; never place important copy over unknown imagery.
+
+The [palette research rationale](docs/palette-research.md) separates perception studies, WCAG requirements, design guidance and our own color choices. Secondary actions use Apricot; selected navigation and tabs use Cyan tints; strong decorative headings use `text-accent-strong` instead of the link role. The exact supporting hex colors are design choices, not a scientifically established optimum.
 
 ## 3. Typography
 
@@ -87,7 +92,7 @@ Use semantic section markup with package-owned `ui-section` and `data-tone="mute
 
 Marketing: asymmetric hero with real product evidence, generous section rhythm, readable measures, alternating section tones, one prominent CTA. Features and case studies use interactive cards with actual links; pricing highlights only the recommended plan; testimonials use semantic blockquotes; blog/article content uses a reading-measure wrapper (`max-w-[var(--reading-width)]`). No decorative illustration is required when a useful product preview can explain the offer.
 
-Applications: Sidebar + topbar + page heading/actions + statistics + main table/chart + activity. Stable neutral surfaces, tighter spacing, labeled icons, clear selection. Settings/auth/onboarding use elevated forms; command/search/dialog/drawer share popover elevation; filters and tabs use quiet accent selection; empty states explain the next action. Charts need visible labels, accessible summary and distinguishable line/marker patterns.
+Applications: Sidebar + topbar + page heading/actions + shared metrics strip + main table/chart + activity. Group related metrics in one surface with dividers. Reserve the strongest filled treatment for the main action; use labeled icons and small tinted areas for category distinctions. Show table progress numerically as well as with a bar. Use different line patterns and a matching legend for chart series. Stable neutral surfaces, tighter spacing, labeled icons, clear selection. Settings/auth/onboarding use elevated forms; command/search/dialog/drawer share popover elevation; filters and tabs use quiet accent selection; empty states explain the next action. Charts need visible labels, accessible summary and distinguishable line/marker patterns.
 
 Validate at 320, 375, 428, 768, 1024, 1280, 1440 and 1920px; light/dark, compact/comfortable, reduced motion and forced colors. Mobile stacks rather than shrinking desktop columns. Menus and dialogs inherit mode by setting `.dark` on documentElement; subtree consumers must provide a themed portal container where supported.
 

@@ -10,6 +10,62 @@ async function openStory(page: Page, story: string, mode = "light") {
 }
 const compositions = ["website", "application"]
 for (const mode of ["light", "dark"]) {
+  test(`notification palette follows semantic roles in ${mode}`, async ({
+    page,
+  }) => {
+    const statuses = [
+      ["Success", "Changes saved", "success"],
+      ["Info", "New version available", "info"],
+      ["Warning", "Storage is almost full", "warning"],
+      ["Error", "Request failed", "destructive"],
+    ]
+    for (const system of ["toast", "sonner"]) {
+      await page.goto(
+        `/iframe.html?id=feedback-${system}--types&viewMode=story&globals=mode:${mode}`
+      )
+      await page.getByRole("button", { name: "Success", exact: true }).waitFor()
+      for (const [button, title, role] of statuses) {
+        const expected = await page.evaluate((role) => {
+          const probe = document.createElement("span")
+          document.body.append(probe)
+          probe.style.color = `hsl(var(--${role}))`
+          const foreground = getComputedStyle(probe).color
+          probe.style.color = `hsl(var(--${role}-subtle))`
+          const background = getComputedStyle(probe).color
+          probe.remove()
+          return { foreground, background }
+        }, role)
+        await page.getByRole("button", { name: button, exact: true }).click()
+        const notification = page
+          .locator(
+            system === "toast" ? '[data-slot="toast"]' : "[data-sonner-toast]"
+          )
+          .filter({ hasText: title })
+        await expect(notification).toBeVisible()
+        const icon = notification.locator(
+          system === "toast"
+            ? '[data-slot="toast-icon"] svg'
+            : "[data-icon] svg"
+        )
+        await expect(icon).toHaveCSS("color", expected.foreground)
+        if (system === "sonner") {
+          await expect(notification).toHaveCSS(
+            "background-color",
+            expected.background
+          )
+          await expect(notification).toHaveCSS("color", expected.foreground)
+        }
+      }
+    }
+    await page.goto(
+      `/iframe.html?id=feedback-sonner--basic&viewMode=story&globals=mode:${mode}`
+    )
+    await page.getByRole("button", { name: "Show toast" }).click()
+    await expect(page.locator("[data-sonner-toast]")).toHaveCSS(
+      "background-color",
+      mode === "light" ? "rgb(248, 250, 252)" : "rgb(27, 41, 64)"
+    )
+  })
   for (const composition of compositions) {
     test(`${composition} ${mode}: responsive, accessible, no browser errors`, async ({
       page,
@@ -35,6 +91,69 @@ for (const mode of ["light", "dark"]) {
       expect(errors).toEqual([])
     })
   }
+  test(`selected palette renders exact colors in ${mode}`, async ({ page }) => {
+    await openStory(page, "design-system-foundations--tokens-and-states", mode)
+    const colors = await page.evaluate(() => {
+      const probe = document.createElement("span")
+      document.body.append(probe)
+      const tokens = [
+        "background",
+        "surface",
+        "foreground",
+        "muted-foreground",
+        "border",
+        "link",
+      ]
+      const colors = Object.fromEntries(
+        tokens.map((token) => {
+          probe.style.color = `hsl(var(--${token}))`
+          return [token, getComputedStyle(probe).color]
+        })
+      )
+      probe.remove()
+      return colors
+    })
+    expect(colors).toEqual(
+      mode === "light"
+        ? {
+            background: "rgb(248, 250, 252)",
+            surface: "rgb(255, 255, 255)",
+            foreground: "rgb(15, 23, 42)",
+            "muted-foreground": "rgb(71, 85, 105)",
+            border: "rgb(203, 213, 225)",
+            link: "rgb(14, 116, 144)",
+          }
+        : {
+            background: "rgb(11, 18, 32)",
+            surface: "rgb(17, 28, 46)",
+            foreground: "rgb(248, 250, 252)",
+            "muted-foreground": "rgb(148, 163, 184)",
+            border: "rgb(42, 58, 80)",
+            link: "rgb(6, 182, 212)",
+          }
+    )
+    await expect(
+      page.getByRole("button", { name: "Secondary", exact: true })
+    ).toHaveCSS(
+      "background-color",
+      mode === "light" ? "rgb(255, 237, 213)" : "rgb(74, 40, 22)"
+    )
+    await expect(page.getByText("Processing", { exact: true })).toHaveCSS(
+      "color",
+      mode === "light" ? "rgb(29, 78, 216)" : "rgb(147, 197, 253)"
+    )
+    await expect(page.getByText("Selected", { exact: true })).toHaveCSS(
+      "color",
+      mode === "light" ? "rgb(21, 94, 117)" : "rgb(165, 243, 252)"
+    )
+    const primary = page.getByRole("button", { name: "Primary action" })
+    await expect(primary).toHaveCSS("background-color", "rgb(6, 182, 212)")
+    await expect(primary).toHaveCSS("color", "rgb(11, 18, 32)")
+    await expect(page.getByRole("button", { name: "View details" })).toHaveCSS(
+      "color",
+      colors.link
+    )
+  })
   test(`semantic color contracts in ${mode}`, async ({ page }) => {
     await openStory(page, "design-system-foundations--tokens-and-states", mode)
     const ratios = await page.evaluate(() => {
@@ -65,13 +184,32 @@ for (const mode of ["light", "dark"]) {
           pairs.push([fg, bg, 4.5])
       for (const bg of ["primary", "primary-hover"])
         pairs.push(["primary-foreground", bg, 4.5])
+      for (const bg of ["secondary", "secondary-hover"])
+        pairs.push(["secondary-foreground", bg, 4.5])
       for (const bg of ["accent", "accent-muted"])
         pairs.push(["accent-foreground", bg, 4.5])
       for (const status of ["success", "warning", "info", "destructive"])
         pairs.push([status, `${status}-subtle`, 4.5])
       pairs.push(["destructive-foreground", "destructive", 4.5])
       for (const bg of ["background", "section", "surface", "surface-elevated"])
-        for (const fg of ["ring", "input"]) pairs.push([fg, bg, 3])
+        for (const fg of [
+          "ring",
+          "input",
+          "primary-border",
+          "secondary-border",
+        ])
+          pairs.push([fg, bg, 3])
+      for (const bg of [
+        "background",
+        "section",
+        "surface",
+        "surface-elevated",
+        "surface-interactive",
+      ])
+        pairs.push(["link", bg, 4.5])
+      pairs.push(["link", "accent-muted", 3])
+      for (const bg of ["surface", "background"])
+        pairs.push(["secondary-strong", bg, 4.5])
       const result = pairs.map(([fg, bg, min]) => {
         const a = luminance(fg),
           b = luminance(bg)
