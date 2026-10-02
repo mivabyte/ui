@@ -1,11 +1,26 @@
 # Migrating to the shadcn-compatible distribution
 
-Version 27 is a breaking re-baseline of `@mivabyte/ui` onto the current official shadcn/ui component catalog.
+Version `26.10.2` is a breaking re-baseline of `@mivabyte/ui` onto the current official shadcn/ui component catalog.
+
+## Read this before upgrading
+
+This breaking change shipped as a **`minor`** version. `26.10.2` satisfies `^26.9.0` and `^26.9.21`, so an existing caret range resolves it with no manifest change:
+
+```bash
+npm install   # silently moves 26.9.21 -> 26.10.2
+```
+
+Two options:
+
+- **Migrate now.** Apply the changes below, then install `26.10.2` explicitly so the upgrade is intentional and visible in your lockfile diff.
+- **Stay on the old contract.** Pin `26.9.21` until you can migrate: `"@mivabyte/ui": "26.9.21"`.
+
+Do not let a caret range pull the breaking release in unnoticed. A future breaking change will return to a `major` version, so pinning is a temporary measure.
 
 ## Install and import
 
 ```bash
-npm install @mivabyte/ui
+npm install @mivabyte/ui@26.10.2
 ```
 
 ```tsx
@@ -19,7 +34,7 @@ The root barrel is also available, but component subpaths are preferred for expl
 
 ## Removed APIs
 
-Remove imports for the old provider, shell/theme or density helpers, custom layout extensions, legacy form barrel, and historical `reset.css`, `tokens.css`, and `themes.css` stylesheet subpaths. They are not part of the version 27 public contract.
+Remove imports for the old provider, shell/theme or density helpers, custom layout extensions, legacy form barrel, and historical `reset.css`, `tokens.css`, and `themes.css` stylesheet subpaths. They are not part of the `26.10.2` public contract.
 
 Two components published as official shadcn/ui modules were removed because they are not part of the upstream catalog:
 
@@ -55,15 +70,17 @@ Node.js 22 or newer. `engines.node` moved from `>=20` to `>=22`: the previous bo
 
 ## Dependencies you now own
 
-Version 27 no longer installs packages this library never imports. If you compose the affected components, declare them yourself:
+Version `26.10.2` no longer installs packages this library never imports. If you compose the affected components, declare them yourself:
 
 ```diff
    "dependencies": {
-     "@mivabyte/ui": "^27.0.0",
+     "@mivabyte/ui": "^26.10.2",
 +    "@hookform/resolvers": "^5.9.1",
 +    "zod": "^3.25.76",
    }
 ```
+
+`^26.10.2` is correct here only because it is written in the same change as the migration. Consumers still on the old contract should not widen an existing range to `^26` before migrating; see [Read this before upgrading](#read-this-before-upgrading).
 
 `zod` and `@hookform/resolvers` are optional peers used by your own resolver wiring, and `@tanstack/react-table` is an optional peer for consumers who compose `DataTable` with a TanStack table instance. Everything the components themselves render stays a direct dependency, including `@types/lodash`, which `recharts` v2 needs in order for its own type declarations to resolve in a consumer's `tsc` run.
 

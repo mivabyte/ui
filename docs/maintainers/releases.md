@@ -18,6 +18,27 @@ Pull requests that change `src/**` or release-relevant `package.json` fields are
 
 The no-release declaration is an escape hatch for genuinely internal work, not a way to skip versioning for consumer-visible changes.
 
+### Recorded exception: `26.10.2`
+
+`26.10.2` carries the shadcn/ui re-baseline, which removes the published
+subpaths `@mivabyte/ui/container` and `@mivabyte/ui/kbd-group` plus five root
+barrel exports. That is a breaking change under the table above, and it ships as
+a `minor` release instead. The exception was taken deliberately.
+
+Consequences that consumers and maintainers must respect:
+
+- `26.10.2` satisfies `^26.9.0` and `^26.9.21`, so caret ranges resolve the
+  breaking removals automatically. Consumers who cannot migrate in the same
+  install must pin below `26.10.0`, for example `26.9.21`, until they migrate.
+- The Changeset for that release is declared `minor`, so `changeset version`
+  derived `26.10.0`; the version was then set to `26.10.2` with the lockfile
+  synchronized. `26.10.0` and `26.10.1` were never published and do not exist on
+  npm.
+- The changelog entry states the exception in place, and
+  `docs/migrations/shadcn-compatible-release.md` carries the replacement code.
+- This is a one-time exception, not a new versioning scheme. Future breaking
+  changes return to `major`. Do not treat `26.10.x` as an ongoing release line.
+
 ## Version format and dist-tags
 
 The published version is plain semantic versioning — `MAJOR.MINOR.PATCH`, with no calendar component and no prerelease suffix. Changesets derives it from the highest pending bump type.
@@ -26,7 +47,7 @@ The release workflow enforces one additional rule before publishing: it fails wh
 
 That rule decided the outcome of the `26.9.x` line. It was versioned in a Calendar Versioning style — `26.9.10-1`, `26.9.21-1`, `26.9.21-2` — which always carried a `-N` suffix. Under the dist-tag rule those releases could not be published as `latest`, so they shipped on `next` and npm `latest` remained on the last dash-free version, `26.9.21`. Semver also cannot continue that line: `semver.inc("26.9.21-2", "minor")` is `26.10.0`, and `semver.inc("26.9.21-2", "major")` is `27.0.0`.
 
-The shadcn/ui re-baseline is therefore the first release to leave CalVer behind. Its `major` changeset produces `27.0.0` — a dash-free version — so it is the first release on this line eligible for the `latest` dist-tag. Do not reintroduce CalVer version strings; a dash in the version demotes the release to a `next` prerelease.
+The shadcn/ui re-baseline is therefore the first release to leave CalVer behind. It shipped as `26.10.2` — a dash-free version, so it is the first release on this line eligible for the `latest` dist-tag. It uses the `minor` bump despite carrying breaking removals; see [Recorded exception: `26.10.2`](#recorded-exception-26102) above. A dash in a future version still demotes that release to a `next` prerelease, so keep CalVer `-N` suffixes out of the version string.
 
 ## Release preparation
 
