@@ -21,7 +21,14 @@ test("release workflow is manual, authenticated, and GitHub-hosted", () => {
   assert.match(workflow, /npm install --global npm@11\.18\.0/)
   assert.match(workflow, /npm ci --ignore-scripts/)
   assert.match(workflow, /npm publish --access public --tag/)
-  assert.equal(packageJson.scripts?.prepublishOnly, "npm run verify")
+  // The publish gate is still the full verify pipeline. It runs through a
+  // wrapper so an inherited `npm_config_dry_run` - which `npm publish --dry-run`
+  // exports into this lifecycle script - cannot make the nested npm calls in
+  // publint and attw skip writing their tarballs.
+  assert.equal(
+    packageJson.scripts?.prepublishOnly,
+    "node scripts/without-dry-run.mjs npm run verify"
+  )
   assert.equal(packageJson.scripts?.["release:publish"], undefined)
   assert.doesNotMatch(workflow, /run: npm run verify/)
 

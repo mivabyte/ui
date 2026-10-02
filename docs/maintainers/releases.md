@@ -100,7 +100,7 @@ The workflow then:
 5. validates branch, repository visibility, version, canonical repository metadata derived from the current GitHub repository, pending Changesets, and dist-tag rules
 6. refuses to publish when the matching `v<version>` Git tag already exists
 7. refuses to publish a version that already exists on npm
-8. runs the production dependency audit and full `npm run verify` gate through `prepublishOnly`
+8. runs the production dependency audit and full `npm run verify` gate through `prepublishOnly`, invoked via `scripts/without-dry-run.mjs` so an inherited `npm_config_dry_run` from `npm publish --dry-run` cannot stop the nested npm calls in publint and attw from writing their tarballs
 9. publishes with `npm publish` using the short-lived OIDC identity supplied by GitHub Actions
 10. waits for the exact registry version and provenance attestation to become visible, then runs the canonical registry release probe against that exact published version
 11. after the publish job succeeds, creates the matching `v<version>` tag and GitHub Release at the exact workflow commit; releases using the `next` npm tag are marked as GitHub pre-releases
