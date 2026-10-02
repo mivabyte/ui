@@ -144,6 +144,17 @@ for (const file of workflowFiles) {
       `${file}: ${action}@${sha} is tag v${resolved.version} (major ${resolvedMajor}) but the workflow comment claims v${declaredMajor}`
     )
 
+    const existing = pins[action]
+    // Two steps can legitimately reference the same action at the same SHA
+    // (`github/codeql-action/init` and `.../analyze`, for example). They must
+    // agree: a silent last-write-wins here would drop the first pin from the
+    // record and let a downgrade in one step go unnoticed.
+    if (existing && existing.sha !== sha) {
+      throw new Error(
+        `${action} is referenced at two different SHAs: ${existing.sha} and ${sha}. Update every reference in one commit so the pin file stays a single source of truth.`
+      )
+    }
+
     pins[action] = { sha, version: resolved.version, tags: resolved.tags }
   }
 }
