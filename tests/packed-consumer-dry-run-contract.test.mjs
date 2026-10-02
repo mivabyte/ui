@@ -1,9 +1,8 @@
 import assert from "node:assert/strict"
-import { access, mkdtemp, rm } from "node:fs/promises"
+import { access, mkdtemp, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import test from "node:test"
-import { fileURLToPath } from "node:url"
 
 import { readJson, readRoot } from "./lib/source.mjs"
 
@@ -18,8 +17,6 @@ import { readJson, readRoot } from "./lib/source.mjs"
 // third-party tools that shell out to npm themselves - publint and attw both
 // pack internally - so the guard has to live in the shared `runNpm` helper
 // rather than at individual call sites.
-
-const root = fileURLToPath(new URL("..", import.meta.url))
 
 test("runNpm disables dry-run for every child npm invocation", async () => {
   const source = await readRoot("scripts/lib/process.mjs")
@@ -71,6 +68,12 @@ test("packing under an inherited npm_config_dry_run still writes a real tarball"
   const { preparePackageSource } =
     await import("../scripts/lib/package-source.mjs")
   const workspace = await mkdtemp(path.join(tmpdir(), "mivabyte-ui-dryrun-"))
+  // Pack an isolated fixture: npm versions that run prepare despite
+  // --ignore-scripts must not rebuild the shared dist while other tests read it.
+  await writeFile(
+    path.join(workspace, "package.json"),
+    JSON.stringify({ name: "dry-run-pack-fixture", version: "1.0.0" })
+  )
   const previous = process.env.npm_config_dry_run
   let packed
 
@@ -85,7 +88,7 @@ test("packing under an inherited npm_config_dry_run still writes a real tarball"
   // `npm publish --dry-run`.
   process.env.npm_config_dry_run = "true"
   packed = await preparePackageSource({
-    root,
+    root: workspace,
     artifacts: path.join(workspace, "artifacts"),
     ignoreScripts: true,
   })
