@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { mergeRenderedChild } from "@/lib/render-child"
 
 interface DialogProps extends React.ComponentPropsWithoutRef<
   typeof DialogPrimitive.Root
@@ -24,16 +25,9 @@ const DialogTrigger = React.forwardRef<
   }
 >(({ render, children, ...props }, ref) => {
   if (render) {
-    const renderedChild = React.isValidElement(render)
-      ? React.cloneElement(
-          render,
-          undefined,
-          (render.props as { children?: React.ReactNode }).children ?? children
-        )
-      : render
     return (
       <DialogPrimitive.Trigger ref={ref} asChild {...props}>
-        {renderedChild}
+        {mergeRenderedChild(render, children)}
       </DialogPrimitive.Trigger>
     )
   }
@@ -54,16 +48,9 @@ const DialogClose = React.forwardRef<
   }
 >(({ render, children, ...props }, ref) => {
   if (render) {
-    const renderedChild = React.isValidElement(render)
-      ? React.cloneElement(
-          render,
-          undefined,
-          (render.props as { children?: React.ReactNode }).children ?? children
-        )
-      : render
     return (
       <DialogPrimitive.Close ref={ref} asChild {...props}>
-        {renderedChild}
+        {mergeRenderedChild(render, children)}
       </DialogPrimitive.Close>
     )
   }

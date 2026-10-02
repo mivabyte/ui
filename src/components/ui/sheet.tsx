@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { mergeRenderedChild } from "@/lib/render-child"
 
 const Sheet = SheetPrimitive.Root
 
@@ -14,16 +15,9 @@ const SheetTrigger = React.forwardRef<
   }
 >(({ render, children, ...props }, ref) => {
   if (render) {
-    const renderedChild = React.isValidElement(render)
-      ? React.cloneElement(
-          render,
-          undefined,
-          (render.props as { children?: React.ReactNode }).children ?? children
-        )
-      : render
     return (
       <SheetPrimitive.Trigger ref={ref} asChild {...props}>
-        {renderedChild}
+        {mergeRenderedChild(render, children)}
       </SheetPrimitive.Trigger>
     )
   }
@@ -42,16 +36,9 @@ const SheetClose = React.forwardRef<
   }
 >(({ render, children, ...props }, ref) => {
   if (render) {
-    const renderedChild = React.isValidElement(render)
-      ? React.cloneElement(
-          render,
-          undefined,
-          (render.props as { children?: React.ReactNode }).children ?? children
-        )
-      : render
     return (
       <SheetPrimitive.Close ref={ref} asChild {...props}>
-        {renderedChild}
+        {mergeRenderedChild(render, children)}
       </SheetPrimitive.Close>
     )
   }

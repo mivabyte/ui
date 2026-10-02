@@ -1463,7 +1463,7 @@ export const useToastManager: typeof Toast_2.useToastManager;
 
 // Warnings were encountered during analysis:
 //
-// src/components/ui/dialog.tsx:15:13 - (ae-forgotten-export) The symbol "DialogProps_2" needs to be exported by the entry point index.d.ts
+// src/components/ui/dialog.tsx:16:13 - (ae-forgotten-export) The symbol "DialogProps_2" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
