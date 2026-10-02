@@ -2,6 +2,17 @@
 
 ## 26.10.2
 
+- b0b8841: Render the `Badge` `info` variant neutral instead of blue-tinted.
+  `variant="info"` used `bg-info-subtle text-info`. Once the badge carries more
+  than a single word — a status phrase, a sentence fragment inside a paragraph —
+  the tinted pill reads as a link or a button rather than as a quiet inline
+  label. It now uses `bg-muted text-foreground`, which stays distinguishable
+  from `secondary` in both themes because `muted` is lighter and `foreground` is
+  darker. Measured contrast improves from 5.29:1 to 15.37:1 in light and from
+  8.38:1 to 14.05:1 in dark. No other component used `bg-info-subtle`, so the
+  change is limited to this variant. The variant name is unchanged; renaming it
+  would be a breaking public API change.
+
 ### Minor Changes (includes breaking removals)
 
 - 0243f0d: Align the component registry with the official shadcn/ui catalog.

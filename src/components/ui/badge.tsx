@@ -15,7 +15,11 @@ const badgeVariants = cva(
         accent: "border-transparent bg-accent text-accent-foreground",
         success: "border-transparent bg-success-subtle text-success",
         warning: "border-transparent bg-warning-subtle text-warning",
-        info: "border-transparent bg-info-subtle text-info",
+        // Neutral rather than tinted. A blue informational pill reads as a link
+        // or a button once it carries more than a word of text, and it sits too
+        // loud inside a paragraph. `muted` is lighter than `secondary`, so this
+        // variant stays distinguishable from `secondary` in both themes.
+        info: "border-transparent bg-muted text-foreground",
         outline: "text-foreground",
       },
     },
