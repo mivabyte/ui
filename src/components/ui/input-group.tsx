@@ -1,6 +1,4 @@
 import * as React from "react"
-import { Input } from "./input"
-import { Label } from "./label"
 import { cn } from "@/lib/utils"
 
 export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {}

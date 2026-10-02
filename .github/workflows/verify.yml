@@ -52,11 +52,21 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run storybook:typecheck
       - run: npm run storybook:build
+      # Distinct cache key from browser.yml: this job installs all three engines at
+      # once, so sharing a key would let whichever job saves first win and
+      # silently leave the others uncached.
+      - name: Cache Playwright browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-all-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-all-
       - name: Install design test browsers
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Verify design compositions

@@ -29,7 +29,7 @@
 
 - **📦 Zero Copy-Paste Required**: Shipped as a fully compiled npm package (`@mivabyte/ui`) with dual ESM and CommonJS exports and bundled TypeScript declarations.
 - **🎨 Midnight, Cyan & Azure Visual System**: A cohesive, distinctive color language engineered with semantic HSL channels. Features rich deep navy dark surfaces, energetic cyan highlights, and crisp azure daylight actions.
-- **⚡ 66 Production-Ready Component Primitives**: Built on battle-tested Radix UI and `@shadcn/react` foundations, from buttons and responsive dialogs to TanStack data tables and Recharts visualizations.
+- **⚡ 66 Production-Ready Component Primitives**: Built on battle-tested Radix UI and Base UI primitives, from buttons and responsive dialogs to headless data tables and Recharts visualizations.
 - **🎯 Precise Subpath Imports**: Fine-grained subpath exports (`@mivabyte/ui/button`, `@mivabyte/ui/card`, `@mivabyte/ui/dialog`) bypass the root barrel, so the dependency graph stays explicit per component.
 - **♿ WCAG 2.1 AA Compliance Built-In**: Fully tested with Axe Core across all components. Keyboard traps, accessible dialog lifecycles, ARIA roles, and high-contrast focus outlines work out of the box.
 - **📏 Adaptive Density Scaling**: Seamlessly switch between spacious touch-friendly `comfortable` mode and information-dense `compact` desktop mode via `data-density`.
@@ -56,7 +56,12 @@ yarn add @mivabyte/ui
 bun add @mivabyte/ui
 ```
 
-> **Peer Dependency Requirement**: `@mivabyte/ui` requires `react >= 19.0.0` and `react-dom >= 19.0.0`.
+Requires **Node.js >= 22** and `react >= 19.0.0` / `react-dom >= 19.0.0`.
+
+`zod`, `@hookform/resolvers`, and `@tanstack/react-table` are optional peers, not
+bundled dependencies: this package never imports them, so install them yourself
+only if you wire a schema resolver or compose `DataTable` with a TanStack table
+instance.
 
 ---
 
@@ -425,15 +430,15 @@ See [`docs/maintainers/releases.md`](docs/maintainers/releases.md) for maintaine
 
 ## Documentation Directory
 
-| Document                                                                                         | Purpose                                                                             |
-| :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| **[`DESIGN.md`](DESIGN.md)**                                                                     | Canonical design contract, color philosophy, typography, and motion specifications  |
-| **[`docs/components.md`](docs/components.md)**                                                   | Per-component catalog: import subpath, runtime exports, and exported types per slug |
-| **[`docs/generated/exports.md`](docs/generated/exports.md)**                                     | Machine-generated authoritative package export and subpath map                      |
-| **[`docs/upstream/component-parity.md`](docs/upstream/component-parity.md)**                     | Parity tracking against upstream shadcn/ui primitives                               |
-| **[`docs/accessibility/keyboard-interactions.md`](docs/accessibility/keyboard-interactions.md)** | Keyboard interaction and focus management specification                             |
-| **[`docs/maintainers/releases.md`](docs/maintainers/releases.md)**                               | Release workflow and publishing procedures                                          |
-| **[`docs/migration/shadcn-compatible-release.md`](docs/migration/shadcn-compatible-release.md)** | Migration guide from legacy versions to the pure Radix/shadcn distribution          |
+| Document                                                                                           | Purpose                                                                             |
+| :------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| **[`DESIGN.md`](DESIGN.md)**                                                                       | Canonical design contract, color philosophy, typography, and motion specifications  |
+| **[`docs/components.md`](docs/components.md)**                                                     | Per-component catalog: import subpath, runtime exports, and exported types per slug |
+| **[`docs/generated/exports.md`](docs/generated/exports.md)**                                       | Machine-generated authoritative package export and subpath map                      |
+| **[`docs/upstream/component-parity.md`](docs/upstream/component-parity.md)**                       | Parity tracking against upstream shadcn/ui primitives                               |
+| **[`docs/accessibility/keyboard-interactions.md`](docs/accessibility/keyboard-interactions.md)**   | Keyboard interaction and focus management specification                             |
+| **[`docs/maintainers/releases.md`](docs/maintainers/releases.md)**                                 | Release workflow and publishing procedures                                          |
+| **[`docs/migrations/shadcn-compatible-release.md`](docs/migrations/shadcn-compatible-release.md)** | Migration guide from legacy versions to the pure Radix/shadcn distribution          |
 
 ---
 

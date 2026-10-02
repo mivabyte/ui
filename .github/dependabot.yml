@@ -15,13 +15,36 @@ updates:
       production-dependencies:
         dependency-type: production
         update-types: [minor, patch]
+    # A newly published version is often broken for hours. Dependabot applies a
+    # 3-day default; majors get longer because a breaking upgrade deserves a
+    # deliberate decision rather than an auto-merge.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
     commit-message:
       prefix: deps
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: monthly
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
     open-pull-requests-limit: 3
+    groups:
+      # A major bump is the interesting one: `scripts/audit-source.mjs` enforces
+      # a per-action major floor, so majors arrive as one reviewable PR instead
+      # of drifting into a single workflow unnoticed.
+      actions-major:
+        applies-to: version-updates
+        update-types: [major]
+      actions-minor-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]
+    # GitHub Actions does not support the SemVer-specific cooldown keys, only
+    # `default-days`.
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: ci

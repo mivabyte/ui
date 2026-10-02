@@ -3,8 +3,18 @@ name: Browser
 on:
   workflow_dispatch:
   pull_request:
+    # This workflow only installs the tarball and drives browsers, so
+    # documentation-only changes cannot affect it. `verify.yml` deliberately
+    # stays unfiltered because `api:check` and `registry:check` both assert on
+    # markdown (`etc/api/*.api.md`, `docs/generated/exports.md`).
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
   push:
     branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
 
 permissions:
   contents: read
@@ -28,15 +38,38 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 22
+          node-version-file: ".nvmrc"
           cache: npm
           cache-dependency-path: |
             package-lock.json
             fixtures/vite-react-19/package-lock.json
       - run: npm ci --ignore-scripts
       - run: npm audit --omit=dev
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
-      - run: npm run test:e2e -- --project=${{ matrix.browser }}
+      # Browser binaries are ~1.5 GB per job; keyed on the lockfile that pins
+      # @playwright/test so an unrelated dependency bump keeps the cache. The
+      # browser name is part of the key because the three matrix legs run in
+      # parallel and `actions/cache` is write-once: without it only one leg could
+      # ever save, and the other two would re-download on every run.
+      - name: Cache Playwright browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
+          # Browser-scoped fallback only. A bare `${{ runner.os }}-playwright-`
+          # prefix would also match the three-browser `all` cache that verify.yml
+          # writes, letting one leg silently restore a different lockfile's set.
+          restore-keys: |
+            ${{ runner.os }}-playwright-${{ matrix.browser }}-
+      - name: Install browser under test
+        # Passed through the environment: a matrix value interpolated into `run:`
+        # is shell code, and this keeps the injection class closed repository-wide.
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: npx playwright install --with-deps "$BROWSER"
+      - name: Run ${{ matrix.browser }} end-to-end suite
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: npm run test:e2e -- --project="$BROWSER"
       - name: Upload Playwright diagnostics
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -1,0 +1,70 @@
+name: Actions Security
+
+# Static analysis for the GitHub Actions workflows themselves. `audit:source`
+# only proves that `uses:` references are SHA-pinned and that their declared
+# major is current; it cannot see script injection through `${{ }}` expansion or
+# over-broad `permissions` blocks.
+#
+# Persona is `pedantic`, not the `regular` default, because two rules that matter
+# here are gated behind it. Verified against a probe workflow using
+# `permissions: write-all`: `regular` reports 0 findings and exits 0, while
+# `pedantic` and `auditor` both report `excessive-permissions`. The repo is kept
+# clean at `pedantic`, so the stricter persona costs nothing.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "scripts/audit-source.mjs"
+      - "scripts/sync-action-pins.mjs"
+      - "etc/action-pins.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: actions-security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  zizmor:
+    name: zizmor workflow audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Required: the action bind-mounts $GITHUB_WORKSPACE into the container and
+      # resolves `.` from it. Without a checkout it audits an empty workspace and
+      # exits non-zero on every run.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Re-resolves every pinned action SHA against the GitHub tags API and fails
+      # if `etc/action-pins.json` is stale. This is what stops a fabricated or
+      # downgraded SHA from passing the offline check in `audit:source`.
+      - name: Verify action pins against the GitHub API
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/sync-action-pins.mjs --check
+      - uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
+        with:
+          # `default`, not `workflows`: the workflows-only collection excludes
+          # composite action definitions, so an unpinned `uses:` inside
+          # `.github/actions/**` would be invisible to this gate.
+          inputs: ".github"
+          collect: default
+          # Pinned so the gate reports the same rule set that was verified
+          # locally, instead of silently changing when "latest" moves.
+          version: "1.16.3"
+          persona: pedantic
+          # Advisory data is fetched live by default, which means an advisory
+          # published against any pinned SHA turns this job red with no change in
+          # this repository. `audit:source` is the offline gate for pins; this job
+          # covers workflow semantics only.
+          online-audits: "false"
+          # Annotations instead of SARIF upload: findings stay visible in the
+          # checks UI without requiring a second write scope.
+          advanced-security: "false"
+          annotations: "true"
+          color: "false"

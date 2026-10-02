@@ -52,22 +52,43 @@ test("release workflow reserves the matching Git tag before publishing", () => {
   )
 })
 
+// The probe argument must arrive through `env:` rather than `${{ }}` expansion
+// inside `run:`, because an interpolated `inputs.version` is shell code.
+const PROBE_STEP = 'node scripts/check-registry-release.mjs "$VERSION"'
+
 test("release workflow verifies the exact published version after publish", () => {
   const publishIndex = workflow.indexOf(
     'run: npm publish --access public --tag "$NPM_TAG"'
   )
-  const probeIndex = workflow.indexOf(
-    'node scripts/check-registry-release.mjs "${{ inputs.version }}"'
-  )
+  const probeIndex = workflow.indexOf(PROBE_STEP)
 
   assert.ok(publishIndex >= 0, "release workflow must publish through npm")
   assert.ok(probeIndex > publishIndex, "registry probe must run after publish")
 })
 
-test("GitHub release synchronization runs only after verified publishing", () => {
-  const probeIndex = workflow.indexOf(
-    'node scripts/check-registry-release.mjs "${{ inputs.version }}"'
+test("release workflow passes the requested version through the environment", () => {
+  const stepIndex = workflow.indexOf(
+    "- name: Verify exact published registry release"
   )
+  assert.ok(
+    stepIndex >= 0,
+    "release workflow must verify the published release"
+  )
+
+  const step = workflow.slice(
+    stepIndex,
+    workflow.indexOf("- name:", stepIndex + 10)
+  )
+  assert.match(step, /VERSION: \$\{\{ inputs\.version \}\}/)
+  assert.doesNotMatch(
+    step,
+    /\$\{\{[^}]*\}\}[^\n]*check-registry-release|check-registry-release[^\n]*\$\{\{/,
+    "the probe argument must not be a template expansion inside run:"
+  )
+})
+
+test("GitHub release synchronization runs only after verified publishing", () => {
+  const probeIndex = workflow.indexOf(PROBE_STEP)
   const syncJobIndex = workflow.indexOf("\n  github-release:")
   const publishJob = workflow.slice(0, syncJobIndex)
   const syncJob = workflow.slice(syncJobIndex)

@@ -18,7 +18,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: npm-release
@@ -30,13 +29,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: npm
+    permissions:
+      contents: read
+      id-token: write # only this job exchanges an OIDC token for an npm publish grant
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version-file: ".nvmrc"
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - name: Pin OIDC-capable npm CLI
@@ -132,14 +134,16 @@ jobs:
           NPM_TAG: ${{ inputs.tag }}
         run: npm publish --access public --tag "$NPM_TAG"
       - name: Verify exact published registry release
-        run: node scripts/check-registry-release.mjs "${{ inputs.version }}"
+        env:
+          VERSION: ${{ inputs.version }}
+        run: node scripts/check-registry-release.mjs "$VERSION"
 
   github-release:
     name: Sync GitHub release
     needs: publish
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # creates the GitHub release and its tag
     steps:
       - name: Create matching GitHub release
         env:
