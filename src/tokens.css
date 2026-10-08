@@ -2,8 +2,8 @@
   :root {
     /* Brand primitives stay stable; components consume semantic roles. */
     --mivabyte-main: hsl(var(--brand-cyan-500));
-    --mivabyte-midnight: #0b1220;
-    --mivabyte-midnight-surface: #111c2e;
+    --mivabyte-midnight: #0b1220; /* Legacy brand primitive, not the dark canvas. */
+    --mivabyte-midnight-surface: #111c2e; /* Legacy brand primitive. */
     --mivabyte-cyan: hsl(var(--brand-cyan-500));
     --mivabyte-cyan-dark: hsl(var(--brand-cyan-500));
     --mivabyte-violet: #8b5cf6; /* Retained for existing brand-asset consumers. */
@@ -67,24 +67,24 @@
   :root,
   .light {
     color-scheme: light;
-    /* Cool slate surfaces with exact cyan fills and readable cyan links. */
+    /* Cool slate surfaces with white-on-cyan actions and readable cyan links. */
     --background: 210 40% 98.03921568627452%;
     --foreground: 222.22222222222226 47.36842105263158% 11.17647058823529%;
     --section: 210 40% 96.07843137254901%;
     --surface: 0 0% 100%;
     --surface-elevated: 210 40% 98.03921568627452%;
     --surface-interactive: 210 40% 96.07843137254901%;
-    --primary: var(--brand-cyan-500);
-    --primary-hover: var(--brand-cyan-400);
+    --primary: var(--brand-cyan-700);
+    --primary-hover: var(--brand-cyan-800);
     --link: var(--brand-cyan-700);
-    --primary-border: var(--link);
-    --primary-foreground: 220 48.83720930232558% 8.43137254901961%;
+    --primary-border: var(--primary);
+    --primary-foreground: 0 0% 100%;
     /* Warm Apricot secondary actions complement the Cyan primary action. */
     --secondary: 34.28571428571429 100% 91.76470588235294%;
     --secondary-hover: 32.142857142857146 97.67441860465117% 83.13725490196077%;
     --secondary-foreground: 15 79.06976744186048% 33.725490196078425%;
     --secondary-strong: 17.47252747252747 88.34951456310678% 40.3921568627451%;
-    --secondary-border: var(--secondary-strong);
+    --secondary-border: var(--secondary);
     --muted: 210 40% 96.07843137254901%;
     --muted-foreground: 215.29411764705881 19.31818181818182% 34.50980392156863%;
     --accent: 185.10638297872345 95.9183673469388% 90.3921568627451%;
@@ -104,6 +104,7 @@
     --border: 212.72727272727269 26.82926829268293% 83.92156862745097%;
     --border-strong: 215.38461538461539 16.31799163179916% 46.86274509803921%;
     --input: 215.38461538461539 16.31799163179916% 46.86274509803921%;
+    --button-outline-border: 0 0% 54.90196078431373%;
     --ring: var(--brand-cyan-700);
     --overlay: 222 47% 8% / 0.6;
     --chart-1: hsl(var(--link));
@@ -118,34 +119,33 @@
   }
   .dark {
     color-scheme: dark;
-    /* Midnight navy surfaces keep exact cyan accents distinct. */
-    --background: 220 48.83720930232558% 8.43137254901961%;
-    --foreground: 210 40% 98.03921568627452%;
-    --section: 216.92307692307691 46.42857142857144% 10.98039215686275%;
-    --surface: 217.24137931034483 46.03174603174603% 12.35294117647059%;
-    --surface-elevated: 217.29729729729732 40.65934065934066% 17.84313725490196%;
-    --surface-interactive: 215.38461538461539 35.13513513513514%
-      21.76470588235294%;
+    /* Neutral charcoal surfaces keep exact cyan accents distinct. */
+    --background: 0 0% 7.0588235294117645%;
+    --foreground: 0 0% 98.03921568627452%;
+    --section: 0 0% 9.411764705882353%;
+    --surface: 0 0% 10.980392156862745%;
+    --surface-elevated: 0 0% 16.07843137254902%;
+    --surface-interactive: 0 0% 20%;
     --primary: var(--brand-cyan-500);
     --primary-hover: var(--brand-cyan-400);
     --link: var(--brand-cyan-500);
     --primary-border: var(--link);
-    --primary-foreground: 220 48.83720930232558% 8.43137254901961%;
+    --primary-foreground: 0 0% 7.0588235294117645%;
     --secondary: 20.769230769230766 54.16666666666667% 18.823529411764707%;
     --secondary-hover: 20.869565217391308 54.330708661417326%
       24.901960784313726%;
     --secondary-foreground: 32.142857142857146 97.67441860465117%
       83.13725490196077%;
     --secondary-strong: 30.656934306569347 97.1631205673759% 72.35294117647058%;
-    --secondary-border: var(--secondary-strong);
-    --muted: 217.29729729729732 40.65934065934066% 17.84313725490196%;
-    --muted-foreground: 215 20.22471910112359% 65.09803921568627%;
+    --secondary-border: var(--secondary);
+    --muted: var(--surface-elevated);
+    --muted-foreground: 0 0% 65.09803921568627%;
     --accent: 196.99999999999997 78.94736842105263% 14.901960784313726%;
     --accent-foreground: 186.20689655172416 93.5483870967742% 81.76470588235294%;
     --accent-muted: 196.80000000000004 70.09345794392523% 20.980392156862745%;
     --accent-strong: 187.94117647058826 85.71428571428572% 53.333333333333336%;
     --destructive: 351.30434782608694 94.52054794520548% 71.37254901960783%;
-    --destructive-foreground: 220 48.83720930232558% 8.43137254901961%;
+    --destructive-foreground: 0 0% 7.0588235294117645%;
     --destructive-subtle: 336 42.16867469879519% 16.27450980392157%;
     --success: 158.11320754716982 64.37246963562752% 51.56862745098039%;
     --success-subtle: 160.71428571428572 46.66666666666666% 11.76470588235294%;
@@ -153,20 +153,22 @@
     --warning-subtle: 36.66666666666667 54.54545454545454% 12.94117647058824%;
     --info: 211.69811320754715 96.36363636363637% 78.43137254901961%;
     --info-subtle: 216 52.08333333333333% 18.82352941176471%;
-    --border: 214.73684210526318 31.14754098360656% 23.92156862745098%;
-    --border-strong: 215 20.22471910112359% 65.09803921568627%;
-    --input: 215 20.22471910112359% 65.09803921568627%;
+    --border: 0 0% 23.92156862745098%;
+    /* Match light control-boundary contrast without bright outlines. */
+    --border-strong: 0 0% 52.94117647058824%;
+    --input: 0 0% 52.94117647058824%;
+    --button-outline-border: var(--input);
     --ring: var(--brand-cyan-500);
-    --overlay: 218 63% 3% / 0.72;
+    --overlay: 0 0% 3% / 0.72;
     --chart-1: hsl(var(--link));
     --chart-2: hsl(158.11320754716982 64.37246963562752% 51.56862745098039%);
     --chart-3: hsl(30.656934306569347 97.1631205673759% 72.35294117647058%);
     --chart-4: hsl(43.25581395348837 96.41255605381164% 56.27450980392157%);
     --chart-5: hsl(351.30434782608694 94.52054794520548% 71.37254901960783%);
-    --highlight: 210 50% 90% / 0.06;
-    --shadow-ink: 220 48.83720930232558% 8.43137254901961%;
+    --highlight: 0 0% 100% / 0.06;
+    --shadow-ink: 0 0% 0%;
     --accent-glow: var(--brand-cyan-500) / 0.08;
-    --grid-line: 207 40% 31% / 0.5;
+    --grid-line: 0 0% 31% / 0.5;
   }
   /* Resolve aliases in every mode scope, including nested previews. */
   :root,
@@ -233,6 +235,7 @@
       --border: var(--foreground);
       --border-strong: var(--foreground);
       --input: var(--foreground);
+      --button-outline-border: var(--foreground);
     }
   }
 }

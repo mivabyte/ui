@@ -27,9 +27,9 @@ export function App() {
 
 Root imports are supported; component subpaths give the clearest dependency boundary and are verified for ESM and CommonJS consumers.
 
-## Official catalog — 66 modules
+## Component catalog — 67 modules
 
-`accordion`, `alert`, `alert-dialog`, `aspect-ratio`, `attachment`, `avatar`, `badge`, `breadcrumb`, `bubble`, `button`, `button-group`, `calendar`, `card`, `carousel`, `chart`, `checkbox`, `collapsible`, `combobox`, `command`, `context-menu`, `data-table`, `date-picker`, `dialog`, `direction`, `drawer`, `dropdown-menu`, `empty`, `field`, `form`, `hover-card`, `input`, `input-group`, `input-otp`, `item`, `kbd`, `label`, `marker`, `menubar`, `message`, `message-scroller`, `native-select`, `navigation-menu`, `pagination`, `popover`, `progress`, `questionnaire`, `radio-group`, `resizable`, `scroll-area`, `select`, `separator`, `sheet`, `sidebar`, `skeleton`, `slider`, `sonner`, `spinner`, `switch`, `table`, `tabs`, `textarea`, `toast`, `toggle`, `toggle-group`, `tooltip`, `typography`.
+`accordion`, `alert`, `alert-dialog`, `aspect-ratio`, `attachment`, `avatar`, `badge`, `breadcrumb`, `bubble`, `button`, `button-group`, `calendar`, `card`, `carousel`, `chart`, `checkbox`, `collapsible`, `combobox`, `command`, `context-menu`, `data-table`, `date-picker`, `dialog`, `direction`, `drawer`, `dropdown-menu`, `empty`, `field`, `form`, `hover-card`, `input`, `input-group`, `input-otp`, `item`, `kbd`, `label`, `marker`, `media-player`, `menubar`, `message`, `message-scroller`, `native-select`, `navigation-menu`, `pagination`, `popover`, `progress`, `questionnaire`, `radio-group`, `resizable`, `scroll-area`, `select`, `separator`, `sheet`, `sidebar`, `skeleton`, `slider`, `sonner`, `spinner`, `switch`, `table`, `tabs`, `textarea`, `toast`, `toggle`, `toggle-group`, `tooltip`, `typography`.
 
 ## Actions & Triggers
 
@@ -385,6 +385,17 @@ Runtime exports: `ScrollArea`, `ScrollBar`.
 
 Storybook usage: `stories/scroll-area.stories.tsx`.
 
+`ScrollArea` uses Radix custom scrollbars by default. Set `scrollbar="native"`
+for browser-managed scrollbar positioning without JavaScript thumb updates.
+Native mode scrolls vertically and reserves a stable scrollbar gutter where
+supported. Scrollbar visibility follows browser and OS settings; Radix `type`
+and `scrollHideDelay` only affect custom mode.
+
+Use `viewportRef` to read or set the scroll position in either mode. The
+forwarded ref continues to refer to the outer root. Both viewports expose
+`data-slot="scroll-area-viewport"`; native mode does not use
+`data-radix-scroll-area-viewport`.
+
 ### Aspect Ratio
 
 Subpath `@mivabyte/ui/aspect-ratio`, source `src/components/ui/aspect-ratio.tsx`.
@@ -515,6 +526,11 @@ Runtime exports: `MessageScroller`.
 
 Storybook usage: `stories/message-scroller.stories.tsx`.
 
+`MessageScroller` defaults to `scrollbar="native"` so the browser positions the
+chat scrollbar even when rendering messages keeps JavaScript busy. Set
+`scrollbar="custom"` to retain the previous Radix appearance and behavior.
+Automatic scrolling is managed by the consumer through `viewportRef`.
+
 ### Carousel
 
 Subpath `@mivabyte/ui/carousel`, source `src/components/ui/carousel.tsx`.
@@ -610,3 +626,34 @@ Runtime exports: `ChartContainer`, `ChartLegend`, `ChartLegendContent`, `ChartSt
 Exported types: `ChartConfig`, `ChartTooltipContentProps`.
 
 Storybook usage: `stories/chart.stories.tsx`.
+
+## Media
+
+### Media Player
+
+Subpath `@mivabyte/ui/media-player`, source `src/components/ui/media-player.tsx`.
+
+Runtime exports: `MediaPlayer`.
+
+Exported types: `MediaPlayerProps`, `MediaPlayerLabels`.
+
+Storybook usage: `stories/media-player.stories.tsx`.
+
+```tsx
+import { MediaPlayer } from "@mivabyte/ui/media-player"
+import "@mivabyte/ui/styles.css"
+
+export function VideoPreview() {
+  return (
+    <MediaPlayer
+      src="/video.mp4"
+      poster="/poster.jpg"
+      aria-label="Product overview"
+    />
+  )
+}
+```
+
+The player uses the native video element with themed play/pause, mute, volume, seeking and fullscreen controls. It pauses when the video leaves the viewport or the tab becomes hidden, preserves its position, and resumes only on an explicit play action. Set `pauseWhenOutOfView={false}` to opt out. Fullscreen uses the browser API or Safari's native video fullscreen; the icon is hidden when neither is available. `showFullscreen={false}` hides it explicitly.
+
+Standard video props and events are forwarded to the video, and the ref exposes `HTMLVideoElement`. Supply `<source>` and `<track default>` children for alternative sources and visible captions. `className` styles the outer surface; `videoClassName` styles the video. Click the video surface or use its keyboard-accessible button to toggle playback. During playback, desktop controls fade when the pointer leaves the player and return on hover or keyboard focus; touch devices and forced-color mode keep them visible. Errors keep controls visible; `labels` overrides control labels and error messages for localization. Playback and fullscreen rejections show an accessible error. Autoplay follows browser permissions and remains subject to the visibility pause behavior.

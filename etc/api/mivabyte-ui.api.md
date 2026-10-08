@@ -890,6 +890,45 @@ export const Label: React_2.ForwardRefExoticComponent<Omit<LabelPrimitive.LabelP
 export function Marker(input: MarkerProps): React_2.JSX.Element;
 
 // @public (undocumented)
+export const MediaPlayer: React_2.ForwardRefExoticComponent<MediaPlayerProps & React_2.RefAttributes<HTMLVideoElement>>;
+
+// @public (undocumented)
+export interface MediaPlayerLabels {
+    // (undocumented)
+    enterFullscreen: string;
+    // (undocumented)
+    exitFullscreen: string;
+    // (undocumented)
+    fullscreenError: string;
+    // (undocumented)
+    mediaError: string;
+    // (undocumented)
+    mute: string;
+    // (undocumented)
+    pause: string;
+    // (undocumented)
+    play: string;
+    // (undocumented)
+    playbackError: string;
+    // (undocumented)
+    seek: string;
+    // (undocumented)
+    unmute: string;
+    // (undocumented)
+    volume: string;
+}
+
+// @public (undocumented)
+export interface MediaPlayerProps extends Omit<React_2.VideoHTMLAttributes<HTMLVideoElement>, "controls"> {
+    // (undocumented)
+    labels?: Partial<MediaPlayerLabels>;
+    pauseWhenOutOfView?: boolean;
+    // (undocumented)
+    showFullscreen?: boolean;
+    videoClassName?: string;
+}
+
+// @public (undocumented)
 export const Menubar: React_2.ForwardRefExoticComponent<Omit<MenubarPrimitive.MenubarProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
@@ -1073,7 +1112,10 @@ export const ResizablePanel: typeof ResizablePrimitive.Panel;
 export const ResizablePanelGroup: (input: React.ComponentProps<typeof ResizablePrimitive.Group>) => JSX.Element;
 
 // @public (undocumented)
-export const ScrollArea: React_2.ForwardRefExoticComponent<Omit<ScrollAreaPrimitive.ScrollAreaProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
+export const ScrollArea: React_2.ForwardRefExoticComponent<Omit<ScrollAreaPrimitive.ScrollAreaProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & {
+    scrollbar?: "custom" | "native";
+    viewportRef?: React_2.Ref<HTMLDivElement>;
+} & React_2.RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
 export const ScrollBar: React_2.ForwardRefExoticComponent<Omit<ScrollAreaPrimitive.ScrollAreaScrollbarProps & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLDivElement>>;

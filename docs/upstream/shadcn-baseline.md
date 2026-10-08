@@ -12,7 +12,7 @@ At that SHA the upstream base registry (`apps/v4/registry/bases/base/ui/`) holds
 
 ## Source of truth
 
-- **Catalog:** `config/components.mjs` (66 component slugs)
+- **Catalog:** `config/components.mjs` (66 shadcn-compatible slugs plus the Mivabyte `media-player` module)
 - **Source modules:** `src/components/ui/`
 - **Style entry point:** `src/styles.css` → `@mivabyte/ui/styles.css`
 - **Release checks:** registry, contracts, Storybook coverage, package linting, packed consumer builds, and API extraction
@@ -32,4 +32,4 @@ Exact pinned dependency versions live in `package.json` and `package-lock.json`;
 
 ## Distribution policy
 
-Only the official component registry and its styles are public. The root barrel must agree with its declaration output and must not leak internal hooks or library helpers. Previous proprietary providers, shell contracts, theme/density helpers, custom layout extensions, and legacy stylesheet subpaths are excluded.
+Only registered components and their styles are public. The registry distinguishes shadcn-compatible components from Mivabyte additions such as `media-player`. The root barrel must agree with its declaration output and must not leak internal hooks or library helpers. Previous proprietary providers, shell contracts, theme/density helpers, custom layout extensions, and legacy stylesheet subpaths are excluded.

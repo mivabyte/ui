@@ -8,16 +8,21 @@ export default defineConfig({
   // The suite is small, so serialise it rather than let artefact cleanup race.
   workers: 1,
   timeout: 60000,
-  use: { baseURL: "http://localhost:6006", trace: "retain-on-failure" },
+  use: {
+    baseURL: process.env.STORYBOOK_URL ?? "http://localhost:6006",
+    trace: "retain-on-failure",
+  },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],
-  webServer: {
-    command: "npm run storybook -- --host localhost --ci",
-    url: "http://localhost:6006",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+  webServer: process.env.STORYBOOK_URL
+    ? undefined
+    : {
+        command: "npm run storybook -- --host localhost --ci",
+        url: "http://localhost:6006",
+        reuseExistingServer: !process.env.CI,
+        timeout: 120000,
+      },
 })

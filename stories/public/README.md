@@ -1,0 +1,1 @@
+`media-player-demo.mp4` is a locally generated 30-second H.264/AAC test clip: Mivabyte-colored geometric shapes and a quiet tone. It contains no third-party media and is only a Storybook/browser-test asset, not part of the published package.

@@ -19,7 +19,7 @@ Markenanker sind keine universell geeigneten Textfarben. Komponenten verwenden d
 
 | Rolle                   | Hell: Text / Fläche   | Dunkel: Text / Fläche |
 | ----------------------- | --------------------- | --------------------- |
-| Hauptaktion             | `#0B1220` / `#06B6D4` | `#0B1220` / `#06B6D4` |
+| Hauptaktion             | `#FFFFFF` / `#0E7490` | `#121212` / `#06B6D4` |
 | Sekundäre Aktion        | `#9A3412` / `#FFEDD5` | `#FED7AA` / `#4A2816` |
 | Sekundäre Aktion, Hover | `#9A3412` / `#FED7AA` | `#FED7AA` / `#62351D` |
 | Auswahl                 | `#155E75` / `#CFFAFE` | `#A5F3FC` / `#083344` |
@@ -27,12 +27,14 @@ Markenanker sind keine universell geeigneten Textfarben. Komponenten verwenden d
 | Warnung                 | `#B45309` / `#FFFBEB` | `#FBBF24` / `#33250F` |
 | Fehler, dezente Fläche  | `#BE123C` / `#FFF1F2` | `#FB7185` / `#3B1826` |
 | Information             | `#1D4ED8` / `#EFF6FF` | `#93C5FD` / `#172B49` |
-| Inhalt                  | `#0F172A` / `#F8FAFC` | `#F8FAFC` / `#0B1220` |
-| Karte                   | `#0F172A` / `#FFFFFF` | `#F8FAFC` / `#111C2E` |
+| Inhalt                  | `#0F172A` / `#F8FAFC` | `#FAFAFA` / `#121212` |
+| Karte                   | `#0F172A` / `#FFFFFF` | `#FAFAFA` / `#1C1C1C` |
 
-Links verwenden `#0E7490` auf hellen Flächen und `#06B6D4` auf dunklen. Sekundäre Buttons haben erkennbare Konturen (`#C2410C` / `#FDBA74`). Apricot wird nicht als Warnsignal eingesetzt: Warnungen verwenden die eigene Amber-Rolle und eine ausdrückliche Zustandsbeschreibung. In Diagrammen ergänzt eine gestrichelte Apricot-Linie die durchgezogene Cyan-Linie; Beschriftung und Linienmuster bleiben auch ohne Farberkennung verständlich.
+Links verwenden `#0E7490` auf hellen Flächen und `#06B6D4` auf dunklen. Die Konturen gefüllter Buttons entsprechen ihrer Fläche. Helle Hauptaktionen verwenden dunkles Cyan (`#0E7490`) mit weißer Beschriftung; der Hover-Zustand verwendet `#155E75`. Outline-Buttons verwenden neutrale Konturen (`#8C8C8C` / `#878787`). Apricot wird nicht als Warnsignal eingesetzt: Warnungen verwenden die eigene Amber-Rolle und eine ausdrückliche Zustandsbeschreibung. In Diagrammen ergänzt eine gestrichelte Apricot-Linie die durchgezogene Cyan-Linie; Beschriftung und Linienmuster bleiben auch ohne Farberkennung verständlich.
 
 Die Verteilung gehört zur Palette: Eine gemeinsame Kennzahlenfläche ersetzt konkurrierende Statistik-Karten. Kleine farbige Symbole, numerische Fortschrittsanzeigen und konsistente Auswahlflächen geben Orientierung. Hervorgehobene Karten behalten eine neutrale Inhaltsfläche mit Cyan-Kontur. Marketing und Anwendung teilen dieselben Farbrollen. Große Flächen verwenden keine zusätzlichen gesättigten Blautöne.
+
+Die dunklen Inhaltsflächen verwenden seit 8. Oktober 2026 neutrale Grautöne: `#121212` für den Hintergrund, `#181818` für Abschnitte, `#1C1C1C` für Karten, `#292929` für erhöhte und `#333333` für interaktive Flächen. Die helle Palette und die semantischen Akzentfarben bleiben unverändert.
 
 ## Evidenz und Grenzen
 
@@ -52,10 +54,10 @@ Berechnet aus sRGB mit der relativen Luminanz und Kontrastformel aus WCAG 2.2. W
 
 | Text / Fläche         | Kontrast | Entscheidung                         |
 | --------------------- | -------: | ------------------------------------ |
-| `#0B1220` / `#06B6D4` |   7,71:1 | Beschriftung der Hauptaktion         |
+| `#FFFFFF` / `#0E7490` |   5,36:1 | Beschriftung der Hauptaktion hell    |
 | `#FFFFFF` / `#06B6D4` |   2,43:1 | Ungeeignet für Button-Beschriftungen |
 | `#0E7490` / `#FFFFFF` |   5,36:1 | Link auf hellen Karten               |
-| `#06B6D4` / `#111C2E` |   7,04:1 | Link auf dunklen Karten              |
+| `#06B6D4` / `#1C1C1C` |   7,02:1 | Link auf dunklen Karten              |
 | `#9A3412` / `#FFEDD5` |   6,38:1 | Sekundäre Aktion hell                |
 | `#9A3412` / `#FED7AA` |   5,40:1 | Sekundäre Aktion hell, Hover         |
 | `#FED7AA` / `#4A2816` |   9,66:1 | Sekundäre Aktion dunkel              |

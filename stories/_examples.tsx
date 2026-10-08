@@ -289,7 +289,7 @@ export function ProgressExample() {
         <span>Migration</span>
         <span className="text-muted-foreground">68%</span>
       </div>
-      <Progress value={68} />
+      <Progress value={68} aria-label="Migration progress" />
     </div>
   )
 }
@@ -297,7 +297,7 @@ export function ProgressExample() {
 export function SelectExample() {
   return (
     <Select defaultValue="production">
-      <SelectTrigger className="w-80 max-w-full">
+      <SelectTrigger aria-label="Environment" className="w-80 max-w-full">
         <SelectValue placeholder="Select environment" />
       </SelectTrigger>
       <SelectContent>

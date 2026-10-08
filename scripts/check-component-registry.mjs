@@ -145,7 +145,7 @@ const generated = `# Package exports
 
 This file is generated from \`config/components.mjs\` and \`package.json\`. Do not edit it manually.
 
-The registry is the authoritative inventory of the official shadcn/ui component subpaths. Package export validation fails when the source, registry, or \`package.json\` disagree.
+The registry is the authoritative inventory of shadcn-compatible and Mivabyte component subpaths. Package export validation fails when the source, registry, or \`package.json\` disagree.
 
 ## Root barrel
 

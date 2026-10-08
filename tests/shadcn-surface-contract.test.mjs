@@ -3,7 +3,10 @@ import { access, readdir, readFile } from "node:fs/promises"
 import path from "node:path"
 import test from "node:test"
 
-import { officialShadcnComponentSlugs } from "../config/components.mjs"
+import {
+  officialShadcnComponentSlugs,
+  mivabyteComponentSlugs,
+} from "../config/components.mjs"
 import { readJson, readRoot } from "./lib/source.mjs"
 
 const expectedSlugs = [
@@ -80,12 +83,14 @@ const root = path.resolve(import.meta.dirname, "..")
 test("the package exposes exactly the official shadcn component surface", async () => {
   assert.equal(expectedSlugs.length, 66)
   assert.deepEqual([...officialShadcnComponentSlugs], expectedSlugs)
+  assert.deepEqual([...mivabyteComponentSlugs], ["media-player"])
+  const publicSlugs = [...expectedSlugs, ...mivabyteComponentSlugs]
 
   const sourceSlugs = (await readdir(path.join(root, "src/components/ui")))
     .filter((file) => file.endsWith(".tsx"))
     .map((file) => file.slice(0, -".tsx".length))
     .sort()
-  assert.deepEqual(sourceSlugs, [...expectedSlugs].sort())
+  assert.deepEqual(sourceSlugs, [...publicSlugs].sort())
 
   const [packageJson, barrel] = await Promise.all([
     readJson("package.json"),
@@ -100,9 +105,9 @@ test("the package exposes exactly the official shadcn component surface", async 
     )
     .map(([key]) => key.slice(2))
     .sort()
-  assert.deepEqual(componentSubpaths, [...expectedSlugs].sort())
+  assert.deepEqual(componentSubpaths, [...publicSlugs].sort())
 
-  for (const slug of expectedSlugs) {
+  for (const slug of publicSlugs) {
     const exportMap = packageJson.exports[`./${slug}`]
     assert.equal(exportMap.default, `./dist/components/ui/${slug}.js`)
     assert.equal(exportMap.import.types, `./dist/components/ui/${slug}.d.ts`)

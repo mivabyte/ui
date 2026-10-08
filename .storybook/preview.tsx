@@ -4,6 +4,7 @@ import type { Decorator, Preview } from "@storybook/react-vite"
 import { DirectionProvider } from "../src/components/ui/direction.js"
 import { TooltipProvider } from "../src/components/ui/tooltip.js"
 import "../src/styles.css"
+import "./preview.css"
 
 const withTheme: Decorator = (Story, context) => {
   const mode = String(context.globals.mode ?? "light")
@@ -26,7 +27,11 @@ const withTheme: Decorator = (Story, context) => {
           dir={direction}
         >
           <div
-            className={context.parameters.layout === "fullscreen" ? "" : "p-6"}
+            className={
+              context.parameters.layout === "fullscreen"
+                ? ""
+                : "min-w-0 max-w-full p-6 [&>*]:max-w-full"
+            }
           >
             <Story />
           </div>

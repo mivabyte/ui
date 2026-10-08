@@ -2,7 +2,7 @@
 
 This file is generated from `config/components.mjs` and `package.json`. Do not edit it manually.
 
-The registry is the authoritative inventory of the official shadcn/ui component subpaths. Package export validation fails when the source, registry, or `package.json` disagree.
+The registry is the authoritative inventory of shadcn-compatible and Mivabyte component subpaths. Package export validation fails when the source, registry, or `package.json` disagree.
 
 ## Root barrel
 
@@ -346,6 +346,15 @@ The registry is the authoritative inventory of the official shadcn/ui component 
 - ESM runtime: `./dist/components/ui/marker.js`
 - CommonJS types: `./dist/components/ui/marker.d.cts`
 - CommonJS runtime: `./dist/components/ui/marker.cjs`
+
+## `@mivabyte/ui/media-player`
+
+- Official component: Media Player
+- Source: `src/components/ui/media-player.tsx`
+- ESM types: `./dist/components/ui/media-player.d.ts`
+- ESM runtime: `./dist/components/ui/media-player.js`
+- CommonJS types: `./dist/components/ui/media-player.d.cts`
+- CommonJS runtime: `./dist/components/ui/media-player.cjs`
 
 ## `@mivabyte/ui/menubar`
 
