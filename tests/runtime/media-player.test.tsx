@@ -336,6 +336,11 @@ describe("MediaPlayer", () => {
     expect(seek).not.toHaveAttribute("data-disabled")
     fireEvent.keyDown(seek, { key: "ArrowRight" })
     expect(video().currentTime).toBeCloseTo(0.1)
+    fireEvent.keyDown(seek, { key: "End" })
+    expect(video().currentTime).toBeGreaterThan(119.9)
+    expect(video().currentTime).toBeLessThan(120)
+    fireEvent.keyDown(seek, { key: "Home" })
+    expect(video().currentTime).toBe(0)
     video().currentTime = 30
     fireEvent.timeUpdate(video())
     expect(seek).toHaveAttribute("aria-valuenow", "30")

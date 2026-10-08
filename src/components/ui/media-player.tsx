@@ -320,8 +320,14 @@ const MediaPlayer = React.forwardRef<HTMLVideoElement, MediaPlayerProps>(
             value={[position]}
             disabled={!canSeek}
             onValueChange={([value]) => {
-              videoRef.current!.currentTime = value
-              setMedia((previous) => ({ ...previous, currentTime: value }))
+              // Some WebKit media backends reset to zero when seeking exactly
+              // to the duration. Keep the final position inside the last frame.
+              const target = Math.min(
+                value,
+                Math.max(0, media.duration - 0.001)
+              )
+              videoRef.current!.currentTime = target
+              setMedia((previous) => ({ ...previous, currentTime: target }))
             }}
           />
           <div className="flex min-w-0 items-center gap-0.5">

@@ -213,7 +213,10 @@ test("video surface toggles playback and controls follow pointer, keyboard and t
     try {
       const touchPage = await touchContext.newPage()
       await touchPage.goto(
-        "http://localhost:6006/iframe.html?id=media-media-player--basic&viewMode=story"
+        new URL(
+          "/iframe.html?id=media-media-player--basic&viewMode=story",
+          page.url()
+        ).href
       )
       await touchPage
         .getByRole("button", {
