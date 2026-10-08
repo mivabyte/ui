@@ -7,7 +7,7 @@
   "actions/setup-node": {
     "sha": "820762786026740c76f36085b0efc47a31fe5020",
     "version": "7.0.0",
-    "tags": ["v7", "v7.0.0"]
+    "tags": ["v7.0.0"]
   },
   "actions/cache": {
     "sha": "55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
@@ -17,7 +17,7 @@
   "actions/upload-artifact": {
     "sha": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
     "version": "7.0.1",
-    "tags": ["v7", "v7.0.1"]
+    "tags": ["v7.0.1"]
   },
   "github/codeql-action/init": {
     "sha": "cdf488f595d80d6e07e03d4674febd5ab45fa938",
