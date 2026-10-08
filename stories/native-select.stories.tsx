@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>
 export const Basic: Story = {
   render: () => (
     <div className="w-80">
-      <NativeSelect defaultValue="apple">
+      <NativeSelect defaultValue="apple" aria-label="Fruit">
         <optgroup label="Fruits">
           <option value="apple">Apple</option>
           <option value="banana">Banana</option>

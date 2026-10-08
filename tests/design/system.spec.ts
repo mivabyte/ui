@@ -63,7 +63,7 @@ for (const mode of ["light", "dark"]) {
     await page.getByRole("button", { name: "Show toast" }).click()
     await expect(page.locator("[data-sonner-toast]")).toHaveCSS(
       "background-color",
-      mode === "light" ? "rgb(248, 250, 252)" : "rgb(27, 41, 64)"
+      mode === "light" ? "rgb(248, 250, 252)" : "rgb(41, 41, 41)"
     )
   })
   for (const composition of compositions) {
@@ -102,6 +102,8 @@ for (const mode of ["light", "dark"]) {
         "foreground",
         "muted-foreground",
         "border",
+        "input",
+        "border-strong",
         "link",
       ]
       const colors = Object.fromEntries(
@@ -121,14 +123,18 @@ for (const mode of ["light", "dark"]) {
             foreground: "rgb(15, 23, 42)",
             "muted-foreground": "rgb(71, 85, 105)",
             border: "rgb(203, 213, 225)",
+            input: "rgb(100, 116, 139)",
+            "border-strong": "rgb(100, 116, 139)",
             link: "rgb(14, 116, 144)",
           }
         : {
-            background: "rgb(11, 18, 32)",
-            surface: "rgb(17, 28, 46)",
-            foreground: "rgb(248, 250, 252)",
-            "muted-foreground": "rgb(148, 163, 184)",
-            border: "rgb(42, 58, 80)",
+            background: "rgb(18, 18, 18)",
+            surface: "rgb(28, 28, 28)",
+            foreground: "rgb(250, 250, 250)",
+            "muted-foreground": "rgb(166, 166, 166)",
+            border: "rgb(61, 61, 61)",
+            input: "rgb(135, 135, 135)",
+            "border-strong": "rgb(135, 135, 135)",
             link: "rgb(6, 182, 212)",
           }
     )
@@ -147,8 +153,40 @@ for (const mode of ["light", "dark"]) {
       mode === "light" ? "rgb(21, 94, 117)" : "rgb(165, 243, 252)"
     )
     const primary = page.getByRole("button", { name: "Primary action" })
-    await expect(primary).toHaveCSS("background-color", "rgb(6, 182, 212)")
-    await expect(primary).toHaveCSS("color", "rgb(11, 18, 32)")
+    await expect(primary).toHaveCSS(
+      "background-color",
+      mode === "light" ? "rgb(14, 116, 144)" : "rgb(6, 182, 212)"
+    )
+    await expect(primary).toHaveCSS(
+      "color",
+      mode === "light" ? "rgb(255, 255, 255)" : "rgb(18, 18, 18)"
+    )
+    const secondary = page.getByRole("button", {
+      name: "Secondary",
+      exact: true,
+    })
+    for (const button of [primary, secondary]) {
+      const colors = await button.evaluate((node) => {
+        const style = getComputedStyle(node)
+        return [style.borderTopColor, style.backgroundColor]
+      })
+      expect(colors[0]).toBe(colors[1])
+      await button.hover()
+      await expect
+        .poll(() =>
+          button.evaluate((node) => {
+            const style = getComputedStyle(node)
+            return style.borderTopColor === style.backgroundColor
+          })
+        )
+        .toBe(true)
+    }
+    await expect(
+      page.getByRole("button", { name: "Outline", exact: true })
+    ).toHaveCSS(
+      "border-top-color",
+      mode === "light" ? "rgb(140, 140, 140)" : "rgb(135, 135, 135)"
+    )
     await expect(page.getByRole("button", { name: "View details" })).toHaveCSS(
       "color",
       colors.link
@@ -196,7 +234,7 @@ for (const mode of ["light", "dark"]) {
           "ring",
           "input",
           "primary-border",
-          "secondary-border",
+          "button-outline-border",
         ])
           pairs.push([fg, bg, 3])
       for (const bg of [

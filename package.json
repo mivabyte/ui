@@ -454,6 +454,17 @@
       },
       "default": "./dist/components/ui/marker.js"
     },
+    "./media-player": {
+      "import": {
+        "types": "./dist/components/ui/media-player.d.ts",
+        "default": "./dist/components/ui/media-player.js"
+      },
+      "require": {
+        "types": "./dist/components/ui/media-player.d.cts",
+        "default": "./dist/components/ui/media-player.cjs"
+      },
+      "default": "./dist/components/ui/media-player.js"
+    },
     "./menubar": {
       "import": {
         "types": "./dist/components/ui/menubar.d.ts",

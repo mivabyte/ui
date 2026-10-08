@@ -14,7 +14,7 @@ type AxeViolation = Omit<AxeViolationSummary, "targets"> & {
 
 const wcagTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]
 
-export async function expectNoAxeViolations(page: Page) {
+export async function collectAxeViolations(page: Page, context?: string) {
   const alreadyInjected = await page.evaluate(
     () => typeof (window as any).__axeInjected !== "undefined"
   )
@@ -25,55 +25,63 @@ export async function expectNoAxeViolations(page: Page) {
     })
   }
 
-  const violations = await page.evaluate(async (tags) => {
-    const runtime = (
-      window as typeof window & {
-        axe: {
-          run: (
-            context: Document,
-            options: {
-              runOnly: { type: "tag"; values: string[] }
-              resultTypes: ["violations"]
-            }
-          ) => Promise<{ violations: AxeViolation[] }>
+  const violations = await page.evaluate(
+    async ({ tags, context }) => {
+      const runtime = (
+        window as typeof window & {
+          axe: {
+            run: (
+              context: Document | string,
+              options: {
+                runOnly: { type: "tag"; values: string[] }
+                resultTypes: ["violations"]
+              }
+            ) => Promise<{ violations: AxeViolation[] }>
+          }
+        }
+      ).axe
+
+      let result: { violations: AxeViolation[] } | null = null
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+          result = await runtime.run(context ?? document, {
+            runOnly: { type: "tag", values: tags },
+            resultTypes: ["violations"],
+          })
+          break
+        } catch (err: any) {
+          if (
+            err &&
+            typeof err.message === "string" &&
+            err.message.includes("Axe is already running") &&
+            attempt < 4
+          ) {
+            await new Promise((resolve) => setTimeout(resolve, 250))
+            continue
+          }
+          throw err
         }
       }
-    ).axe
 
-    let result: { violations: AxeViolation[] } | null = null
-    for (let attempt = 0; attempt < 5; attempt++) {
-      try {
-        result = await runtime.run(document, {
-          runOnly: { type: "tag", values: tags },
-          resultTypes: ["violations"],
-        })
-        break
-      } catch (err: any) {
-        if (
-          err &&
-          typeof err.message === "string" &&
-          err.message.includes("Axe is already running") &&
-          attempt < 4
-        ) {
-          await new Promise((resolve) => setTimeout(resolve, 250))
-          continue
-        }
-        throw err
+      if (!result) {
+        throw new Error("Axe failed to produce results after retries")
       }
-    }
 
-    if (!result) {
-      throw new Error("Axe failed to produce results after retries")
-    }
+      return result.violations.map(({ id, impact, help, nodes }) => ({
+        id,
+        impact,
+        help,
+        targets: nodes.map((node) => node.target),
+      }))
+    },
+    { tags: wcagTags, context }
+  )
 
-    return result.violations.map(({ id, impact, help, nodes }) => ({
-      id,
-      impact,
-      help,
-      targets: nodes.map((node) => node.target),
-    }))
-  }, wcagTags)
+  return violations
+}
 
+export async function expectNoAxeViolations(page: Page, context?: string) {
+  const violations = await collectAxeViolations(page, context)
   expect(
     violations,
     `Browser accessibility violations:\n${JSON.stringify(violations, null, 2)}`

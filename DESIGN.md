@@ -15,7 +15,7 @@ This is the design contract; `src/tokens.css` is its executable source of truth,
 
 ## 1. Brand Narrative & Philosophy
 
-Precise technology, warm human typography, and quiet depth. Midnight anchors dark canvases; cool Slate grounds light canvases; exact Cyan (#06B6D4) carries primary actions in both modes. Apricot gives secondary actions a warm, distinct role. Cyan tints identify selection. Amber, Emerald, Coral and Azure communicate warnings, success, errors and information. Distinction comes from composition, tonal layers and type before decoration. Dense applications and spacious websites share the same components, with different layout rhythms. Use Cyan for the main action; Apricot supports secondary actions and planning context. Blue belongs to informational feedback. Keep large data surfaces neutral and use small, meaningful color areas rather than saturated statistic cards. Most surfaces remain neutral. Use one highlighted object or section per visual group.
+Precise technology, warm human typography, and quiet depth. Neutral charcoal anchors dark canvases; cool Slate grounds light canvases; Cyan carries primary actions: dark Cyan with white labels in light mode, brand Cyan (#06B6D4) with charcoal labels in dark mode. Apricot gives secondary actions a warm, distinct role. Cyan tints identify selection. Amber, Emerald, Coral and Azure communicate warnings, success, errors and information. Distinction comes from composition, tonal layers and type before decoration. Dense applications and spacious websites share the same components, with different layout rhythms. Use Cyan for the main action; Apricot supports secondary actions and planning context. Blue belongs to informational feedback. Keep large data surfaces neutral and use small, meaningful color areas rather than saturated statistic cards. Most surfaces remain neutral. Use one highlighted object or section per visual group.
 
 ## 2. Color System
 
@@ -23,13 +23,13 @@ Semantic HSL channels are consumed as `hsl(var(--token))`. Chart, shadow and gra
 
 | Role             | Token / Tailwind mapping                                                           | Intent                                                      |
 | ---------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| Canvas           | `--background` / `--color-background`                                              | Cool off-white / Midnight                                   |
+| Canvas           | `--background` / `--color-background`                                              | Cool off-white / neutral charcoal                           |
 | Text             | `--foreground`, `--muted-foreground`                                               | Strong headings, readable secondary copy                    |
 | Section          | `--section`                                                                        | Tonal separation without another border                     |
 | Surface          | `--surface`, `--card`                                                              | Content layer                                               |
 | Raised           | `--surface-elevated`, `--popover`                                                  | Floating and foreground content                             |
 | Interactive      | `--surface-interactive`                                                            | Hover and active spatial feedback                           |
-| Action           | `--primary`, `--primary-hover`, `--primary-foreground`                             | Exact Cyan + Midnight labels in both modes                  |
+| Action           | `--primary`, `--primary-hover`, `--primary-foreground`                             | Dark Cyan / white labels; brand Cyan / charcoal labels      |
 | Links            | `--link` / `--color-link`                                                          | Dark Cyan (#0E7490) on light; exact Cyan on dark            |
 | Action boundary  | `--primary-border` / `--color-primary-border`                                      | Identifiable filled-control outline                         |
 | Secondary action | `--secondary`, `--secondary-hover`, `--secondary-foreground`, `--secondary-border` | Warm Apricot surfaces with readable ink and boundaries      |
@@ -43,7 +43,7 @@ Semantic HSL channels are consumed as `hsl(var(--token))`. Chart, shadow and gra
 
 The generic skill's roles `--color-bg`, `--color-fg`, `--color-fg-muted`, `--color-focus-ring`, `--color-danger`, `--color-accent-hover` map to the existing background, foreground, muted-foreground, ring, destructive, primary-hover tokens; these are documentation mappings, not duplicate CSS aliases. `--color-surface`, `--color-border`, `--color-accent`, `--color-success` are Tailwind mappings.
 
-Text pairs target 4.5:1; essential control boundaries and focus target 3:1. Decorative card borders need not reach 3:1. Bright brand Cyan is not small text on white: use `text-link` for readable cyan text and `bg-primary text-primary-foreground` for exact Cyan fills with Midnight labels. Filled primary controls use `border-primary-border`; secondary buttons use `border-secondary-border`. `--secondary-strong` provides readable Apricot-family text or icons on neutral surfaces. Accent/gradient sections retain foreground text, not white text on a bright gradient. Glass is opt-in with a sufficiently opaque base; never place important copy over unknown imagery.
+Text pairs target 4.5:1; essential control boundaries and focus target 3:1. Decorative card borders need not reach 3:1. Bright brand Cyan is not small text on white: use `text-link` for readable cyan text and `bg-primary text-primary-foreground` for mode-appropriate Cyan fills and readable labels. Filled primary controls use `border-primary-border`; secondary buttons use `border-secondary-border`. Filled button borders match their fill; outline buttons use the neutral `border-button-outline-border` role. `--secondary-strong` provides readable Apricot-family text or icons on neutral surfaces. Accent/gradient sections retain foreground text, not white text on a bright gradient. Glass is opt-in with a sufficiently opaque base; never place important copy over unknown imagery.
 
 The [palette research rationale](docs/palette-research.md) separates perception studies, WCAG requirements, design guidance and our own color choices. Secondary actions use Apricot; selected navigation and tabs use Cyan tints; strong decorative headings use `text-accent-strong` instead of the link role. The exact supporting hex colors are design choices, not a scientifically established optimum.
 
@@ -88,7 +88,7 @@ Keyboard focus uses a double offset ring plus forced-colors outline. Under `forc
 
 ## 9. Layout
 
-Use semantic section markup with package-owned `ui-section` and `data-tone="muted|accent|gradient|grid"`. Compose a page-width wrapper (`mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]`) with Heading, Text and Card. This avoids a new shell/component API and keeps the existing 66 module registry stable.
+Use semantic section markup with package-owned `ui-section` and `data-tone="muted|accent|gradient|grid"`. Compose a page-width wrapper (`mx-auto w-full min-w-0 max-w-[var(--content-width)] px-[var(--page-gutter)]`) with Heading, Text and Card. Keep the shared registry authoritative; Mivabyte additions such as MediaPlayer compose the existing themed controls and browser APIs.
 
 Marketing: asymmetric hero with real product evidence, generous section rhythm, readable measures, alternating section tones, one prominent CTA. Features and case studies use interactive cards with actual links; pricing highlights only the recommended plan; testimonials use semantic blockquotes; blog/article content uses a reading-measure wrapper (`max-w-[var(--reading-width)]`). No decorative illustration is required when a useful product preview can explain the offer.
 

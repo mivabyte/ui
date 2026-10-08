@@ -49,12 +49,8 @@ describe("Command palette primitive", () => {
     expect(screen.getByText("⌘C")).toBeInTheDocument()
     expect(screen.getByText("Actions")).toBeInTheDocument()
 
-    // Test a11y (cmdk renders separator inside listbox which ARIA disallows)
-    const results = await axe.run(container, {
-      rules: {
-        "aria-required-children": { enabled: false },
-      },
-    })
+    // Visual separators are hidden from the listbox accessibility tree.
+    const results = await axe.run(container)
     expect(results.violations).toEqual([])
   })
 

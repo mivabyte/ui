@@ -1,0 +1,5 @@
+/* Centered examples must shrink to the viewport, including decorator padding. */
+.sb-main-centered #storybook-root {
+  max-width: 100%;
+  min-width: 0;
+}

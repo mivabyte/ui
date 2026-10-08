@@ -28,8 +28,8 @@
 ## Highlights
 
 - **📦 Zero Copy-Paste Required**: Shipped as a fully compiled npm package (`@mivabyte/ui`) with dual ESM and CommonJS exports and bundled TypeScript declarations.
-- **🎨 Midnight, Cyan & Azure Visual System**: A cohesive, distinctive color language engineered with semantic HSL channels. Features rich deep navy dark surfaces, energetic cyan highlights, and crisp azure daylight actions.
-- **⚡ 66 Production-Ready Component Primitives**: Built on battle-tested Radix UI and Base UI primitives, from buttons and responsive dialogs to headless data tables and Recharts visualizations.
+- **🎨 Charcoal, Cyan & Apricot Visual System**: Semantic HSL channels combine neutral charcoal dark surfaces, cool off-white light surfaces, cyan primary actions, and warm Apricot secondary actions.
+- **⚡ 67 Production-Ready Component Modules**: Built on battle-tested Radix UI and Base UI primitives, from buttons and responsive dialogs to headless data tables and Recharts visualizations.
 - **🎯 Precise Subpath Imports**: Fine-grained subpath exports (`@mivabyte/ui/button`, `@mivabyte/ui/card`, `@mivabyte/ui/dialog`) bypass the root barrel, so the dependency graph stays explicit per component.
 - **♿ WCAG 2.1 AA Compliance Built-In**: Fully tested with Axe Core across all components. Keyboard traps, accessible dialog lifecycles, ARIA roles, and high-contrast focus outlines work out of the box.
 - **📏 Adaptive Density Scaling**: Seamlessly switch between spacious touch-friendly `comfortable` mode and information-dense `compact` desktop mode via `data-density`.
@@ -187,7 +187,7 @@ present) and maps the token variables onto sonner's own options. Import it from
 
 ## Component Catalog
 
-`@mivabyte/ui` contains **66 component modules**, grouped into logical architectural families:
+`@mivabyte/ui` contains **67 component modules**, grouped into logical architectural families:
 
 | Category                   | Primitives & Modules                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | :------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -201,6 +201,8 @@ present) and maps the token variables onto sonner's own options. Import it from
 | **Feedback & Status**      | [`Alert`](docs/components.md#alert), [`Progress`](docs/components.md#progress), [`Spinner`](docs/components.md#spinner), [`Toast`](docs/components.md#toast) (`Toaster`, `toast`), [`Sonner`](docs/components.md#sonner) (`Toaster`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | **Data Visualization**     | [`Chart`](docs/components.md#chart) (`ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 
+The Mivabyte [`MediaPlayer`](docs/components.md#media-player) adds native video playback with themed controls and automatic pause outside the viewport.
+
 Every link above opens that component's entry in [`docs/components.md`](docs/components.md), the per-slug inventory of import subpaths, runtime exports, and exported types. Props, variants, and runtime behavior are documented in Storybook rather than duplicated here; [`docs/generated/exports.md`](docs/generated/exports.md) is the machine-verified subpath and artifact map.
 
 ---
@@ -211,7 +213,7 @@ The Mivabyte design system balances technical precision with warm human typograp
 
 ### Cyan-led Multicolor Palette
 
-Exact `#06B6D4` is the primary fill in both modes, paired with Midnight labels (`#0B1220`). Links and essential control strokes use a separate `--link` role: dark Cyan (`#0E7490`) on light surfaces and exact brand Cyan on dark surfaces. Use `text-link` for links and readable cyan text; `bg-primary text-primary-foreground` for filled actions.
+Brand Cyan remains `#06B6D4`. Light primary actions use dark Cyan (`#0E7490`) with white labels; dark primary actions use brand Cyan with charcoal labels (`#121212`). Links and essential control strokes use a separate `--link` role: dark Cyan (`#0E7490`) on light surfaces and exact brand Cyan on dark surfaces. Use `text-link` for links and readable cyan text; `bg-primary text-primary-foreground` for filled actions.
 
 Cyan stays the main color. Apricot identifies secondary actions; Cyan tints identify selections; Amber marks attention, Emerald success, Coral errors, and Azure information. Each family has readable light/dark shades rather than making every component cyan.
 
@@ -226,17 +228,19 @@ The [research rationale and measured contrasts](docs/palette-research.md) explai
 | Coral   | `#F43F5E`   | Errors and destructive actions                     |
 | Azure   | `#3B82F6`   | Information and processing                         |
 
-| Role                 | Light mode | Dark mode |
-| -------------------- | ---------- | --------- |
-| Brand / primary fill | `#06B6D4`  | `#06B6D4` |
-| Background           | `#F8FAFC`  | `#0B1220` |
-| Cards                | `#FFFFFF`  | `#111C2E` |
-| Main text            | `#0F172A`  | `#F8FAFC` |
-| Secondary text       | `#475569`  | `#94A3B8` |
-| Borders              | `#CBD5E1`  | `#2A3A50` |
-| Links                | `#0E7490`  | `#06B6D4` |
+| Role           | Light mode | Dark mode |
+| -------------- | ---------- | --------- |
+| Primary fill   | `#0E7490`  | `#06B6D4` |
+| Background     | `#F8FAFC`  | `#121212` |
+| Cards          | `#FFFFFF`  | `#1C1C1C` |
+| Main text      | `#0F172A`  | `#FAFAFA` |
+| Secondary text | `#475569`  | `#A6A6A6` |
+| Borders        | `#CBD5E1`  | `#3D3D3D` |
+| Links          | `#0E7490`  | `#06B6D4` |
 
-`--brand-cyan-500`, `--mivabyte-main`, `--mivabyte-cyan`, and `--mivabyte-cyan-dark` resolve to exact `#06B6D4`. The existing HSL-channel convention preserves these hex colors at full precision. Primary controls have an identifiable border, and checked switches use Midnight thumbs. Focus rings, slider/progress fills, and radio indicators use readable cyan strokes.
+`--brand-cyan-500`, `--mivabyte-main`, `--mivabyte-cyan`, and `--mivabyte-cyan-dark` resolve to exact `#06B6D4`. The existing HSL-channel convention preserves these hex colors at full precision. Filled button borders match their fill, and checked switches use the primary foreground color. Outline buttons use `--button-outline-border`; inputs retain `--input` boundaries. Focus rings, slider/progress fills, and radio indicators use readable cyan strokes.
+
+Dark sections use `#181818`, elevated surfaces use `#292929`, and interactive surfaces use `#333333`. Legacy `--mivabyte-midnight` primitives retain their brand colors; use semantic surface tokens for themed UI.
 
 To enable dark mode, toggle the `.dark` class on the `<html>` or `<body>` element:
 
@@ -389,7 +393,7 @@ export function EmailForm() {
 
 ## Interactive Storybook
 
-Storybook provides an interactive sandbox for inspecting all 66 components, their token foundations, and complete full-page compositions (marketing websites and administrative dashboards).
+Storybook provides an interactive sandbox for inspecting all 67 components, their token foundations, and complete full-page compositions (marketing websites and administrative dashboards).
 
 ```bash
 # Start local Storybook development server

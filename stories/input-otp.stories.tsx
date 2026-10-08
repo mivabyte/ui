@@ -28,7 +28,11 @@ type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
   render: () => (
-    <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+    <InputOTP
+      aria-label="Verification code"
+      maxLength={6}
+      pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+    >
       <InputOTPGroup>
         <InputOTPSlot index={0} />
         <InputOTPSlot index={1} />

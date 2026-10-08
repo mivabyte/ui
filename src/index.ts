@@ -1,4 +1,4 @@
-// @mivabyte/ui — official shadcn/ui components only
+// @mivabyte/ui — shadcn/ui primitives and Mivabyte components
 
 // Accordion
 export {
@@ -300,6 +300,13 @@ export {
 
 // Message
 export { Message } from "./components/ui/message"
+
+// Media Player
+export type {
+  MediaPlayerProps,
+  MediaPlayerLabels,
+} from "./components/ui/media-player"
+export { MediaPlayer } from "./components/ui/media-player"
 
 // Message Scroller
 export { MessageScroller } from "./components/ui/message-scroller"

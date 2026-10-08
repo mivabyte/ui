@@ -7,20 +7,50 @@ import { cn } from "@/lib/utils"
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={cn("relative overflow-hidden", className)}
-    {...props}
-  >
-    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
-      {children}
-    </ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-))
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
+    /** Native scrollbars avoid JavaScript-driven thumb position updates. */
+    scrollbar?: "custom" | "native"
+    /** The scrollable element; the forwarded ref still points to the root. */
+    viewportRef?: React.Ref<HTMLDivElement>
+  }
+>(
+  (
+    { className, children, scrollbar = "custom", viewportRef, ...props },
+    ref
+  ) => (
+    <ScrollAreaPrimitive.Root
+      ref={ref}
+      data-slot="scroll-area"
+      data-scrollbar={scrollbar}
+      className={cn("relative overflow-hidden", className)}
+      {...props}
+    >
+      {scrollbar === "native" ? (
+        <div
+          ref={viewportRef}
+          data-slot="scroll-area-viewport"
+          tabIndex={0}
+          className="h-full w-full overflow-x-hidden overflow-y-auto rounded-[inherit] [scrollbar-color:hsl(var(--border))_transparent] [scrollbar-gutter:stable] [scrollbar-width:thin]"
+        >
+          {children}
+        </div>
+      ) : (
+        <>
+          <ScrollAreaPrimitive.Viewport
+            tabIndex={0}
+            ref={viewportRef}
+            data-slot="scroll-area-viewport"
+            className="h-full w-full rounded-[inherit]"
+          >
+            {children}
+          </ScrollAreaPrimitive.Viewport>
+          <ScrollBar />
+          <ScrollAreaPrimitive.Corner />
+        </>
+      )}
+    </ScrollAreaPrimitive.Root>
+  )
+)
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
 const ScrollBar = React.forwardRef<

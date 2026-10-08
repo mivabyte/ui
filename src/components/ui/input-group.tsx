@@ -7,7 +7,7 @@ export function InputGroup({ className, ...props }: InputGroupProps) {
   return (
     <div
       className={cn(
-        "flex w-full rounded-md border border-input bg-background shadow-sm",
+        "ui-control flex w-full rounded-md border border-input bg-surface shadow-sm focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
         className
       )}
       {...props}

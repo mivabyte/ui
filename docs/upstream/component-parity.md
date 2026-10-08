@@ -1,6 +1,6 @@
 # Component Parity Ledger
 
-`@mivabyte/ui` publishes exactly the 66 slugs registered in `config/components.mjs` and nothing else:
+`@mivabyte/ui` publishes the 66 shadcn-compatible slugs below plus the Mivabyte `media-player` module, all registered in `config/components.mjs`:
 
 `accordion`, `alert`, `alert-dialog`, `aspect-ratio`, `attachment`, `avatar`, `badge`, `breadcrumb`, `bubble`, `button`, `button-group`, `calendar`, `card`, `carousel`, `chart`, `checkbox`, `collapsible`, `combobox`, `command`, `context-menu`, `data-table`, `date-picker`, `dialog`, `direction`, `drawer`, `dropdown-menu`, `empty`, `field`, `form`, `hover-card`, `input`, `input-group`, `input-otp`, `item`, `kbd`, `label`, `marker`, `menubar`, `message`, `message-scroller`, `native-select`, `navigation-menu`, `pagination`, `popover`, `progress`, `questionnaire`, `radio-group`, `resizable`, `scroll-area`, `select`, `separator`, `sheet`, `sidebar`, `skeleton`, `slider`, `sonner`, `spinner`, `switch`, `table`, `tabs`, `textarea`, `toast`, `toggle`, `toggle-group`, `tooltip`, `typography`.
 
@@ -17,7 +17,7 @@ Release validation verifies all of the following against that registry:
 - one root-barrel re-export per slug;
 - one Storybook story per slug;
 - no extra component source modules; and
-- no proprietary root runtime export.
+- all root runtime exports declared in the typed barrel.
 
 ### Base UI
 

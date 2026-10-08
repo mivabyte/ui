@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Scrolling container for chat threads with auto-scroll and custom scrollbars.",
+          'Scrolling container for chat threads with native scrollbars. Use viewportRef to manage scroll position, or scrollbar="custom" for Radix scrollbars.',
       },
     },
   },

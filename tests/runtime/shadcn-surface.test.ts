@@ -83,7 +83,9 @@ const officialComponents = [
   "typography",
 ]
 
-describe("official shadcn component surface", () => {
+const publicComponents = [...officialComponents, "media-player"]
+
+describe("official shadcn components and Mivabyte additions", () => {
   it("contains exactly the official component set in source and public subpaths", () => {
     const sourceComponents = readdirSync(componentDirectory)
       .filter((file) => file.endsWith(".tsx"))
@@ -92,11 +94,11 @@ describe("official shadcn component surface", () => {
     const packageComponents = Object.keys(packageJson.exports)
       .filter((subpath) => subpath.startsWith("./"))
       .map((subpath) => subpath.slice(2))
-      .filter((subpath) => officialComponents.includes(subpath))
+      .filter((subpath) => publicComponents.includes(subpath))
       .sort()
 
-    expect(sourceComponents).toEqual([...officialComponents].sort())
-    expect(packageComponents).toEqual([...officialComponents].sort())
+    expect(sourceComponents).toEqual([...publicComponents].sort())
+    expect(packageComponents).toEqual([...publicComponents].sort())
   })
 
   it("keeps every official component in the root barrel", () => {
@@ -106,12 +108,11 @@ describe("official shadcn component surface", () => {
       )
     )
 
-    expect([...rootComponentPaths].sort()).toEqual(
-      [...officialComponents].sort()
-    )
+    expect([...rootComponentPaths].sort()).toEqual([...publicComponents].sort())
     expect(publicApi).toEqual(
       expect.objectContaining({
         Button: expect.anything(),
+        MediaPlayer: expect.anything(),
         DirectionProvider: expect.anything(),
         Form: expect.anything(),
         Toaster: expect.anything(),

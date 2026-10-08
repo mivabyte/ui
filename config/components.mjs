@@ -77,7 +77,12 @@ export const officialShadcnComponentSlugs = Object.freeze([
   "typography",
 ])
 
-export const components = officialShadcnComponentSlugs.map((slug) => ({
+export const mivabyteComponentSlugs = Object.freeze(["media-player"])
+
+export const components = [
+  ...officialShadcnComponentSlugs,
+  ...mivabyteComponentSlugs,
+].map((slug) => ({
   name: titleCase(slug),
   slug,
   source: `src/components/ui/${slug}.tsx`,
