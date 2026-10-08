@@ -1,5 +1,29 @@
 # @mivabyte/ui
 
+## 26.10.8
+
+Release version explicitly requested as `26.10.8`; the pending minor Changesets would otherwise derive `26.11.0`. This release includes the new MediaPlayer and native ScrollArea capabilities described below.
+
+### Minor Changes
+
+- 8918332: Add a themed MediaPlayer with native video playback, a central play action, compact controls over the video with hover/focus visibility and click-to-toggle playback, mute and volume, seeking, fullscreen, and automatic pause outside the viewport or in hidden tabs. Export it from the root and media-player subpath with Storybook examples and localized control labels. Forward slider accessibility labels and value descriptions to the interactive thumb.
+- 8918332: Add `scrollbar="native"` and `viewportRef` to ScrollArea. MessageScroller now
+  defaults to browser-managed scrollbars to avoid delayed JavaScript thumb updates
+  in busy chats. Use `scrollbar="custom"` for the previous Radix behavior, and
+  `viewportRef` instead of querying `data-radix-scroll-area-viewport` for native
+  scroll position access.
+
+### Patch Changes
+
+- 8918332: Keep keyboard focus rings, invalid borders and read-only surfaces visible when controls also use Tailwind color and shadow utilities. Align NativeSelect height, surface and focus treatment with other controls, show focus and invalid states on InputGroup, and use the shared outline-border role for Toggle. Give dropdown keyboard shortcuts readable semantic text colors. Use neutral popover styling for Tooltip and strengthen outline boundaries in increased-contrast mode.
+
+  Make custom ScrollArea viewports keyboard focusable, hide visual Command separators from the listbox accessibility tree, name Combobox triggers, allow navigation menus to wrap on narrow screens, and enlarge the media volume thumb hit area while preserving its small visual dot.
+
+- 8918332: Use dark Cyan (#0E7490) with white labels for primary actions in light mode, with a darker readable hover state. Match filled primary and secondary button borders to their fills, including hover. Add a dedicated, softer neutral outline-button border token while keeping input boundaries and focus rings distinct. Dark primary actions retain bright brand Cyan and dark labels.
+- 8918332: Replace blue-tinted dark theme canvases, sections, cards, elevated and interactive surfaces, text, borders, overlays and shadows with neutral charcoal grays. Keep the light theme, Cyan/Apricot actions, status colors and legacy brand primitives unchanged. Consumers receive the new palette through the existing stylesheet and semantic tokens.
+
+  Balance dark input and outline-button borders with light mode using `#878787` control boundaries, while preserving subtle card borders and accessible focus states.
+
 ## 26.10.3
 
 ### Patch Changes
