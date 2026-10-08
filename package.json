@@ -1,6 +1,6 @@
 {
   "name": "@mivabyte/ui",
-  "version": "26.10.3",
+  "version": "26.10.8",
   "description": "Shared Mivabyte design tokens and React UI primitives.",
   "license": "MIT",
   "private": false,
@@ -827,10 +827,10 @@
     "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify && mkdir -p dist/fonts && cp src/fonts/* dist/fonts/"
   },
   "peerDependencies": {
-    "react": ">=19 <20",
-    "react-dom": ">=19 <20",
     "@hookform/resolvers": "^5.9.1",
     "@tanstack/react-table": "^9.2.4",
+    "react": ">=19 <20",
+    "react-dom": ">=19 <20",
     "zod": "^3.25.76"
   },
   "peerDependenciesMeta": {
@@ -872,8 +872,8 @@
     "@radix-ui/react-toggle": "^1.1.18",
     "@radix-ui/react-toggle-group": "^1.1.19",
     "@radix-ui/react-tooltip": "^1.2.16",
-    "class-variance-authority": "^0.7.1",
     "@types/lodash": "^4.17.25",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
